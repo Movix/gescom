@@ -1098,7 +1098,7 @@ class BlockedLog
 				$this->action 			= $obj->action;
 				$this->module_source	= $obj->module_source;
 
-				$this->amounts_taxexcl	= (is_null($obj->amounts_taxexcl) ? null : (float) $obj->amounts);
+				$this->amounts_taxexcl	= (is_null($obj->amounts_taxexcl) ? null : (float) $obj->amounts_taxexcl);
 				$this->amounts			= (float) $obj->amounts;
 
 				$this->fk_object = $obj->fk_object;
@@ -1267,7 +1267,7 @@ class BlockedLog
 
 			// For debug info (we can clean this field later)
 			if (getDolGlobalString('BLOCKEDLOG_ADD_DEBUG_INFO')) {
-				$this->debuginfo = $this->buildFirstPartOfKeyForSignature();	// Not used
+				$this->debuginfo = 'previoushash='.$previoushash.' concatenateddatafirstpart='.$this->buildFirstPartOfKeyForSignature().' => signature='.$this->signature;	// Not used
 			}
 		} catch (Exception $e) {
 			$this->error = $e->getMessage();
@@ -1281,7 +1281,7 @@ class BlockedLog
 		if ($forcesignature) {
 			$this->signature = $forcesignature;
 		}
-		//var_dump($concatenateddata);var_dump($previoushash);var_dump($this->signature);
+		//var_dump($previoushash, $concatenateddata, $this->signature);
 
 		$sql = "INSERT INTO ".MAIN_DB_PREFIX."blockedlog (";
 		$sql .= " date_creation,";
@@ -1397,6 +1397,8 @@ class BlockedLog
 			$concatenateddata = $this->buildKeyForSignature();
 
 			$signature = $this->buildFinalSignatureHash($previoushash.$concatenateddata);
+
+			//var_dump($previoushash, $concatenateddata, $signature);
 		} catch (Exception $e) {
 			$res = ($signature === $this->signature);
 			$this->error = $e->getMessage();
@@ -1434,16 +1436,21 @@ class BlockedLog
 	 * Note: rowid of line not included as it is not a business data and this allow to make backup of a year
 	 * and restore it into another database with different ids without comprimising checksums
 	 *
-	 * @return string		First part of key for signature
+	 * @param	string	$format		Force format to use
+	 * @return string				First part of key for signature
 	 */
-	private function buildFirstPartOfKeyForSignature()
+	private function buildFirstPartOfKeyForSignature($format = '')
 	{
+		if (empty($format)) {
+			$format = $this->object_format;
+		}
+
 		// Note: $this->amounts can be '0', '1.1', '1.123';  // All 0 at end should have been removed already
-		if ($this->object_format == '') {
+		if ($format == '') {
 			return $this->date_creation.'|'.$this->action.'|'.$this->amounts.'|'.$this->ref_object.'|'.$this->date_object.'|'.$this->user_fullname;
-		} elseif ($this->object_format == 'V1') {	// Note: $this->amounts can be '0', '1.1', '1.123';  // All 0 at end should have been removed already
+		} elseif ($format == 'V1') {	// Note: $this->amounts can be '0', '1.1', '1.123';  // All 0 at end should have been removed already
 			return $this->date_creation.'|'.$this->action.'|'.$this->amounts.'|'.$this->ref_object.'|'.$this->date_object.'|'.$this->user_fullname;
-		} elseif ($this->object_format == 'V2') {
+		} elseif ($format == 'V2') {
 			$s = $this->entity;
 			$s .= '|'.$this->date_creation.'|'.$this->action.'|'.$this->module_source.'|'.$this->amounts_taxexcl.'|'.$this->amounts.'|'.$this->ref_object.'|'.$this->date_object.'|'.$this->user_fullname;
 			$s .= '|'.(string) $this->linktoref;
@@ -1466,12 +1473,13 @@ class BlockedLog
 		if (empty($format)) {
 			$format = $this->object_format;
 		}
+
 		if ($format == '') {
-			return $this->buildFirstPartOfKeyForSignature().'|'.print_r($this->object_data, true);
+			return $this->buildFirstPartOfKeyForSignature($format).'|'.print_r($this->object_data, true);
 		} elseif ($format == 'V1') {	// Note: $this->amounts can be '0', '1.1', '1.123';  // All 0 at end should have been removed already
-			return $this->buildFirstPartOfKeyForSignature().'|'.json_encode($this->object_data, JSON_FORCE_OBJECT);
+			return $this->buildFirstPartOfKeyForSignature($format).'|'.json_encode($this->object_data, JSON_FORCE_OBJECT);
 		} elseif ($format == 'V2') {
-			return $this->buildFirstPartOfKeyForSignature().'|'.json_encode($this->object_data, JSON_FORCE_OBJECT);
+			return $this->buildFirstPartOfKeyForSignature($format).'|'.json_encode($this->object_data, JSON_FORCE_OBJECT);
 		} else {
 			throw new Exception('Error bad value "'.$format.'" for object_format');
 		}
@@ -1481,15 +1489,20 @@ class BlockedLog
 	 * Return a hash that is the signature of a line (hash_hmac en SHA256 des données + clé secrète)
 	 *
 	 * @param 	string $clearstring		Data to sign
+	 * @param	string	$format			Force format to use
 	 * @return 	string					Signature string
 	 */
-	private function buildFinalSignatureHash($clearstring)
+	private function buildFinalSignatureHash($clearstring, $format = '')
 	{
-		if ($this->object_format == '') {
+		if (empty($format)) {
+			$format = $this->object_format;
+		}
+
+		if ($format == '') {
 			return dol_hash($clearstring, '5');
-		} elseif ($this->object_format == 'V1') {
+		} elseif ($format == 'V1') {
 			return dol_hash($clearstring, '5');
-		} elseif ($this->object_format == 'V2') {
+		} elseif ($format == 'V2') {
 			// BLOCKEDLOG_HMAC_KEY is a HMAC key starting with 'BLOCKEDLOGHMAC....', but it is not stored as a clear data. It will be decrypted later.
 			$hmac_encoded_secret_key = getDolGlobalString('BLOCKEDLOG_HMAC_KEY');
 			if (empty($hmac_encoded_secret_key)) {
@@ -1576,7 +1589,7 @@ class BlockedLog
 	}
 
 	/**
-	 *	Return array of log objects (with criteria)
+	 *	Return array of unalterable log objects (filtered with criteria)
 	 *
 	 *	@param	string 					$element      			Element to search
 	 *	@param	string|int				$fk_object				Id of object to search. Can be a UFS search criteria.
