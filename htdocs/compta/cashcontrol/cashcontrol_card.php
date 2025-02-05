@@ -660,6 +660,7 @@ if ($action == "create" || $action == "start") {
 	print $form->selectarray('posnumber', $arrayofpos, GETPOSTISSET('posnumber') ? GETPOSTINT('posnumber') : $selectedposnumber, $showempty);
 	//print '<input name="posnumber" type="text" class="maxwidth50" value="'.(GETPOSTISSET('posnumber')?GETPOST('posnumber', 'alpha'):'0').'">';
 	print '</td>';
+
 	// Year
 	print '<td>';
 	$retstring = '<select'.($disabled ? ' disabled' : '').' class="flat valignmiddle maxwidth75imp" id="'.$prefix.'year" name="'.$prefix.'year">';
@@ -669,6 +670,7 @@ if ($action == "create" || $action == "start") {
 	$retstring .= "</select>\n";
 	print $retstring;
 	print '</td>';
+
 	// Month
 	print '<td>';
 	$retstring = '<select'.($disabled ? ' disabled' : '').' class="flat valignmiddle maxwidth75imp" id="'.$prefix.'month" name="'.$prefix.'month">';
@@ -680,7 +682,9 @@ if ($action == "create" || $action == "start") {
 	}
 	$retstring .= "</select>";
 	print $retstring;
+	print ' '.$form->textwithpicto('', $langs->trans("KeepEmptyForAYearlyControl"));
 	print '</td>';
+
 	// Day
 	print '<td>';
 	$retstring = '<select'.($disabled ? ' disabled' : '').' class="flat valignmiddle maxwidth50imp" id="'.$prefix.'day" name="'.$prefix.'day">';
@@ -690,7 +694,9 @@ if ($action == "create" || $action == "start") {
 	}
 	$retstring .= "</select>";
 	print $retstring;
+	print ' '.$form->textwithpicto('', $langs->trans("KeepEmptyForAMonthlyControl"));
 	print '</td>';
+
 	// Button Start
 	print '<td>';
 	if ($action == 'start' && GETPOST('posnumber') != '' && GETPOST('posnumber') != '' && GETPOST('posnumber') != '-1') {
@@ -882,9 +888,10 @@ if (empty($action) || $action == "view" || $action == "close") {
 		print '<tr><td class="nowrap">';
 		print $langs->trans("Period");
 		print '</td><td>';
-		print $object->year_close;
-		print($object->month_close ? "-".sprintf("%02d", $object->month_close) : "");
-		print($object->day_close ? "-".sprintf("%02d", $object->day_close) : "");
+		$period = $object->year_close;
+		$period .= ($object->month_close ? "-".sprintf("%02d", $object->month_close) : "");
+		$period .= ($object->day_close ? "-".sprintf("%02d", $object->day_close) : "");
+		print $period;
 
 		//print ' &nbsp;  &nbsp; ';
 		$htmltooltip = '';

@@ -1051,6 +1051,14 @@ class BlockedLog
 				}
 			}
 
+			if ($object->element == 'cashcontrol') {
+				$period = $object->year_close;
+				$period .= ($object->month_close ? "-".sprintf("%02d", $object->month_close) : "");
+				$period .= ($object->day_close ? "-".sprintf("%02d", $object->day_close) : "");
+
+				$this->object_data->period = $period;
+			}
+
 			if (!empty($object->newref)) {
 				$this->object_data->ref = $object->newref;
 			}
