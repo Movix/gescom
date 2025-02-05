@@ -291,7 +291,7 @@ if ($action == 'export' && $user->hasRight('blockedlog', 'read')) {		// read is 
 				.';'.$langs->transnoentities('FingerprintDatabase')			// Signature
 				.';'.$langs->transnoentities('Status')
 				//.';'.$langs->transnoentities('FingerprintExport')
-				."\n");
+				);
 
 			$loweridinerror = 0;
 			$i = 0;
@@ -310,6 +310,13 @@ if ($action == 'export' && $user->hasRight('blockedlog', 'read')) {		// read is 
 
 				$block_static->id = $obj->rowid;
 				$block_static->entity = $obj->entity;
+
+				if ($i == 0) {
+					$tmparray = $block_static->getPreviousHash(0, $block_static->id);
+					$previoushash = $tmparray['previoushash'];
+
+					fwrite($fh, ";NOTE - previoushash=".$previoushash."\n");
+				}
 
 				$block_static->date_creation = $db->jdate($obj->date_creation);		// jdate(date_creation) is UTC
 				$block_static->date_modification = $db->jdate($obj->tms);			// jdate(tms) is UTC
@@ -997,11 +1004,11 @@ if ($action == 'check' || $action == 'checkconfirmed') {
 		if ($recalculatedhashsign && $recalculatedhashsign == $hashsign) {
 			print img_picto('', 'tick', 'class="valignmiddle pictofixedwidth"');
 			print '<b>'.$langs->trans("FileIntegrity").'</b> ';
-			print ' '.$form->textwithpicto('', $algosign.' = '.$recalculatedhashsign);
+			print ' '.$form->textwithpicto('', $langs->trans("FileContentMatchSignature").'<br><br>'.$algosign.' = '.$recalculatedhashsign);
 		} else {
 			print img_picto('', 'cross', 'class="error valignmiddle pictofixedwidth"');
 			print '<b>'.$langs->trans("FileIntegrity").'</b> ';
-			print ' '.$form->textwithpicto('', $langs->trans("FileHasBeenCorrupted").'<br>Recalculated '.$recalculatedhashsign.' != Found in file '.$hashsign);
+			print ' '.$form->textwithpicto('', $langs->trans("FileHasBeenCorrupted").'<br><br>Recalculated '.$recalculatedhashsign.' != Found in file '.$hashsign);
 		}
 		print '<br><br>';
 
@@ -1009,7 +1016,7 @@ if ($action == 'check' || $action == 'checkconfirmed') {
 			print img_picto('', 'tick', 'class="valignmiddle pictofixedwidth"');
 			print '<b>'.$langs->trans("FileAuthenticity").'</b> ';
 			print ' - <span class="opacitymedium">'.$langs->trans("FileWasGeneratedByThisInstance").'</span>';
-			print ' '.$form->textwithpicto('', $algoauth.' = '.$recalculatedhashauth);
+			print ' '.$form->textwithpicto('', $langs->trans("FileContentMatchSignature").'<br><br>'.$algoauth.' = '.$recalculatedhashauth);
 		} elseif ($recalculatedhashsign == $hashsign) {
 			print img_picto('', 'cross', 'class="error valignmiddle pictofixedwidth"');
 			print '<b>'.$langs->trans("FileAuthenticity").'</b> ';
@@ -1036,8 +1043,10 @@ if ($action == 'check' || $action == 'checkconfirmed') {
 		}
 
 		print img_picto('', 'minus', 'class="valignmiddle pictofixedwidth"');
-		print '<b>Detection of database restoration or not allowed line deletion in period</b>: ';
-		print '<span class="opacitymedium">This feature is for the moment available only from https://www.dolibarr.org/onlinecheckarchive.php</span><br>';
+		print '<b>'.$langs->trans("DetectionOfSystemRestoration").'</b>: ';
+		print '<span class="opacitymedium">';
+		print $langs->trans("FeatureOnlyWhenArchiveAnalyzedFrom", "https://www.dolibarr.org/onlinecheckarchive.php");
+		print '</span><br>';
 		print '<br>';
 
 		print '<hr>';
@@ -1072,10 +1081,16 @@ if ($action == 'check' || $action == 'checkconfirmed') {
 				print $langs->trans("TTC").': ';
 				print '<span class="amount">'.price($totaltoshow, 0, $langs, 1, -1, -1, getDolCurrency()).'</span>';
 			}
-			print '<br><br>';
+			print '<br>';
 		}
 
-		print '<hr>';
+		print '<br>';
+
+		$text = $langs->trans("IfIntegrityAuthenticityIsOkYouCanGetdetailByOpeningTheFile");
+		$text .= '<br>';
+		$text .= $langs->trans("IfIntegrityAuthenticityIsOkYouCanGetdetailByOpeningTheFile2");
+		//$langs->transnoentitiesnoconv("logBILL_VALIDATE"), $langs->transnoentitiesnoconv("logPAYMENT_CUSTOMER_CREATE"), $langs->transnoentitiesnoconv("logDOC_DOWNLOAD"), $langs->transnoentitiesnoconv("logCASHCONTROL_CLOSE")).'...');
+		print info_admin($text);
 	}
 
 
