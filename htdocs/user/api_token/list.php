@@ -41,27 +41,24 @@ require_once DOL_DOCUMENT_ROOT.'/core/class/html.formadmin.class.php';
  */
 
 // Load translation files required by page
-$langs->loadLangs(array('companies', 'products', 'admin', 'users', 'languages', 'projects', 'members'));
+$langs->loadLangs(array('admin', 'users'));
 
-// Defini si peux lire/modifier permissions
-$canreaduser = ($user->admin || $user->hasRight("user", "user", "read"));
-$caneditfield = false;
-
+// Security check
 $id = GETPOSTINT('id');
 $action = GETPOST('action', 'aZ09');
-$contextpage = GETPOST('contextpage', 'aZ') ? GETPOST('contextpage', 'aZ') : 'userihm'; // To manage different context of search
+$massaction = GETPOST('massaction', 'alpha');
 
 if (!isset($id) || empty($id)) {
 	accessforbidden();
 }
-'@phan-var-force int<1,max> $id';
 
+// Retrieve needed GETPOSTS for this file
 $toselect = GETPOST('toselect', 'array');
 
-// $user est le user qui edite, $id est l'id de l'utilisateur edite
+// $user is current user, $id is id of edited user
+$canreaduser = ($user->admin || $user->hasRight("user", "user", "read"));
 $caneditfield = ((($user->id == $id) && $user->hasRight("user", "self", "write"))
 	|| (($user->id != $id) && $user->hasRight("user", "user", "write")));
-
 
 // Security check
 $socid = 0;
@@ -69,9 +66,6 @@ if ($user->socid > 0) {
 	$socid = $user->socid;
 }
 $feature2 = (($socid && $user->hasRight("user", "self", "write")) ? '' : 'user');
-
-// Initialize a technical object to manage hooks of page. Note that conf->hooks_modules contains an array of hook context
-$hookmanager->initHooks(array('usercard', 'userihm', 'globalcard'));
 
 $result = restrictedArea($user, 'user', $id, 'user&user', $feature2);
 if ($user->id != $id && !$canreaduser) {
@@ -113,19 +107,11 @@ $help_url = '';
 
 llxHeader('', $title, $help_url, '', 0, 0, '', '', '', 'mod-user page-card_param_ihm');
 
-$massaction = GETPOST('massaction', 'alpha');
 $arrayofselected = is_array($toselect) ? $toselect : array();
 
 $head = user_prepare_head($object);
 
 $title = $langs->trans("User");
-
-if ($action == 'edit') {
-	print '<form method="post" action="'.$_SERVER["PHP_SELF"].'">';
-	print '<input type="hidden" name="token" value="'.newToken().'">';
-	print '<input type="hidden" name="action" value="update">';
-	print '<input type="hidden" name="id" value="'.$id.'">';
-}
 
 print dol_get_fiche_head($head, 'apitoken', $title, -1, 'user');
 
@@ -140,13 +126,8 @@ $morehtmlref .= dolButtonToOpenUrlInDialogPopup('publicvirtualcard', $langs->tra
 
 dol_banner_tab($object, 'id', $linkback, $user->hasRight("user", "user", "read") || $user->admin, 'rowid', 'ref', $morehtmlref);
 
-$arrayofmassactions['predelete'] = img_picto('', 'delete', 'class="pictofixedwidth"').$langs->trans("Delete");
-$massactionbutton = $form->selectMassAction('', $arrayofmassactions);
-
 print '<div class="fichecenter">';
-
 print '<div class="underbanner clearboth"></div>';
-
 print '<table class="border centpercent tableforfield">';
 
 // Login
@@ -169,14 +150,15 @@ if (!empty($object->ldap_sid) && $object->status == 0) {
 	print '</td>';
 }
 print '</tr>'."\n";
-
 print '</table>';
-
 print '</div>';
 
 print dol_get_fiche_end();
 
 print '<!-- Token section -->'."\n";
+
+$arrayofmassactions['predelete'] = img_picto('', 'delete', 'class="pictofixedwidth"').$langs->trans("Delete");
+$massactionbutton = $form->selectMassAction('', $arrayofmassactions);
 
 $morehtmlright = '';
 //if (!empty($moreoptions['showhideaddbutton']) && $conf->use_javascript_ajax) {
@@ -187,7 +169,6 @@ $morehtmlright .= dolGetButtonTitle($langs->trans('New'), '', 'fa fa-plus-circle
 
 print '<form method="POST" action="'.$_SERVER["PHP_SELF"].'">'."\n";
 print '<input type="hidden" name="token" value="'.newToken().'">';
-
 print load_fiche_titre($langs->trans("ListOfTokensForUser"), $morehtmlright, '', 0, '', '', $massactionbutton);
 print '</form>';
 
