@@ -170,6 +170,7 @@ if (empty($reshook)) {
 			}
 		}
 	}
+
 	if ($action == 'addrights' && $caneditperms && $confirm == 'yes') {
 		$tokenrigthsarray = [];
 
@@ -183,6 +184,7 @@ if (empty($reshook)) {
 			$tokenrigthsarray []= $rights;
 		}
 
+		$tokenrigthsarray = array_unique($tokenrigthsarray);
 		sort($tokenrigthsarray);
 		$newrigths = preg_replace('/\s+/', '', implode(',', $tokenrigthsarray));
 
@@ -206,6 +208,7 @@ if (empty($reshook)) {
 			$tokenrigthsarray = array_diff($tokenrigthsarray, array($rights));
 		}
 
+		$tokenrigthsarray = array_unique($tokenrigthsarray);
 		sort($tokenrigthsarray);
 		$newrigths = preg_replace('/\s+/', '', implode(',', $tokenrigthsarray));
 
