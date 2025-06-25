@@ -47,7 +47,9 @@ $langs->loadLangs(array('admin', 'users'));
 $id = GETPOSTINT('id');
 $action = GETPOST('action', 'aZ09');
 $tokenid = GETPOST('tokenid', 'aZ09');
-$massaction = GETPOST('massaction', 'alpha');
+$confirm = GETPOST('confirm', 'alpha');
+$module = GETPOST('module', 'alpha');
+$rights = GETPOSTINT('rights');
 
 if (!isset($id) || empty($id)) {
 	accessforbidden();
@@ -99,9 +101,63 @@ if ($reshook < 0) {
 }
 
 if (empty($reshook)) {
-	if ($action == 'update' && ($caneditfield || !empty($user->admin))) {
-		header('Location: '.$_SERVER["PHP_SELF"].'?id='.$id);
-		exit;
+	if (in_array($action, array('addrights', 'delrights')) && $module != '') {
+		$rigthsarray = [];
+		$sql = "SELECT id";
+		$sql .= " FROM ".MAIN_DB_PREFIX."rights_def";
+		$sql .= " WHERE entity IN (".$db->sanitize($token->entity, 0, 0, 0, 0).")";
+		if ($module != 'allmodules') {
+			$sql .= " AND (module='".$db->escape($module)."')";	// Note: parenthesis are important because wherefordel can contains OR. Also note that $wherefordel is already sanitized
+		}
+		$resql = $db->query($sql);
+		while ($obj = $db->fetch_object($resql)) {
+			$rigthsarray []= $obj->id;
+		}
+	}
+	if ($action == 'addrights' && $caneditperms && $confirm == 'yes') {
+		$tokenrigthsarray = explode(',', $token->rights);
+		if (isset($rigthsarray)) {
+			$tokenrigthsarray = array_merge($tokenrigthsarray, $rigthsarray);
+		} else {
+			$tokenrigthsarray []= $rights;
+		}
+
+		sort($tokenrigthsarray);
+		$newrigths = preg_replace('/\s+/', '', implode(',', $tokenrigthsarray));
+
+		$sql = "UPDATE ".MAIN_DB_PREFIX."oauth_token";
+		$sql.= " SET state = '".$db->escape($newrigths)."'";
+		$sql.= " WHERE rowid = '".$tokenid."'";
+
+		$resql = $db->query($sql);
+		if (!$resql) {
+			dol_print_error($db);
+		}
+
+		$token->rights = $newrigths;
+	}
+
+	if ($action == 'delrights' && $caneditperms && $confirm == 'yes') {
+		$tokenrigthsarray = explode(',', $token->rights);
+		if (isset($rigthsarray)) {
+			$tokenrigthsarray = array_diff($tokenrigthsarray, $rigthsarray);
+		} else {
+			$tokenrigthsarray = array_diff($tokenrigthsarray, array($rights));
+		}
+
+		sort($tokenrigthsarray);
+		$newrigths = preg_replace('/\s+/', '', implode(',', $tokenrigthsarray));
+
+		$sql = "UPDATE ".MAIN_DB_PREFIX."oauth_token";
+		$sql.= " SET state = '".$db->escape($newrigths)."'";
+		$sql.= " WHERE rowid = '".$tokenid."'";
+
+		$resql = $db->query($sql);
+		if (!$resql) {
+			dol_print_error($db);
+		}
+
+		$token->rights = $newrigths;
 	}
 }
 
@@ -259,22 +315,8 @@ foreach ($modulesdir as $dir) {
 $db->commit();
 
 // Load perms ids for the user
-$permsuser = array();
-
-$sql = "SELECT ot.state";
-$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as ot";
-$sql .= " WHERE ot.rowid = ".((int) $token->token_id);
-
+$permsuser = explode(",", $token->rights);
 dol_syslog("get user perms", LOG_DEBUG);
-$result = $db->query($sql);
-
-if ($result) {
-	$obj = $db->fetch_object($result);
-	$permsuser = explode(",", $obj->state);
-	$db->free($result);
-} else {
-	dol_print_error($db);
-}
 
 print '<div class="div-table-responsive-no-min">';
 print '<table class="noborder centpercent">';
@@ -460,9 +502,9 @@ if ($result) {
 				if ($caneditperms) {
 					print '<td class="tdforbreakperms tdforbreakpermsifnotempty center width50 nowraponall" data-hide-perms="'.dol_escape_htmltag($obj->module).'">';
 					print '<span class="permtohide_'.dol_escape_htmltag($obj->module).'" '.(!$isexpanded ? ' style="display:none"' : '').'>';
-					print '<a class="reposition alink addexpandedmodulesinparamlist" title="'.dol_escape_htmltag($langs->trans("All")).'" alt="'.dol_escape_htmltag($langs->trans("All")).'" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=addrights&token='.newToken().'&entity='.$entity.'&module='.$obj->module.'&confirm=yes&updatedmodulename='.$obj->module.'">'.$langs->trans("All")."</a>";
+					print '<a class="reposition alink addexpandedmodulesinparamlist" title="'.dol_escape_htmltag($langs->trans("All")).'" alt="'.dol_escape_htmltag($langs->trans("All")).'" href="'.$_SERVER["PHP_SELF"].'?id='.$id.'&tokenid='.$tokenid.'&action=addrights&token='.newToken().'&entity='.$entity.'&module='.$obj->module.'&confirm=yes">'.$langs->trans("All")."</a>";
 					print ' / ';
-					print '<a class="reposition alink addexpandedmodulesinparamlist" title="'.dol_escape_htmltag($langs->trans("None")).'" alt="'.dol_escape_htmltag($langs->trans("None")).'" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=delrights&token='.newToken().'&entity='.$entity.'&module='.$obj->module.'&confirm=yes&updatedmodulename='.$obj->module.'">'.$langs->trans("None")."</a>";
+					print '<a class="reposition alink addexpandedmodulesinparamlist" title="'.dol_escape_htmltag($langs->trans("None")).'" alt="'.dol_escape_htmltag($langs->trans("None")).'" href="'.$_SERVER["PHP_SELF"].'?id='.$id.'&tokenid='.$tokenid.'&action=delrights&token='.newToken().'&entity='.$entity.'&module='.$obj->module.'&confirm=yes&">'.$langs->trans("None")."</a>";
 					print '</span>';
 					print '</td>';
 					print '<td class="tdforbreakperms" data-hide-perms="'.dol_escape_htmltag($obj->module).'">';
@@ -474,10 +516,6 @@ if ($result) {
 			} else {
 				if ($caneditperms) {
 					print '<td class="tdforbreakperms center wraponsmartphone" data-hide-perms="'.dol_escape_htmltag($obj->module).'">';
-					/*print '<a class="reposition alink" title="'.dol_escape_htmltag($langs->trans("All")).'" alt="'.dol_escape_htmltag($langs->trans("All")).'" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=addrights&token='.newToken().'&entity='.$entity.'&module='.$obj->module.'&confirm=yes&updatedmodulename='.$obj->module.'">'.$langs->trans("All")."</a>";
-					print ' / ';
-					print '<a class="reposition alink" title="'.dol_escape_htmltag($langs->trans("None")).'" alt="'.dol_escape_htmltag($langs->trans("None")).'" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=delrights&token='.newToken().'&entity='.$entity.'&module='.$obj->module.'&confirm=yes&updatedmodulename='.$obj->module.'">'.$langs->trans("None")."</a>";
-					*/
 					print '</td>';
 					print '<td class="tdforbreakperms" data-hide-perms="'.dol_escape_htmltag($obj->module).'">';
 					print '</td>';
@@ -529,7 +567,7 @@ if ($result) {
 			print '<!-- user has perm -->';
 			if ($caneditperms) {
 				print '<td class="center nowrap">';
-				print '<a class="reposition addexpandedmodulesinparamlist" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=delrights&token='.newToken().'&entity='.$entity.'&rights='.$obj->id.'&confirm=yes&updatedmodulename='.$obj->module.'">';
+				print '<a class="reposition addexpandedmodulesinparamlist" href="'.$_SERVER["PHP_SELF"].'?id='.$id.'&tokenid='.$tokenid.'&action=delrights&token='.newToken().'&entity='.$entity.'&rights='.$obj->id.'&confirm=yes">';
 				//print img_edit_remove($langs->trans("Remove"));
 				print img_picto($langs->trans("Remove"), 'switch_on');
 				print '</a>';
@@ -555,7 +593,7 @@ if ($result) {
 				// Do not own permission
 				if ($caneditperms) {
 					print '<td class="center nowrap">';
-					print '<a class="reposition addexpandedmodulesinparamlist" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=addrights&entity='.$entity.'&rights='.$obj->id.'&confirm=yes&token='.newToken().'&updatedmodulename='.$obj->module.'">';
+					print '<a class="reposition addexpandedmodulesinparamlist" href="'.$_SERVER["PHP_SELF"].'?id='.$id.'&tokenid='.$tokenid.'&action=addrights&entity='.$entity.'&rights='.$obj->id.'&confirm=yes&token='.newToken().'">';
 					//print img_edit_add($langs->trans("Add"));
 					print img_picto($langs->trans("Add"), 'switch_off');
 					print '</a>';
@@ -573,7 +611,7 @@ if ($result) {
 			print '<!-- do not own permission -->';
 			if ($caneditperms) {
 				print '<td class="center nowrap">';
-				print '<a class="reposition addexpandedmodulesinparamlist" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=addrights&entity='.$entity.'&rights='.$obj->id.'&confirm=yes&token='.newToken().'&updatedmodulename='.$obj->module.'">';
+				print '<a class="reposition addexpandedmodulesinparamlist" href="'.$_SERVER["PHP_SELF"].'?id='.$id.'&tokenid='.$tokenid.'&action=addrights&entity='.$entity.'&rights='.$obj->id.'&confirm=yes&token='.newToken().'">';
 				//print img_edit_add($langs->trans("Add"));
 				print img_picto($langs->trans("Add"), 'switch_off');
 				print '</a>';
