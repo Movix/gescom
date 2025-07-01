@@ -79,9 +79,9 @@ if ($user->id != $id && !$canreaduser) {
 	accessforbidden();
 }
 
-$sql = "SELECT ot.rowid as token_id, ot.token, ot.entity, ot.state as rights, ot.datec as date_creation, ot.tms as date_modification";
-$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as ot";
-$sql .= " WHERE ot.rowid = ".((int) $tokenid);
+$sql = "SELECT oat.rowid as token_id, oat.token, oat.entity, oat.state as rights, oat.datec as date_creation, oat.tms as date_modification";
+$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as oat";
+$sql .= " WHERE oat.rowid = ".((int) $tokenid);
 
 $resql = $db->query($sql);
 
@@ -256,7 +256,7 @@ if (empty($reshook)) {
 		}
 
 		$sqlforcount = 'SELECT COUNT(*) as nbtotalofrecords';
-		$sqlforcount .= " FROM ".MAIN_DB_PREFIX."oauth_token as ot";
+		$sqlforcount .= " FROM ".MAIN_DB_PREFIX."oauth_token as oat";
 		$sqlforcount .= " WHERE token = '".$db->escape($tokenstring)."'";
 		$sqlforcount .= " AND service = 'dolibarr_rest_api'";
 		$resql = $db->query($sqlforcount);
@@ -306,9 +306,9 @@ if (empty($reshook)) {
 }
 
 if (isset($reloadtoken)) { // If we add or del rights, we want to refresh the token with its new updated fields
-	$sql = "SELECT ot.rowid as token_id, ot.token, ot.entity, ot.state as rights, ot.datec as date_creation, ot.tms as date_modification";
-	$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as ot";
-	$sql .= " WHERE ot.rowid = ".((int) $tokenid);
+	$sql = "SELECT oat.rowid as token_id, oat.token, oat.entity, oat.state as rights, oat.datec as date_creation, oat.tms as date_modification";
+	$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as oat";
+	$sql .= " WHERE oat.rowid = ".((int) $tokenid);
 
 	$resql = $db->query($sql);
 	$token = $db->fetch_object($resql);

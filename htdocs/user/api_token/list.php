@@ -91,7 +91,7 @@ $pageprev = $page - 1;
 $pagenext = $page + 1;
 
 if (!$sortfield) {
-	$sortfield = 'ot.token';
+	$sortfield = 'oat.token';
 }
 if (!$sortorder) {
 	$sortorder = 'DESC';
@@ -116,10 +116,10 @@ if ($user->id != $id && !$canreaduser) {
 }
 
 $arrayfields = array(
-	'ot.token' => array('label' => "ApiToken", 'checked' => '1'),
-	'ot.entity' => array('label' => "Entity", 'checked' => '1'),
-	'ot.datec' => array('label' => "DateCreation", 'checked' => '1'),
-	'ot.tms' => array('label' => "DateModification", 'checked' => '1'),
+	'oat.token' => array('label' => "ApiToken", 'checked' => '1'),
+	'oat.entity' => array('label' => "Entity", 'checked' => '1'),
+	'oat.datec' => array('label' => "DateCreation", 'checked' => '1'),
+	'oat.tms' => array('label' => "DateModification", 'checked' => '1'),
 );
 
 $object = new User($db);
@@ -215,7 +215,7 @@ $nbtotalofrecords = '';
 if (!getDolGlobalInt('MAIN_DISABLE_FULL_SCANLIST')) {
 	/* The fast and low memory method to get and count full list converts the sql into a sql count */
 	$sqlforcount = 'SELECT COUNT(*) as nbtotalofrecords';
-	$sqlforcount .= " FROM ".MAIN_DB_PREFIX."oauth_token as ot";
+	$sqlforcount .= " FROM ".MAIN_DB_PREFIX."oauth_token as oat";
 	$sqlforcount .= " WHERE entity IN (".$conf->entity.") AND fk_user = ".$id;
 	$resql = $db->query($sqlforcount);
 	if ($resql) {
@@ -232,26 +232,26 @@ if (!getDolGlobalInt('MAIN_DISABLE_FULL_SCANLIST')) {
 	$db->free($resql);
 }
 
-$sql = "SELECT ot.rowid as token_id, ot.token, ot.entity, ot.state as rights, ot.datec as date_creation, ot.tms as date_modification";
-$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as ot";
-$sql .= " WHERE ot.fk_user = ".((int) $object->id)." AND entity IN (".$conf->entity.")";
+$sql = "SELECT oat.rowid as token_id, oat.token, oat.entity, oat.state as rights, oat.datec as date_creation, oat.tms as date_modification";
+$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as oat";
+$sql .= " WHERE oat.fk_user = ".((int) $object->id)." AND entity IN (".$conf->entity.")";
 if ($search_token) {
-	$sql .= natural_search('ot.token', $search_token);
+	$sql .= natural_search('oat.token', $search_token);
 }
 if ($search_entity) {
-	$sql .= natural_search('ot.entity', $search_entity);
+	$sql .= natural_search('oat.entity', $search_entity);
 }
 if ($search_datec_start) {
-	$sql .= " AND ot.datec >= '".$db->idate($search_datec_start)."'";
+	$sql .= " AND oat.datec >= '".$db->idate($search_datec_start)."'";
 }
 if ($search_datec_end) {
-	$sql .= " AND ot.datec <= '".$db->idate($search_datec_end)."'";
+	$sql .= " AND oat.datec <= '".$db->idate($search_datec_end)."'";
 }
 if ($search_tms_start) {
-	$sql .= " AND ot.tms >= '".$db->idate($search_tms_start)."'";
+	$sql .= " AND oat.tms >= '".$db->idate($search_tms_start)."'";
 }
 if ($search_tms_end) {
-	$sql .= " AND ot.tms <= '".$db->idate($search_tms_end)."'";
+	$sql .= " AND oat.tms <= '".$db->idate($search_tms_end)."'";
 }
 $sql .= $db->order($sortfield, $sortorder);
 if ($limit) {
@@ -401,14 +401,14 @@ if (empty($reshook)) {
 	}
 
 	// Token string
-	if (!empty($arrayfields['ot.token']['checked'])) {
+	if (!empty($arrayfields['oat.token']['checked'])) {
 		print '<td class="liste_titre">';
 		print '<input class="flat" type="text" name="search_token" value="'.dol_escape_htmltag($search_token).'">';
 		print '</td>';
 	}
 
 	// Entity
-	if (!empty($arrayfields['ot.entity']['checked']) && isModEnabled('multicompany')) {
+	if (!empty($arrayfields['oat.entity']['checked']) && isModEnabled('multicompany')) {
 		print '<td class="liste_titre">';
 		print '<input class="flat maxwidth100" type="text" name="search_entity" value="'.dol_escape_htmltag($search_entity).'"'.($socid > 0 ? " disabled" : "").'>';
 		print '</td>';
@@ -420,7 +420,7 @@ if (empty($reshook)) {
 	print '<td class="liste_titre"></td>';
 
 	// Date creation
-	if (!empty($arrayfields['ot.datec']['checked'])) {
+	if (!empty($arrayfields['oat.datec']['checked'])) {
 		print '<td class="liste_titre center">';
 		print '<div class="nowrapfordate">';
 		print $form->selectDate($search_datec_start ? $search_datec_start : -1, 'search_datec_start', 0, 0, 1, '', 1, 0, 0, '', '', '', '', 1, '', $langs->trans('From'));
@@ -432,7 +432,7 @@ if (empty($reshook)) {
 	}
 
 	// Date modification
-	if (!empty($arrayfields['ot.tms']['checked'])) {
+	if (!empty($arrayfields['oat.tms']['checked'])) {
 		print '<td class="liste_titre center">';
 		print '<div class="nowrapfordate">';
 		print $form->selectDate($search_tms_start ? $search_tms_start : -1, 'search_tms_start', 0, 0, 1, '', 1, 0, 0, '', '', '', '', 1, '', $langs->trans('From'));
@@ -459,18 +459,18 @@ if (empty($reshook)) {
 		print $form->showCheckAddButtons('checkforselect', 1);
 		print '</th>';
 	}
-	if (!empty($arrayfields['ot.token']['checked'])) {
-		print_liste_field_titre($arrayfields['ot.token']['label'], $_SERVER["PHP_SELF"], 'ot.token', '', $param, '', $sortfield, $sortorder);
+	if (!empty($arrayfields['oat.token']['checked'])) {
+		print_liste_field_titre($arrayfields['oat.token']['label'], $_SERVER["PHP_SELF"], 'oat.token', '', $param, '', $sortfield, $sortorder);
 	}
-	if (!empty($arrayfields['ot.entity']['checked']) && isModEnabled('multicompany')) {
-		print_liste_field_titre($arrayfields['ot.entity']['label'], $_SERVER["PHP_SELF"], 'ot.entity', '', $param, '', $sortfield, $sortorder);
+	if (!empty($arrayfields['oat.entity']['checked']) && isModEnabled('multicompany')) {
+		print_liste_field_titre($arrayfields['oat.entity']['label'], $_SERVER["PHP_SELF"], 'oat.entity', '', $param, '', $sortfield, $sortorder);
 	}
 	print '<th class="liste_titre right">'.$langs->trans("NumberOfPermissions").'</th>';
-	if (!empty($arrayfields['ot.datec']['checked'])) {
-		print_liste_field_titre($arrayfields['ot.datec']['label'], $_SERVER["PHP_SELF"], 'ot.datec', '', $param, '', $sortfield, $sortorder, 'center ');
+	if (!empty($arrayfields['oat.datec']['checked'])) {
+		print_liste_field_titre($arrayfields['oat.datec']['label'], $_SERVER["PHP_SELF"], 'oat.datec', '', $param, '', $sortfield, $sortorder, 'center ');
 	}
-	if (!empty($arrayfields['ot.tms']['checked'])) {
-		print_liste_field_titre($arrayfields['ot.tms']['label'], $_SERVER["PHP_SELF"], 'ot.tms', '', $param, '', $sortfield, $sortorder, 'center ');
+	if (!empty($arrayfields['oat.tms']['checked'])) {
+		print_liste_field_titre($arrayfields['oat.tms']['label'], $_SERVER["PHP_SELF"], 'oat.tms', '', $param, '', $sortfield, $sortorder, 'center ');
 	}
 	if (!getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 		print '<th class="wrapcolumntitle center maxwidthsearch liste_titre">';
