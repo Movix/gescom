@@ -80,7 +80,13 @@ if ($user->id != $id && !$canreaduser) {
 }
 
 $sql = "SELECT oat.rowid as token_id, oat.token, oat.entity, oat.state as rights, oat.datec as date_creation, oat.tms as date_modification";
+if (isModEnabled('multicompany')) {
+	$sql .= ", e.label";
+}
 $sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as oat";
+if (isModEnabled('multicompany')) {
+	$sql .= " JOIN ".$db->prefix()."entity as e ON oat.entity = e.rowid";
+}
 $sql .= " WHERE oat.rowid = ".((int) $tokenid);
 
 $resql = $db->query($sql);
@@ -315,7 +321,13 @@ if (empty($reshook)) {
 
 if (isset($reloadtoken)) { // If we add or del rights, we want to refresh the token with its new updated fields
 	$sql = "SELECT oat.rowid as token_id, oat.token, oat.entity, oat.state as rights, oat.datec as date_creation, oat.tms as date_modification";
+	if (isModEnabled('multicompany')) {
+		$sql .= ", e.label";
+	}
 	$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token as oat";
+	if (isModEnabled('multicompany')) {
+		$sql .= " JOIN ".$db->prefix()."entity as e ON oat.entity = e.rowid";
+	}
 	$sql .= " WHERE oat.rowid = ".((int) $tokenid);
 
 	$resql = $db->query($sql);
@@ -364,8 +376,9 @@ if ($action == 'create') {
 		print '<tr class="field_ref"><td class="titlefieldcreate fieldrequired">'.$langs->trans('User').'</td><td class="valuefieldcreate">'.$person_name.'</td></tr>';
 	}
 
-	if (isModEnabled('multicompany')) {
-		print '<tr class="field_ref"><td class="titlefieldcreate fieldrequired">'.$langs->trans('Entity').'</td><td class="valuefieldcreate">'.$conf->entity.'</td></tr>';
+	if (isModEnabled('multicompany') && is_object($mc)) {
+		$mc->getInfo($conf->entity);
+		print '<tr class="field_ref"><td class="titlefieldcreate fieldrequired">'.$langs->trans('Entity').'</td><td class="valuefieldcreate">'.$mc->label.'</td></tr>';
 	}
 
 	print '<tr><td class="titlefieldcreate fieldrequired">'.$langs->trans("ApiToken").'</td>';
@@ -441,10 +454,11 @@ if ($action == 'create') {
 	print '</tr>'."\n";
 
 	// Entity
-	if (isModEnabled('multicompany')) {
+	if (isModEnabled('multicompany') && is_object($mc)) {
+		$mc->getInfo($conf->entity);
 		print '<tr><td class="titlefield">'.$langs->trans("Entity").'</td>';
 		print '<td>';
-		print $token->entity;
+		print $mc->label;
 		print '</td>';
 		print '</tr>'."\n";
 	}
