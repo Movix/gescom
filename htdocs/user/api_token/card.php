@@ -363,7 +363,10 @@ if ($action == 'create') {
 	} else {
 		print '<tr class="field_ref"><td class="titlefieldcreate fieldrequired">'.$langs->trans('User').'</td><td class="valuefieldcreate">'.$person_name.'</td></tr>';
 	}
-	print '<tr class="field_ref"><td class="titlefieldcreate fieldrequired">'.$langs->trans('Entity').'</td><td class="valuefieldcreate">'.$conf->entity.'</td></tr>';
+
+	if (isModEnabled('multicompany')) {
+		print '<tr class="field_ref"><td class="titlefieldcreate fieldrequired">'.$langs->trans('Entity').'</td><td class="valuefieldcreate">'.$conf->entity.'</td></tr>';
+	}
 
 	print '<tr><td class="titlefieldcreate fieldrequired">'.$langs->trans("ApiToken").'</td>';
 	print '<td>';
