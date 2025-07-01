@@ -6188,8 +6188,8 @@ class Form
 
 			$formconfirm .= '
                     resizable: false,
-                    height: \'' . ((int) $height) . '\',
-                    width: \'' . ((int) $width) . '\',
+					height: \'' . dol_escape_js($height) . '\',
+                    width: \'' . dol_escape_js($width) . '\',
                     modal: true,
                     closeOnEscape: false,
                     buttons: {
@@ -9105,7 +9105,7 @@ class Form
 			$sql .= " LEFT JOIN " . $this->db->prefix() . "product as p ON p.rowid = t.fk_product";
 		}
 		if (!empty($objecttmp->ismultientitymanaged)) {
-			if ($objecttmp->ismultientitymanaged == 1) {
+			if ($objecttmp->ismultientitymanaged == 1) {	// @phan-suppress-current-line PhanPluginEmptyStatementIf
 				// No need to join/link another table
 			}
 			if (!is_numeric($objecttmp->ismultientitymanaged)) {
@@ -9127,6 +9127,8 @@ class Form
 			$sql .= $hookmanager->resPrint;
 		} else {
 			$sql .= " WHERE 1=1";
+
+			// If table need a multientity restriction
 			if (!empty($objecttmp->ismultientitymanaged)) {
 				if ($objecttmp->ismultientitymanaged == 1) {
 					$sql .= " AND t.entity IN (" . getEntity($objecttmp->table_element) . ")";
@@ -9142,23 +9144,14 @@ class Form
 						$sql .= " WHERE sc.fk_soc = t.fk_soc AND sc.fk_user = ".((int) $user->id).")";
 					}
 				}
-				// If user is external user, we also make a test on llx_societe_commerciaux
-				if (!empty($user->socid)) {
-					if ($objecttmp->ismultientitymanaged == 1) {
-						if ($objecttmp->element == 'societe') {
-							$sql .= " AND t.rowid = " . ((int) $user->socid);
-						} else {
-							$sql .= " AND t.fk_soc = " . ((int) $user->socid);
-						}
-					}
-					if (!is_numeric($objecttmp->ismultientitymanaged)) {
-						$sql .= " AND t." . $this->db->sanitize($tmparray[0])." = ".((int) $user->socid);
-					}
-					// If the parent table is llx_societe and user is an external user,
-					// then we must also check that user has permissions
-					if ($objecttmp->ismultientitymanaged === 'fk_soc@societe') {
-						$sql .= " AND t.fk_soc = ".((int) $user->socid);
-					}
+			}
+
+			// If user is external user, we must also make a test on llx_societe_commerciaux
+			if (!empty($user->socid)) {
+				if ($objecttmp->element == 'societe') {
+					$sql .= " AND t.rowid = " . ((int) $user->socid);
+				} elseif (!empty($objecttmp->fields['fk_soc']) || !empty($objecttmp->fields['t.fk_soc']) || property_exists($objecttmp, 'fk_soc') || property_exists($objecttmp, 'socid')) {
+					$sql .= " AND t.fk_soc = " . ((int) $user->socid);
 				}
 			}
 
