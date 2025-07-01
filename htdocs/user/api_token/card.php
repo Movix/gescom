@@ -153,6 +153,17 @@ if (empty($reshook)) {
 				}
 			}
 			$sql .= ")";
+			// To avoid better perms in token
+			$sql .= " AND id IN (";
+			$sql .= " SELECT ur.fk_id";
+			$sql .= " FROM llx_user_rights as ur";
+			$sql .= " WHERE ur.entity = ".$token->entity;
+			$sql .= " AND ur.fk_user = ".$id;
+			$sql .= " UNION";
+			$sql .= " SELECT gr.fk_id";
+			$sql .= " FROM llx_usergroup_rights as gr";
+			$sql .= " WHERE EXISTS(SELECT gu.rowid FROM llx_usergroup_user as gu WHERE gu.fk_user = ".$id;
+			$sql .= " AND gu.fk_usergroup = gr.fk_usergroup))";
 			$resql = $db->query($sql);
 			while ($obj = $db->fetch_object($resql)) {
 				$rigthsarray []= $obj->id;
