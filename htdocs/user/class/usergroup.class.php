@@ -585,6 +585,7 @@ class UserGroup extends CommonObject
 						$sqlusertokens .= " WHERE gu.fk_usergroup = ".((int) $this->id);
 						$sqlusertokens .= " AND oat.fk_user = ".((int) $usertocheck->id);
 						$sqlusertokens .= " AND oat.service = 'dolibarr_rest_api'";
+						$sqlusertokens .= " AND oat.entity = ".((int) $entity);
 
 						$idtodeletequery = $this->db->query($sqlforid);
 						$resulttokens = $this->db->query($sqlusertokens);
