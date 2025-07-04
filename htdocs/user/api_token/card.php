@@ -287,8 +287,10 @@ if (empty($reshook)) {
 			$nbtotalofrecords = $objforcount->nbtotalofrecords;
 		} else {
 			dol_print_error($db);
+			$error++;
 		}
-		if (!isset($nbtotalofrecords) || $nbtotalofrecords > 0) {
+
+		if (isset($nbtotalofrecords) && $nbtotalofrecords > 0) {
 			setEventMessages($langs->trans("ErrorFieldExist", $langs->transnoentitiesnoconv("ApiToken")), null, 'errors');
 			$action = 'create';
 			$error++;
