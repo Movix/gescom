@@ -133,7 +133,7 @@ class DolibarrApiAccess implements iAuthenticate
 		if ($api_key) {
 			$userentity = 0;
 
-			$sql = "SELECT u.login, oat.token as api_key, oat.entity";
+			$sql = "SELECT u.login, u.api_key as use_api, oat.token as api_key, oat.entity";
 			$sql .= " FROM ".MAIN_DB_PREFIX."oauth_token AS oat";
 			$sql .= " JOIN ".MAIN_DB_PREFIX."user AS u ON u.rowid = oat.fk_user";
 			$sql .= " WHERE oat.token = '".$this->db->escape($api_key)."'";
@@ -148,6 +148,7 @@ class DolibarrApiAccess implements iAuthenticate
 					$login = $obj->login;
 					$stored_key = dolDecrypt($obj->api_key);
 					$userentity = $obj->entity;
+					$use_api = $obj->use_api;
 
 					if (!defined("DOLENTITY") && $conf->entity != ($obj->entity ? $obj->entity : 1)) {		// If API was not forced with HTTP_DOLENTITY, and user is on another entity, so we reset entity to entity of user
 						$conf->entity = ($obj->entity ? $obj->entity : 1);
@@ -171,6 +172,12 @@ class DolibarrApiAccess implements iAuthenticate
 
 			if (!$login) {
 				dol_syslog("functions_isallowed::check_user_api_key Authentication KO for api key: Error when searching login user from api key", LOG_NOTICE);
+				sleep(1); // Anti brute force protection. Must be same delay when user and password are not valid.
+				throw new RestException(401, $genericmessageerroruser);
+			}
+
+			if (!$use_api) {
+				dol_syslog("functions_isallowed::check_user_api_key Authentication KO for api key: API not enabled for user", LOG_NOTICE);
 				sleep(1); // Anti brute force protection. Must be same delay when user and password are not valid.
 				throw new RestException(401, $genericmessageerroruser);
 			}
