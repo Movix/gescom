@@ -1237,7 +1237,7 @@ if ($action == 'create' || $action == 'adduserldap') {
 	if (isModEnabled('api')) {
 		// API key
 		//$generated_password = getRandomPassword(false);
-		print '<tr><td>'.$langs->trans("UseApiKey").'</td>';
+		print '<tr><td>'.$langs->trans("UseRestApi").'</td>';
 		print '<td>';
 		print '<input type="checkbox" id="api_key" name="api_key" value="'.getRandomPassword().'"'.(GETPOST('api_key') != '' ? ' checked="checked"' : "").'>';
 		print '</td></tr>';
@@ -2051,7 +2051,7 @@ if ($action == 'create' || $action == 'adduserldap') {
 
 			// API key
 			if (isModEnabled('api') && ($user->id == $id || $user->admin || $user->hasRight("api", "apikey", "generate"))) {
-				print '<tr class="nooddeven"><td>'.$langs->trans("UseApiKey").'</td>';
+				print '<tr class="nooddeven"><td>'.$langs->trans("UseRestApi").'</td>';
 				print '<td>';
 				print '<span class="opacitymedium">';
 				print empty($object->api_key) ? $langs->trans("No") : $langs->trans("Yes");
@@ -2645,7 +2645,7 @@ if ($action == 'create' || $action == 'adduserldap') {
 
 			// API key
 			if (isModEnabled('api')) {
-				print '<tr><td>'.$langs->trans("UseApiKey").'</td>';
+				print '<tr><td>'.$langs->trans("UseRestApi").'</td>';
 				print '<td>';
 				if ($permissiontoeditpasswordandsee || $user->hasRight("api", "apikey", "generate")) {
 					print '<input type="checkbox" id="api_key" name="api_key" value="'.getRandomPassword().'"'.($object->api_key != '' ? ' checked="checked"' : "").'>';
