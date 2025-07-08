@@ -240,7 +240,6 @@ if (isModEnabled('multicompany')) {
 	$sql .= " JOIN ".$db->prefix()."entity as e ON oat.entity = e.rowid";
 }
 $sql .= " WHERE oat.fk_user = ".((int) $object->id);
-$sql .= " AND entity IN (".$conf->entity.")";
 $sql .= " AND service = 'dolibarr_rest_api'";
 if ($search_entity) {
 	$sql .= natural_search('oat.entity', $search_entity);
