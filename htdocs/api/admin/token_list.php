@@ -213,7 +213,10 @@ if (!isModEnabled('multicompany') || $conf->entity > 1) {
 	$sql .= " AND oat.entity IN (".$conf->entity.")";
 }
 if ($search_user) {
-	$sql .= natural_search('u.login', $search_user);
+	$sql .= " AND EXISTS(SELECT 'exist' FROM ".MAIN_DB_PREFIX."user u";
+	$sql .= " WHERE (u.lastname LIKE '%".$search_user."%'";
+	$sql .= " OR u.firstname LIKE '%".$search_user."%')";
+	$sql .= " AND oat.fk_user = u.rowid)";
 }
 if ($search_entity) {
 	$sql .= natural_search('e.label', $search_entity);
