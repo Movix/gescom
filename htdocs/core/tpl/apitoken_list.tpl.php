@@ -156,8 +156,17 @@ if ($num > 0) {
 		$obj = $db->fetch_object($resql);
 		$useridparam = isset($obj->fk_user) ? $obj->fk_user : $object->id;
 		$numperms = 0;
+		if (isset($obj->fk_user)) {
+			$currentuser = new User($db);
+			$currentuser->fetch($obj->fk_user);
+		} else {
+			$currentuser = $object;
+		}
 		if (!empty($obj->rights)) {
 			$numperms = count(explode(",", $obj->rights));
+		} elseif (!(strlen($obj->rights) == 1 && substr($obj->rights, 0, 1) == 0)) {
+			$currentuser->loadRights();
+			$numperms = $currentuser->nb_rights;
 		}
 		print '<tr class="oddeven">';
 		// Action column
@@ -178,8 +187,6 @@ if ($num > 0) {
 		print '</a>';
 		print '</td>';
 		if (!empty($arrayfields['u.login']['checked'])) {
-			$currentuser = new User($db);
-			$currentuser->fetch($obj->fk_user);
 			print '<td>';
 			print '<a href="'.DOL_URL_ROOT.'/user/card.php?id='.$obj->fk_user.'">';
 			print $currentuser->getNomUrl(1);
