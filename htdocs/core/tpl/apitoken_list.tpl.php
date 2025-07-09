@@ -45,6 +45,13 @@
 '
 @phan-var-force Propal|Contrat|Commande|Facture|Expedition|Delivery|FactureFournisseur|FactureFournisseur|SupplierProposal $object
 @phan-var-force int $num
+@phan-var-force string $search_user
+@phan-var-force string $search_entity
+@phan-var-force string $search_datec_start
+@phan-var-force string $search_datec_end
+@phan-var-force string $search_tms_start
+@phan-var-force string $search_tms_end
+@phan-var-force int $colspan
 ';
 
 echo "<!-- BEGIN PHP TEMPLATE apitoken_list.tpl.php -->\n";
