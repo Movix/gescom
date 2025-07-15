@@ -134,6 +134,7 @@ if (getDolGlobalString('MAIN_CHECKBOX_LEFT_COLUMN')) {
 }
 print '<th class="liste_titre">'.$langs->trans("Token").'</th>';
 if (!empty($arrayfields['u.login']['checked'])) {
+	// @phan-suppress-next-line PhanTypeInvalidDimOffset
 	print_liste_field_titre($arrayfields['u.login']['label'], $_SERVER["PHP_SELF"], 'u.login', '', $param, '', $sortfield, $sortorder);
 }
 if (!empty($arrayfields['e.label']['checked']) && isModEnabled('multicompany')) {
