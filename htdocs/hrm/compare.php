@@ -222,7 +222,7 @@ $fk_usergroup1 = GETPOSTINT('fk_usergroup1');
 					<table class="centpercent">
 						<tr>
 							<th class="left"><?php print $langs->trans('Employees'); ?></th>
-							<th class="left"><?php print $langs->trans('Skill'); ?></th>
+							<th class="left" style="padding-left: 10px;"><?php print $langs->trans('Skill'); ?></th>
 							<th><?php print $langs->trans('HighestRank'); ?></th>
 							<th><?php print $langs->trans('difference'); ?></th>
 							<th><?php print $langs->trans('ExpectedRank'); ?></th>
@@ -262,10 +262,10 @@ $fk_usergroup1 = GETPOSTINT('fk_usergroup1');
 
 						echo '</td>';
 
-						echo '<td id="" style="width:20%" valign="top">' . skillList($TMergedSkills) . '</td>';
+						echo '<td id="" style="width:20%; padding-left: 10px;" valign="top">' . skillList($TMergedSkills) . '</td>';
 						echo '<td id="" style="width:10%" valign="top">' . rate($TMergedSkills, 'rate1') . '</td>';
 						echo '<td id="" style="width:10%" valign="top">' . diff($TMergedSkills) . '</td>';
-						echo '<td id="" style="width:10%" valign="top">' . rate($TMergedSkills, 'rate2') . '</td>';
+						echo '<td id="" style="width:10%; padding-right: 10px;" valign="top">' . rate($TMergedSkills, 'rate2') . '</td>';
 
 						echo '<td id="list-user-right" style="width:25%; padding-left: 10px; border-left: 1px solid #ccc;" class="valigntop">';
 
