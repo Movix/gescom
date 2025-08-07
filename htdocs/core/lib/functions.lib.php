@@ -16458,8 +16458,6 @@ function show_actions_messaging($conf, $langs, $db, $filterobj, $objcon = null, 
 		}
 	}
 
-	print_r($sql);
-
 	if ($noprint) {
 		return $out;
 	} else {

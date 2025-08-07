@@ -123,18 +123,18 @@ if (GETPOST('button_removefilter_x', 'alpha') || GETPOST('button_removefilter.x'
  * View
  */
 
-$form = new Form($db);
 $agenda = (isModEnabled('agenda') && ($user->hasRight('agenda', 'myactions', 'read') || $user->hasRight('agenda', 'allactions', 'read'))) ? '/' . $langs->trans("Agenda") : '';
 $title = $langs->trans('Events') . $agenda . ' - ' . $object->ref; // Removed $object->name as orders typically don't have it
 if (getDolGlobalString('MAIN_HTML_TITLE') && preg_match('/ordernamonly/', getDolGlobalString('MAIN_HTML_TITLE'))) { // Changed from projectnameonly
 	$title = $object->ref . ' - ' . $langs->trans("Info"); // Simplified title
 }
 $help_url = "EN:Module_Orders|FR:Module_Propals|ES:M&oacute;dulo_Pedidos"; // Changed help URL
+
 llxHeader("", $title, $help_url, '', 0, 0, '', '', '', 'mod-order page-card_messaging'); // Changed mod-project
 
 $head = propal_prepare_head($object); // Changed from project_prepare_head
 
-print dol_get_fiche_head($head, 'agenda', $langs->trans("Order"), -1, 'order'); // Changed "Project" and "projectpub"
+print dol_get_fiche_head($head, 'agenda', $title, -1, 'order'); // Changed "Project" and "projectpub"
 
 
 // Order card
@@ -235,7 +235,7 @@ if (!empty($object->id)) {
 	$cachekey = 'count_events_order_' . $object->id; // Changed from project
 	$nbEvent = dol_getcache($cachekey);
 
-	$titlelist = $langs->trans("ActionsOnOrder") . (is_numeric($nbEvent) ? '<span class="opacitymedium colorblack paddingleft">(' . $nbEvent . ')</span>' : ''); // Changed from ActionsOnProject
+	$titlelist = $langs->trans("ActionsOnPropal") . (is_numeric($nbEvent) ? '<span class="opacitymedium colorblack paddingleft">(' . $nbEvent . ')</span>' : ''); // Changed from ActionsOnProject
 	if (!empty($conf->dol_optimize_smallscreen)) {
 		$titlelist = $langs->trans("Actions") . (is_numeric($nbEvent) ? '<span class="opacitymedium colorblack paddingleft">(' . $nbEvent . ')</span>' : '');
 	}
