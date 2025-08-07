@@ -27,10 +27,11 @@
 
 // Load Dolibarr environment
 require '../../main.inc.php';
-require_once DOL_DOCUMENT_ROOT . '/core/lib/functions2.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/comm/propal/class/propal.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/lib/functions2.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/propal.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/company.lib.php';
+require_once DOL_DOCUMENT_ROOT . '/projet/class/project.class.php';
 
 /**
  * @var Conf $conf
@@ -76,7 +77,7 @@ if (GETPOST('actioncode', 'array')) {
 $search_rowid = GETPOST('search_rowid');
 $search_agenda_label = GETPOST('search_agenda_label');
 
-$hookmanager->initHooks(array('ordercardinfo')); // Changed from projectcardinfo
+$hookmanager->initHooks(array('propalagenda', 'globalcard'));
 
 // Security check
 $id = GETPOSTINT("id");
@@ -123,6 +124,8 @@ if (GETPOST('button_removefilter_x', 'alpha') || GETPOST('button_removefilter.x'
  * View
  */
 
+$form = new Form($db);
+
 $agenda = (isModEnabled('agenda') && ($user->hasRight('agenda', 'myactions', 'read') || $user->hasRight('agenda', 'allactions', 'read'))) ? '/' . $langs->trans("Agenda") : '';
 $title = $langs->trans('Events') . $agenda . ' - ' . $object->ref; // Removed $object->name as orders typically don't have it
 if (getDolGlobalString('MAIN_HTML_TITLE') && preg_match('/ordernamonly/', getDolGlobalString('MAIN_HTML_TITLE'))) { // Changed from projectnameonly
@@ -130,39 +133,44 @@ if (getDolGlobalString('MAIN_HTML_TITLE') && preg_match('/ordernamonly/', getDol
 }
 $help_url = "EN:Module_Orders|FR:Module_Propals|ES:M&oacute;dulo_Pedidos"; // Changed help URL
 
-llxHeader("", $title, $help_url, '', 0, 0, '', '', '', 'mod-order page-card_messaging'); // Changed mod-project
+llxHeader("", $title, $help_url, '', 0, 0, '', '', '', 'mod-propal page-card_messaging'); // Changed mod-project
 
 $head = propal_prepare_head($object); // Changed from project_prepare_head
 
-print dol_get_fiche_head($head, 'agenda', $title, -1, 'order'); // Changed "Project" and "projectpub"
+print dol_get_fiche_head($head, 'agenda', $title, -1, $object->picto);
 
-
-// Order card
-
-if (!empty($_SESSION['pageforbacktolist']) && !empty($_SESSION['pageforbacktolist']['order'])) { // Changed from project
-	$tmpurl = $_SESSION['pageforbacktolist']['order']; // Changed from project
-	$tmpurl = preg_replace('/__SOCID__/', (string) $object->socid, $tmpurl);
-	$linkback = '<a href="' . $tmpurl . (preg_match('/\?/', $tmpurl) ? '&' : '?') . 'restore_lastsearch_values=1">' . $langs->trans("BackToList") . '</a>';
-} else {
-	$linkback = '<a href="' . DOL_URL_ROOT . '/comm/propal/list.php?restore_lastsearch_values=1">' . $langs->trans("BackToList") . '</a>'; // Changed from projet
-}
+// Object card
+// ------------------------------------------------------------
+$linkback = '<a href="' . DOL_URL_ROOT . '/comm/propal/list.php?restore_lastsearch_values=1' . (!empty($socid) ? '&socid=' . $socid : '') . '">' . $langs->trans("BackToList") . '</a>';
 
 $morehtmlref = '<div class="refidno">';
-// Title
-$morehtmlref .= $object->ref; // Changed from $object->title as orders typically use ref for main identification
+// Ref customer
+$morehtmlref .= $form->editfieldkey("RefCustomer", 'ref_client', $object->ref_customer, $object, 0, 'string', '', 0, 1);
+$morehtmlref .= $form->editfieldval("RefCustomer", 'ref_client', $object->ref_customer, $object, 0, 'string', '', null, null, '', 1);
 // Thirdparty
-if (!empty($object->thirdparty->id) && $object->thirdparty->id > 0) {
-	$morehtmlref .= '<br>' . $object->thirdparty->getNomUrl(1, 'order');
+$morehtmlref .= '<br>' . $object->thirdparty->getNomUrl(1);
+// Project
+if (isModEnabled('project')) {
+	$langs->load("projects");
+	$morehtmlref .= '<br>';
+	if (0) {
+		$morehtmlref .= img_picto($langs->trans("Project"), 'project', 'class="pictofixedwidth"');
+		if ($action != 'classify') {
+			$morehtmlref .= '<a class="editfielda" href="' . $_SERVER['PHP_SELF'] . '?action=classify&token=' . newToken() . '&id=' . $object->id . '">' . img_edit($langs->transnoentitiesnoconv('SetProject')) . '</a> ';
+		}
+		$morehtmlref .= $form->form_project($_SERVER['PHP_SELF'] . '?id=' . $object->id, $object->socid, (string) $object->fk_project, ($action == 'classify' ? 'projectid' : 'none'), 0, 0, 0, 1, '', 'maxwidth300');
+	} else {
+		if (!empty($object->fk_project)) {
+			$proj = new Project($db);
+			$proj->fetch($object->fk_project);
+			$morehtmlref .= $proj->getNomUrl(1);
+			if ($proj->title) {
+				$morehtmlref .= '<span class="opacitymedium"> - ' . dol_escape_htmltag($proj->title) . '</span>';
+			}
+		}
+	}
 }
 $morehtmlref .= '</div>';
-
-// Define a complementary filter for search of next/prev ref.
-if (!$user->hasRight('propal', 'all', 'lire')) { // Changed from projet
-	// This part needs a function specific to orders, e.g., getOrdersAuthorizedForUser
-	// $objectsListId = $object->getOrdersAuthorizedForUser($user, 0, 0); // Assuming such a method exists or will be created
-	// $object->next_prev_filter = "rowid:IN:".$db->sanitize(count($objectsListId) ? implode(',', array_keys($objectsListId)) : '0');
-	$object->next_prev_filter = ''; // Placeholder if getOrdersAuthorizedForUser is not available
-}
 
 dol_banner_tab($object, 'ref', $linkback, 1, 'ref', 'ref', $morehtmlref);
 

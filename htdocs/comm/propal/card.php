@@ -2687,7 +2687,7 @@ if ($action == 'create') {
 	}
 
 	$head = propal_prepare_head($object);
-	print dol_get_fiche_head($head, 'comm', $langs->trans('Proposal'), -1, 'propal', 0, '', '', 0, '', 1);
+	print dol_get_fiche_head($head, 'comm', $langs->trans('Proposal'), -1, $object->picto, 0, '', '', 0, '', 1);
 
 	$formconfirm = '';
 

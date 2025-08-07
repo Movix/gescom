@@ -134,7 +134,7 @@ llxHeader("", $title, $help_url, '', 0, 0, '', '', '', 'mod-shipping page-card_m
 
 $head = shipping_prepare_head($object); // Changed from commande_prepare_head (This function might need to be defined in expedition.lib.php if it doesn't exist)
 
-print dol_get_fiche_head($head, 'agenda', $langs->trans("Shipping"), -1, 'shipping'); // Changed "Order" and "order"
+print dol_get_fiche_head($head, 'agenda', $langs->trans("Shipment"), -1, $object->picto);
 
 
 // Shipping card

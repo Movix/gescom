@@ -76,7 +76,7 @@ if (GETPOST('actioncode', 'array')) {
 $search_rowid = GETPOST('search_rowid');
 $search_agenda_label = GETPOST('search_agenda_label');
 
-$hookmanager->initHooks(array('ordercardinfo')); // Changed from projectcardinfo
+$hookmanager->initHooks(array('orderagenda', 'globalcard'));
 
 // Security check
 $id = GETPOSTINT("id");
@@ -125,6 +125,7 @@ if (GETPOST('button_removefilter_x', 'alpha') || GETPOST('button_removefilter.x'
  */
 
 $form = new Form($db);
+
 $agenda = (isModEnabled('agenda') && ($user->hasRight('agenda', 'myactions', 'read') || $user->hasRight('agenda', 'allactions', 'read'))) ? '/' . $langs->trans("Agenda") : '';
 $title = $langs->trans('Events') . $agenda . ' - ' . $object->ref; // Removed $object->name as orders typically don't have it
 if (getDolGlobalString('MAIN_HTML_TITLE') && preg_match('/ordernamonly/', getDolGlobalString('MAIN_HTML_TITLE'))) { // Changed from projectnameonly
@@ -135,7 +136,7 @@ llxHeader("", $title, $help_url, '', 0, 0, '', '', '', 'mod-order page-card_mess
 
 $head = commande_prepare_head($object); // Changed from project_prepare_head
 
-print dol_get_fiche_head($head, 'agenda', $langs->trans("Order"), -1, 'order'); // Changed "Project" and "projectpub"
+print dol_get_fiche_head($head, 'agenda', $langs->trans("Order"), -1, $object->picto);
 
 
 // Order card

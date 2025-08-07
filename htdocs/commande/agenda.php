@@ -138,7 +138,7 @@ llxHeader("", $title, $help_url, '', 0, 0, '', '', '', 'mod-order page-card_agen
 
 $head = commande_prepare_head($object); // Changed from project_prepare_head
 
-print dol_get_fiche_head($head, 'agenda', $langs->trans("Order"), -1, 'order'); // Changed "Project" and "projectpub"
+print dol_get_fiche_head($head, 'agenda', $langs->trans("Order"), -1, $object->picto);
 
 
 // Order card
