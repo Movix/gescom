@@ -202,13 +202,13 @@ if ($action == 'edit') {
 				//var_dump($val);
 				$listoffieldsid = '';
 				foreach ($arrayofelem[$logicalKey]['anonymize_fields'] as $tmpkey => $tmpval) {
-					if ($tmpval == 'MAKEANONYMOUS') {
-						$listoffieldsid .= ($listoffieldsid ? ', ' : '').$tmpkey.' -> field-anonymous-ID';
+					if ($tmpval === 'MAKEANONYMOUS') {
+						$listoffieldsid .= ($listoffieldsid ? ', ' : '').$tmpkey.' -> field-anon-ID';
 					}
 				}
 				$otherfields = '';
 				foreach ($arrayofelem[$logicalKey]['anonymize_fields'] as $tmpkey => $tmpval) {
-					if ($tmpval != 'MAKEANONYMOUS') {
+					if ($tmpval !== 'MAKEANONYMOUS') {
 						$otherfields .= ($otherfields ? ', ' : '').$tmpkey.' -> '.json_encode($tmpval);
 					}
 				}
