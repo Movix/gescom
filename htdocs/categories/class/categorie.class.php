@@ -105,8 +105,9 @@ class Categorie extends CommonObject
 	/**
 	 * @var array<int,string> 	Code mapping from ID
 	 *
-	 * @deprecated	This array should be removed now. We can get it by doing: array_flip(self::$MAP_ID)
+	 * @deprecated	This array should be removed now. We can get it by doing: array_flip($categ->MAP_ID)
 	 */
+	/*
 	public static $MAP_ID_TO_CODE = array(
 		0  => 'product',
 		1  => 'supplier',
@@ -128,6 +129,7 @@ class Categorie extends CommonObject
 		20 => 'supplier_order',
 		21 => 'supplier_invoice'
 	);
+	*/
 
 	/**
 	 * @var array<string,string> Foreign keys mapping from type string when value does not match
