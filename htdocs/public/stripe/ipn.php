@@ -962,13 +962,17 @@ if ($event->type == 'payout.created' && getDolGlobalString('STRIPE_AUTO_RECORD_P
 	dol_syslog("The payment disputed has the amount ".$amountdispute.", fees of ".$fees." and the invoice has ".$payment_amountInDolibarr);
 	dol_syslog("The payment disputed has the amount ".$amountdispute.", fees of ".$fees." and the invoice has ".$payment_amountInDolibarr, LOG_DEBUG, 0, '_payment');
 
+	// Amount may differ: sometimes amount for chargback is higher or lower than initial amount. No explanation (may be currencyrate ?)
+	// So we disable this protection
+	/*
 	if ($amountdispute != $payment_amountInDolibarr) {
 		http_response_code(500);
-		print "The payment disputed has the amount ".$amountdispute." and the invoice has ".$payment_amountInDolibarr.". Amount differs, we don't know what to do.";
+		print "The payment disputed has the amount ".$amountdispute." and the invoice has ".$payment_amountInDolibarr.". Amount is too different, we don't know what to do.";
 		dol_syslog("Amount differs, we don't know what to do - Return HTTP 500.", LOG_WARNING, 0, '_payment');
 		http_response_code(500);
 		return -1;
 	}
+	*/
 
 	if ($statusdispute == 'needs_response') {
 		// Payment is disputed, but not yet refunded.
