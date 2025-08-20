@@ -654,7 +654,7 @@ if ($action == 'create') {
 			$objMod = $modules[$obj->module];
 
 			// Save field module_position in database if value is wrong
-			if (empty($obj->module_position) || (is_object($objMod) && $objMod->isCoreOrExternalModule() == 'external' && $obj->module_position < 100000)) {
+			if (empty($obj->module_position) || ($objMod->isCoreOrExternalModule() == 'external' && $obj->module_position < 100000)) {
 				if ($modules[$obj->module]->module_position > 0) {
 					// TODO Define familyposition
 					//$familyposition = $modules[$obj->module]->family_position;
