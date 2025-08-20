@@ -210,13 +210,14 @@ if (empty($reshook)) {
 			$sql .= " AND id IN (";
 			$sql .= " SELECT ur.fk_id";
 			$sql .= " FROM llx_user_rights as ur";
-			$sql .= " WHERE ur.entity = ".$token->entity;
-			$sql .= " AND ur.fk_user = ".$id;
+			$sql .= " WHERE ur.entity = ".((int) $token->entity);
+			$sql .= " AND ur.fk_user = ".((int) $id);
 			$sql .= " UNION";
 			$sql .= " SELECT gr.fk_id";
 			$sql .= " FROM llx_usergroup_rights as gr";
-			$sql .= " WHERE EXISTS(SELECT gu.rowid FROM llx_usergroup_user as gu WHERE gu.fk_user = ".$id;
+			$sql .= " WHERE EXISTS (SELECT gu.rowid FROM llx_usergroup_user as gu WHERE gu.fk_user = ".((int) $id);
 			$sql .= " AND gu.fk_usergroup = gr.fk_usergroup))";
+			
 			$resql = $db->query($sql);
 			while ($obj = $db->fetch_object($resql)) {
 				$rigthsarray []= $obj->id;
@@ -232,12 +233,12 @@ if (empty($reshook)) {
 			$sql .= " AND id IN (";
 			$sql .= " SELECT ur.fk_id";
 			$sql .= " FROM llx_user_rights as ur";
-			$sql .= " WHERE ur.entity = ".$token->entity;
-			$sql .= " AND ur.fk_user = ".$id;
+			$sql .= " WHERE ur.entity = ".((int) $token->entity);
+			$sql .= " AND ur.fk_user = ".((int) $id);
 			$sql .= " UNION";
 			$sql .= " SELECT gr.fk_id";
 			$sql .= " FROM llx_usergroup_rights as gr";
-			$sql .= " WHERE EXISTS(SELECT gu.rowid FROM llx_usergroup_user as gu WHERE gu.fk_user = ".$id;
+			$sql .= " WHERE EXISTS(SELECT gu.rowid FROM llx_usergroup_user as gu WHERE gu.fk_user = ".((int) $id);
 			$sql .= " AND gu.fk_usergroup = gr.fk_usergroup))";
 			$resql = $db->query($sql);
 			while ($obj = $db->fetch_object($resql)) {
@@ -266,7 +267,7 @@ if (empty($reshook)) {
 		$sql = "UPDATE ".MAIN_DB_PREFIX."oauth_token";
 		$sql.= " SET state = '".$db->escape($newrigths)."'";
 		$sql.= ", tms = '".$db->idate(dol_now())."'";
-		$sql.= " WHERE rowid = '".$tokenid."'";
+		$sql.= " WHERE rowid = ".((int) $tokenid);
 
 		$resql = $db->query($sql);
 		if (!$resql) {
@@ -295,7 +296,7 @@ if (empty($reshook)) {
 		$sql = "UPDATE ".MAIN_DB_PREFIX."oauth_token";
 		$sql.= " SET state = '".$db->escape($newrigths)."'";
 		$sql.= ", tms = '".$db->idate(dol_now())."'";
-		$sql.= " WHERE rowid = '".$tokenid."'";
+		$sql.= " WHERE rowid = ".((int) $tokenid);
 
 		$resql = $db->query($sql);
 		if (!$resql) {
@@ -347,7 +348,7 @@ if (empty($reshook)) {
 			$db->begin();
 
 			$sql = "INSERT INTO ".MAIN_DB_PREFIX."oauth_token (service, token, state, fk_user, entity, datec)";
-			$sql .= " VALUES ('dolibarr_rest_api', '".$db->escape(dolEncrypt($tokenstring, '', '', 'dolibarr'))."', 0, ".($useridtoadd).", ".((int) $entity).", '".$db->idate(dol_now())."')";
+			$sql .= " VALUES ('dolibarr_rest_api', '".$db->escape(dolEncrypt($tokenstring, '', '', 'dolibarr'))."', 0, ".((int) $useridtoadd).", ".((int) $entity).", '".$db->idate(dol_now())."')";
 			$resql = $db->query($sql);
 
 			if (!$resql) {
@@ -363,7 +364,7 @@ if (empty($reshook)) {
 	} elseif ($action == 'confirm_delete' && $confirm == 'yes' && $canedittoken) {
 		// Remove token
 		$sql = "DELETE FROM ".MAIN_DB_PREFIX."oauth_token";
-		$sql .= " WHERE rowid = '".$tokenid."'";
+		$sql .= " WHERE rowid = ".((int) $tokenid;
 
 		$resql = $db->query($sql);
 
