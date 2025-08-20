@@ -558,64 +558,6 @@ class UserGroup extends CommonObject
 			}
 
 			if (!$error) {
-				// Get all users id that are in this group
-				$sqlforusers = "SELECT gu.fk_user as id";
-				$sqlforusers .= " FROM llx_usergroup_user AS gu WHERE";
-				$sqlforusers .= " gu.fk_usergroup = ".((int) $this->id);
-
-				$resultusers = $this->db->query($sqlforusers);
-
-				if ($resultusers) {
-					while ($usertocheck = $this->db->fetch_object($resultusers)) {
-						$idtodelete = array();
-
-						// Query to avoid erasing perms from token if the user still have them himself
-						$sqlforid = "SELECT id";
-						$sqlforid .= " FROM ".$this->db->prefix()."rights_def";
-						$sqlforid .= " WHERE (entity = ".((int) $entity);
-						if ($wherefordel != 'allmodules') {
-							$sqlforid .= " AND ".$wherefordel;
-						}
-						$sqlforid .= ") AND NOT EXISTS(SELECT ur.fk_id FROM llx_user_rights as ur WHERE ur.entity = 1 AND ur.fk_user = ".((int) $usertocheck->id)." AND id = ur.fk_id)";
-
-						// Get all the tokens of the current user from query
-						$sqlusertokens = "SELECT oat.rowid, oat.state as rights";
-						$sqlusertokens .= " FROM llx_usergroup_user AS gu";
-						$sqlusertokens .= " JOIN llx_oauth_token AS oat ON gu.fk_user = oat.fk_user";
-						$sqlusertokens .= " WHERE gu.fk_usergroup = ".((int) $this->id);
-						$sqlusertokens .= " AND oat.fk_user = ".((int) $usertocheck->id);
-						$sqlusertokens .= " AND oat.service = 'dolibarr_rest_api'";
-						$sqlusertokens .= " AND oat.entity = ".((int) $entity);
-
-						$idtodeletequery = $this->db->query($sqlforid);
-						$resulttokens = $this->db->query($sqlusertokens);
-						if ($resulttokens && $idtodeletequery) {
-							while ($idobj = $this->db->fetch_object($idtodeletequery)) {
-								$idtodelete []= $idobj->id;
-							}
-
-							while ($obj = $this->db->fetch_object($resulttokens)) {
-								if (!empty($obj->rights)) {
-									$newtokenrigths = array_diff(explode(',', $obj->rights), $idtodelete);
-
-									$sqlupdate = "UPDATE ".MAIN_DB_PREFIX."oauth_token";
-									$sqlupdate.= " SET state = '".$this->db->escape(preg_replace('/\s+/', '', implode(',', $newtokenrigths)))."'";
-									$sqlupdate.= ", tms = '".$this->db->idate(dol_now())."'";
-									$sqlupdate.= " WHERE rowid = '".$obj->rowid."'";
-
-									$resupdate = $this->db->query($sqlupdate);
-									if (!$resupdate) {
-										$error++;
-										dol_print_error($this->db);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-
-			if (!$error) {
 				$langs->load("other");
 				$this->context = array('audit' => $langs->trans("PermissionsDelete").($rid ? ' (id='.$rid.')' : ''));
 
