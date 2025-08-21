@@ -1575,7 +1575,7 @@ function top_httphead($contenttype = 'text/html', $forcenocache = 0)
  *
  * @param 	string		$head			 Optional head lines
  * @param 	string		$title			 HTML title
- * @param 	int<0,1>   	$disablejs		 Disable js output
+ * @param 	int<0,2>   	$disablejs		 Disable js output (1) or disable output except jquery (2)
  * @param 	int<0,1>   	$disablehead	 Disable head output
  * @param 	string[]	$arrayofjs		 Array of complementary js files
  * @param 	string[]	$arrayofcss		 Array of complementary css files
@@ -1733,7 +1733,7 @@ function top_htmlhead($head, $title = '', $disablejs = 0, $disablehead = 0, $arr
 			print '<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600&display=swap" rel="stylesheet">'."\n";
 		}
 
-		if (!defined('DISABLE_JQUERY') && !$disablejs && $conf->use_javascript_ajax) {
+		if (!defined('DISABLE_JQUERY') && (!$disablejs || $disablejs == 2) && $conf->use_javascript_ajax) {
 			print '<!-- Includes CSS for JQuery (Ajax library) -->'."\n";
 			if (!defined('DISABLE_JQUERY_UI')) {
 				$jquerytheme = 'base';
@@ -1837,7 +1837,7 @@ function top_htmlhead($head, $title = '', $disablejs = 0, $disablehead = 0, $arr
 		}
 
 		// Output standard javascript links
-		if (!defined('DISABLE_JQUERY') && !$disablejs && !empty($conf->use_javascript_ajax)) {
+		if (!defined('DISABLE_JQUERY') && (!$disablejs || $disablejs == 2) && !empty($conf->use_javascript_ajax)) {
 			// JQuery. Must be before other includes
 			print '<!-- Includes JS for JQuery -->'."\n";
 			if (defined('JS_JQUERY') && constant('JS_JQUERY')) {
