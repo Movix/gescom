@@ -1,15 +1,13 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"
-    directories:
-      - "/htdocs"
-      - "/scripts"
-      - "/tests"
+    directory: "/"
     schedule:
       interval: "weekly"
     allow:
       # Allow both direct and indirect updates for all packages.
       - dependency-type: "production"
     exclude-paths:
+      - 'dev'
       - 'tests/acceptance'
       - 'tests/selenium'
