@@ -129,14 +129,6 @@ class Evaluation extends CommonObject
 	 */
 	public $description;
 	/**
-	 * @var string
-	 */
-	public $note_public;
-	/**
-	 * @var string
-	 */
-	public $note_private;
-	/**
 	 * @var int
 	 */
 	public $fk_user_creat;
@@ -149,7 +141,7 @@ class Evaluation extends CommonObject
 	 */
 	public $import_key;
 	/**
-	 * @var int
+	 * @var int|null
 	 */
 	public $status;
 	/**
@@ -319,24 +311,16 @@ class Evaluation extends CommonObject
 		unset($object->import_key);
 
 		// Clear fields
-		if (property_exists($object, 'ref')) {
+		if (!empty($object->ref)) {
 			// @phan-suppress-next-line PhanTypeMismatchProperty
 			$object->ref = empty($this->fields['ref']['default']) ? "Copy_Of_".$object->ref : $this->fields['ref']['default'];
 		}
-		if (property_exists($object, 'label')) {
-			// @phan-suppress-next-line PhanTypeInvalidDimOffset
-			$object->label = empty($this->fields['label']['default']) ? $langs->trans("CopyOf")." ".$object->label : $this->fields['label']['default'];
+		if (!empty($object->label)) {
+			$object->label = $langs->trans("CopyOf")." ".$object->label;
 		}
-		if (property_exists($object, 'status')) {
-			$object->status = self::STATUS_DRAFT;
-		}
-		if (property_exists($object, 'date_creation')) {
-			$object->date_creation = dol_now();
-		}
-		if (property_exists($object, 'date_modification')) {
-			$object->date_modification = null;
-		}
-		// ...
+		$object->status = self::STATUS_DRAFT;
+		$object->date_creation = dol_now();
+
 		// Clear extrafields that are unique
 		if (is_array($object->array_options) && count($object->array_options) > 0) {
 			$extrafields->fetch_name_optionals_label($this->table_element);
@@ -555,7 +539,7 @@ class Evaluation extends CommonObject
 		$this->db->begin();
 
 		// Define new ref
-		if (!$error && (preg_match('/^[\(]?PROV/i', $this->ref) || empty($this->ref))) { // empty should not happened, but when it occurs, the test save life
+		if (preg_match('/^[\(]?PROV/i', $this->ref) || empty($this->ref)) { // empty should not happened, but when it occurs, the test save life
 			$num = $this->getNextNumRef();
 		} else {
 			$num = $this->ref;
@@ -1073,7 +1057,7 @@ class Evaluation extends CommonObject
 		$return .= img_picto('', $this->picto);
 		$return .= '</span>';
 		$return .= '<div class="info-box-content">';
-		$return .= '<span class="info-box-ref inline-block tdoverflowmax150 valignmiddle">'.(method_exists($this, 'getNomUrl') ? $this->getNomUrl(1) : $this->ref).'</span>';
+		$return .= '<span class="info-box-ref inline-block tdoverflowmax150 valignmiddle">' . $this->getNomUrl(1) . '</span>';
 		$return .= '<input class="fright" id="cb'.$this->id.'" class="flat checkforselect" type="checkbox" name="toselect[]" value="'.$this->id.'"'.($selected ? ' checked="checked"' : '').'>';
 		if (!empty($arraydata['user'])) {
 			$return .= '<br><span class="info-box-label ">'.$arraydata['user'].'</span>';
@@ -1081,9 +1065,7 @@ class Evaluation extends CommonObject
 		if (!empty($arraydata['job'])) {
 			$return .= '<br><span class="info-box-label ">'.$arraydata['job'].'</span>';
 		}
-		if (method_exists($this, 'getLibStatut')) {
-			$return .= '<br><div class="info-box-status">'.$this->getLibStatut(3).'</div>';
-		}
+		$return .= '<br><div class="info-box-status">'.$this->getLibStatut(3).'</div>';
 		$return .= '</div>';
 		$return .= '</div>';
 		$return .= '</div>';
