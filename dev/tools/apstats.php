@@ -276,9 +276,9 @@ print 'Execute git log to get commits related to security: '.$commandcheck."\n";
 $output_arrglpu = array();
 $resexecglpu = 0;
 exec($commandcheck, $output_arrglpu, $resexecglpu);
-foreach ($output_arrglpu as $val) {
+foreach ($output_arrglpu as $valgitlog) {		// The most recent lines are first.
 	// Parse the line to split interesting data
-	$tmpval = cleanVal2($val);
+	$tmpval = cleanVal2($valgitlog);
 
 	if (preg_match('/(#yogosha|CVE|Sec:|Sec\s|Sec$)/i', $tmpval['title'])) {	// Recommended git comment:  "Sec: Fix #..."
 		$alreadyfound = '';
@@ -353,63 +353,6 @@ foreach ($output_arrglpu as $val) {
 		}
 	}
 }
-
-
-/*
-//$urlgit = 'https://api.github.com/search/issues?q=is:pr+repo:Dolibarr/dolibarr+created:>'.dol_print_date(dol_now() - $delay, "%Y-%m");
-$urlgit = 'https://api.github.com/search/commits?q=repo:Dolibarr/dolibarr+yogosha+created:>'.dol_print_date(dol_now() - $delay, "%Y-%m");
-
-// Count lines of code of application
-$newurl = $urlgit.'+CVE';
-$result = getURLContent($newurl);
-print 'Execute GET on github for '.$newurl."\n";
-if ($result && $result['http_code'] == 200) {
-	$arrayofalerts1 = json_decode($result['content']);
-
-	foreach ($arrayofalerts1->items as $val) {
-		$tmpval = cleanVal($val);
-		if (preg_match('/CVE/i', $tmpval['title'])) {
-			$arrayofalerts[$tmpval['number']] = $tmpval;
-		}
-	}
-} else {
-	print 'Error: failed to get github response';
-	exit(-1);
-}
-
-$newurl = $urlgit.'+yogosha';
-$result = getURLContent($newurl);
-print 'Execute GET on github for '.$newurl."\n";
-if ($result && $result['http_code'] == 200) {
-	$arrayofalerts2 = json_decode($result['content']);
-
-	foreach ($arrayofalerts2->items as $val) {
-		$tmpval = cleanVal($val);
-		if (preg_match('/yogosha:/i', $tmpval['title'])) {
-			$arrayofalerts[$tmpval['number']] = $tmpval;
-		}
-	}
-} else {
-	print 'Error: failed to get github response';
-	exit(-1);
-}
-
-$newurl = $urlgit.'+Sec:';
-$result = getURLContent($newurl);
-print 'Execute GET on github for '.$newurl."\n";
-if ($result && $result['http_code'] == 200) {
-	$arrayofalerts3 = json_decode($result['content']);
-	foreach ($arrayofalerts3->items as $val) {
-		$tmpval = cleanVal($val);
-		if (preg_match('/Sec:/i', $tmpval['title'])) {
-			$arrayofalerts[$tmpval['number']] = $tmpval;
-		}
-	}
-} else {
-	print 'Error: failed to get github response';
-	exit(-1);
-}
-*/
 
 $timeend = time();
 
@@ -1192,7 +1135,7 @@ function cleanVal2($val)
 		$tmpval['issueid'] = $reg[1];
 	}
 	if (preg_match('/CVE([0-9\-\s]+)/', $tmpval['title'], $reg)) {
-		$tmpval['issueidcve'] = preg_replace('/^\-/', '', trim($reg[1]));
+		$tmpval['issueidcve'] = preg_replace('/^\-/', '', preg_replace('/\s+/', '-', trim($reg[1])));
 	}
 	if (preg_match('/#yogosha(\d+)/i', $tmpval['title'], $reg)) {
 		$tmpval['issueidyogosha'] = $reg[1];
