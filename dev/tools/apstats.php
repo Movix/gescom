@@ -299,7 +299,7 @@ foreach ($output_arrglpu as $valgitlog) {		// The most recent lines are first.
 				$alreadyfoundcommitid = $val['commitid'];
 				break;
 			}
-			if ($val['title'] && $val['title'] == $tmpval['title']) {	// Already in list
+			if ($val['title'] && (strpos($val['title'], $tmpval['title']) === 0 || strpos($tmpval['title'], $val['title']) === 0)) {	// Already in list
 				$alreadyfound = 'title';
 				$alreadyfoundcommitid = $val['commitid'];
 				break;
@@ -905,7 +905,7 @@ foreach ($arrayofalerts as $key => $alert) {
 	}
 	$html .= '</td>';
 
-	// Description
+	// Title - Description
 	$html .= '<td class="tdoverflowmax300" title="'.dol_escape_htmltag($alert['title']).'">'.dol_escape_htmltag($alert['title']).'</td>';
 
 	// Branches
