@@ -23,38 +23,32 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
- *
- * Need to have the following variables defined:
- * $object (invoice, order, ...)
- * $conf
- * $langs
- * $forceall (0 by default, 1 for supplier invoices/orders)
  */
 
 require_once DOL_DOCUMENT_ROOT."/product/class/html.formproduct.class.php";
 
 /**
  * @var CommonObject $this
- * @var CommonObject $object
+ * @var CommonObject $object	Invoice, order, ...
  * @var ExtraFields $extrafields
  * @var Form $form
  * @var Societe $buyer
  * @var Translate $langs
  *
  * @var string $action
+ * @var int	$forceall (0 by default, 1 for supplier invoices/orders)
  */
+'
+@phan-var-force CommonObject $this
+@phan-var-force CommonObject $object
+@phan-var-force Societe $buyer
+';
 
 // Protection to avoid direct call of template
 if (empty($object) || !is_object($object)) {
 	print "Error: this template page cannot be called directly as an URL";
 	exit;
 }
-
-'
-@phan-var-force CommonObject $this
-@phan-var-force CommonObject $object
-@phan-var-force Societe $buyer
-';
 
 global $forceall, $forcetoshowtitlelines, $filtertype;
 
