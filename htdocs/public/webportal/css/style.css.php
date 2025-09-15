@@ -16,7 +16,7 @@
  */
 
 /**
- *		\file       htdocs/public/webportal/css/global.css.php
+ *		\file       htdocs/public/webportal/css/style.css.php
  *		\brief      File for CSS style sheet of Web portal
  */
 
@@ -46,7 +46,14 @@ if (!defined('NOREQUIREAJAX')) {
 session_cache_limiter('public');
 
 require_once __DIR__.'/../../../main.inc.php'; // __DIR__ allow this script to be included in custom themes
+/**
+ * @var Conf $conf
+ *
+ * @var	string	$dolibarr_nocache
+ */
 
+$fontlist = 'arial,tahoma,verdana,helvetica';
+$colorbacktitle1 = '#fff';
 
 // Define css type
 top_httphead('text/css');
@@ -246,4 +253,182 @@ Home Styles
  */
 .home-links-card{
 
+}
+
+
+
+:root {
+	--colorbackbody: #fff;
+	--colortext: #000;
+}
+
+
+.width150 { width: 150px; }
+
+
+/* ============================================================================== */
+/* Calendar date picker                                                           */
+/* ============================================================================== */
+
+.ui-datepicker-calendar .ui-state-default, .ui-datepicker-calendar .ui-widget-content .ui-state-default,
+.ui-datepicker-calendar .ui-widget-header .ui-state-default, .ui-datepicker-calendar .ui-button,
+html .ui-datepicker-calendar .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active
+{
+	border: unset;
+}
+
+div#ui-datepicker-div {
+	width: 300px;
+	box-shadow: 2px 5px 15px #aaa;
+	border: unset;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	z-index: 1010 !important;	/* must be over menu bar */
+}
+.ui-datepicker .ui-datepicker table {
+	font-size: unset;
+}
+.ui-datepicker .ui-widget-header {
+	border: unset;
+	background: unset;
+}
+
+/* the button Previous / Next month */
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+	width: 2.5em;
+	height: 2.7em;
+}
+
+
+img.datecallink { padding-left: 2px !important; padding-right: 2px !important; }
+
+select.ui-datepicker-year {
+	margin-left: 2px !important;
+}
+.ui-datepicker-trigger {
+	vertical-align: middle;
+	cursor: pointer;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+/*
+.bodyline {
+	border-radius: 8px;
+	border: 1px #E4ECEC outset;
+	padding: 0px;
+	margin-bottom: 5px;
+}
+*/
+table.dp {
+	width: 180px;
+	background-color: var(--inputbackgroundcolor);
+	border-top: solid 2px #DDDDDD;
+	border-<?php print $left; ?>: solid 2px #DDDDDD;
+	border-<?php print $right; ?>: solid 1px #222222;
+	border-bottom: solid 1px #222222;
+	padding: 0px;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+.dp td, .tpHour td, .tpMinute td{padding:2px; font-size:10px;}
+/* Barre titre */
+.dpHead,.tpHead,.tpHour td:Hover .tpHead{
+	font-weight:bold;
+	background-color:#b3c5cc;
+	color:white;
+	font-size:11px;
+	cursor:auto;
+}
+/* Barre navigation */
+.dpButtons,.tpButtons {
+	text-align:center;
+	background-color:#617389;
+	color:#FFFFFF;
+	font-weight:bold;
+	cursor:pointer;
+}
+.dpButtons:Active,.tpButtons:Active{border: 1px outset black;}
+.dpDayNames td,.dpExplanation {background-color:#D9DBE1; font-weight:bold; text-align:center; font-size:11px;}
+.dpExplanation{ font-weight:normal; font-size:11px;}
+.dpWeek td{text-align:center}
+
+.dpToday,.dpReg,.dpSelected{
+	cursor:pointer;
+}
+.dpToday{font-weight:bold; color:black; background-color:#DDDDDD;}
+.dpReg:Hover,.dpToday:Hover{background-color:black;color:white}
+
+/* Jour courant */
+.dpSelected{background-color:#0B63A2;color:white;font-weight:bold; }
+
+.tpHour{border-top:1px solid #DDDDDD; border-right:1px solid #DDDDDD;}
+.tpHour td {border-left:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD; cursor:pointer;}
+.tpHour td:Hover {background-color:black;color:white;}
+
+.tpMinute {margin-top:5px;}
+.tpMinute td:Hover {background-color:black; color:white; }
+.tpMinute td {background-color:#D9DBE1; text-align:center; cursor:pointer;}
+
+/* Bouton X fermer */
+.dpInvisibleButtons
+{
+	border-style:none;
+	background-color:transparent;
+	padding:0px;
+	font-size: 0.85em;
+	border-width:0px;
+	color:#0B63A2;
+	vertical-align:middle;
+	cursor: pointer;
+}
+.datenowlink {
+	color: var(--colortextlink);
+	font-size: 0.8em;
+	opacity: 0.7;
+}
+
+
+
+/* ============================================================================== */
+/*  UI features                                                                   */
+/* ============================================================================== */
+
+.ui-widget-content {
+	border: solid 1px rgba(0,0,0,.3);
+	background: var(--colorbackbody) !important;
+	color: var(--colortext) !important;
+}
+
+/* Style to overwrites UI JQuery styles */
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+	/* border: 1px solid #888; */
+	background: rgb(<?php echo $colorbacktitle1; ?>);
+	color: unset;
+	font-weight: bold;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+	background: #007fff !important;
+	color: #ffffff !important;
+}
+
+.ui-menu .ui-menu-item a {
+	text-decoration:none;
+	display:block;
+	padding:.2em .4em;
+	line-height:1.5;
+	font-weight: normal;
+	font-family:<?php echo $fontlist; ?>;
+	font-size:1em;
+}
+.ui-widget {
+	font-family:<?php echo $fontlist; ?>;
+}
+.ui-button { margin-left: -2px; <?php print(preg_match('/chrome/', $conf->browser->name) ? 'padding-top: 1px;' : ''); ?> }
+.ui-button-icon-only .ui-button-text { height: 8px; }
+.ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text { padding: 2px 0px 6px 0px; }
+.ui-button-text
+{
+	line-height: 1em !important;
 }
