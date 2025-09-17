@@ -420,7 +420,7 @@ class DataPolicyCron
 			} else {
 				// For others, force the value, but only if not already empty.
 				if (!empty($object->$field)) {
-					$newval = str_replace_('__ID__', $object->id ? (string) $object->id : '0', $val);
+					$newval = str_replace('__ID__', $object->id ? (string) $object->id : '0', $val);
 					$object->$field = $newval;
 				}
 			}
