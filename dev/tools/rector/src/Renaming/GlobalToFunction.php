@@ -307,8 +307,23 @@ class GlobalToFunction extends AbstractRector
 				if (empty($constName)) {
 					return;
 				}
+
+				// Test the type after the comparison conf->global->xxx to know the name of function
+				$typeleft = $node->left->getType();
+				switch ($typeleft) {
+					case 'Scalar_LNumber':
+						$funcName = 'getDolGlobalInt';
+						break;
+					case 'Scalar_String':
+						$funcName = 'getDolGlobalString';
+						break;
+					default:	// Can be Expr_FuncCall
+						$funcName = 'getDolGlobalString';
+						break;
+				}
+
 				$node->right = new FuncCall(
-						new Name('getDolGlobalString'),
+						new Name($funcName),
 						[new Arg($constName)]
 						);
 				return $node;
