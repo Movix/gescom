@@ -12223,12 +12223,6 @@ parameters:
 			path: ../../../htdocs/modulebuilder/index.php
 
 		-
-			message: '#^Right side of && is always true\.$#'
-			identifier: booleanAnd.rightAlwaysTrue
-			count: 34
-			path: ../../../htdocs/modulebuilder/index.php
-
-		-
 			message: '#^Ternary operator condition is always false\.$#'
 			identifier: ternary.alwaysFalse
 			count: 1
@@ -16577,24 +16571,6 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/salaries/card.php
-
-		-
-			message: '#^Loose comparison using \=\= between '''' and ''nolink'' will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
-			count: 2
-			path: ../../../htdocs/salaries/class/paymentsalary.class.php
-
-		-
-			message: '#^Result of \|\| is always false\.$#'
-			identifier: booleanOr.alwaysFalse
-			count: 2
-			path: ../../../htdocs/salaries/class/paymentsalary.class.php
-
-		-
-			message: '#^Variable \$url in empty\(\) always exists and is not falsy\.$#'
-			identifier: empty.variable
-			count: 2
-			path: ../../../htdocs/salaries/class/paymentsalary.class.php
 
 		-
 			message: '#^Negated boolean expression is always false\.$#'
