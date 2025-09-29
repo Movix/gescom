@@ -28,12 +28,6 @@
 class InvoiceListController extends Controller
 {
 	/**
-	 * @var FormListWebPortal Form for list
-	 */
-	public $formList;
-
-
-	/**
 	 * Check current access to controller
 	 *
 	 * @return  bool

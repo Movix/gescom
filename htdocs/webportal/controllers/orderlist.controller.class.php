@@ -31,12 +31,6 @@ require_once DOL_DOCUMENT_ROOT . '/webportal/class/html.formlistwebportal.class.
 class OrderListController extends Controller
 {
 	/**
-	 * @var FormListWebPortal Form for list
-	 */
-	public $formList;
-
-
-	/**
 	 * Check current access to controller
 	 *
 	 * @return  bool
