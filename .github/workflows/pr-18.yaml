@@ -6,7 +6,7 @@
 # Go on Organisation - Secret and variables and create a variable PR18_APP_ID and copy the ID of the previously create ID. Choose the repository access to "Repository Dolibarr".
 #
 
-name: Set reviewer for v18
+name: Set reviewer and label for v18
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
