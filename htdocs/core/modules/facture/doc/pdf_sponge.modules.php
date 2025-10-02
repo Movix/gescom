@@ -1746,6 +1746,7 @@ class pdf_sponge extends ModelePDFFactures
 
 		// Total remise
 		$total_line_remise = 0;
+		$total_line_remise_print = 0;
 		foreach ($object->lines as $i => $line) {
 			$resdiscount = pdfGetLineTotalDiscountAmount($object, $i, $outputlangs, 2);
 			$total_line_remise += (is_numeric($resdiscount) ? $resdiscount : 0);
