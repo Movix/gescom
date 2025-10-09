@@ -165,11 +165,10 @@ if (dol_is_file($dolibarrdataroot.'/installmodules.lock')) {
 	$allowonlineinstall = false;
 }
 
-//$remotestore = new Dolistore(false);
-$remotestore = new ExternalModules();
+$debug = false;
+$remotestore = new ExternalModules($debug);
 if ($mode == 'marketplace') {
 	// Make remote calls
-	$clearcache = 0;
 	if (GETPOSTINT('dol_resetcache')) {
 		dol_delete_file($remotestore->cache_file);
 	}
