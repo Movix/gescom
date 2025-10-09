@@ -1747,8 +1747,6 @@ class Adherent extends CommonObject
 	public function fetch_subscriptions()
 	{
 		// phpcs:enable
-		global $langs;
-
 		require_once DOL_DOCUMENT_ROOT.'/adherents/class/subscription.class.php';
 
 		$sql = "SELECT c.rowid, c.fk_adherent, c.fk_type, c.subscription, c.note as note_public, c.fk_bank,";
@@ -1811,8 +1809,6 @@ class Adherent extends CommonObject
 	 */
 	public function fetchPartnerships($mode)
 	{
-		global $langs;
-
 		require_once DOL_DOCUMENT_ROOT.'/partnership/class/partnership.class.php';
 
 
@@ -1829,15 +1825,16 @@ class Adherent extends CommonObject
 	 *	@param	double		$amount     		Amount of subscription (0 accepted for some members)
 	 *	@param	int			$accountid			Id bank account. NOT USED.
 	 *	@param	string		$operation			Code of payment mode (if Id bank account provided). Example: 'CB', ... NOT USED.
-	 *	@param	string		$label				Label operation (if Id bank account provided).
-	 *	@param	string		$num_chq			Numero cheque (if Id bank account provided)
+	 *	@param	string		$label				Label operation stored into public note.
+	 *	@param	string		$num_chq			Numero cheque (if Id bank account provided). NOT USED.
 	 *	@param	string		$emetteur_nom		Name of cheque writer
 	 *	@param	string		$emetteur_banque	Name of bank of cheque
 	 *	@param	int     	$datesubend			Date end subscription
 	 *	@param	int     	$fk_type 			Member type id
+	 *  @param	string		$ref_ext			To save an external ref
 	 *	@return int         					rowid of record added, <0 if KO
 	 */
-	public function subscription($date, $amount, $accountid = 0, $operation = '', $label = '', $num_chq = '', $emetteur_nom = '', $emetteur_banque = '', $datesubend = 0, $fk_type = null)
+	public function subscription($date, $amount, $accountid = 0, $operation = '', $label = '', $num_chq = '', $emetteur_nom = '', $emetteur_banque = '', $datesubend = 0, $fk_type = null, $ref_ext = '')
 	{
 		global $user;
 
@@ -1866,9 +1863,9 @@ class Adherent extends CommonObject
 		$subscription->dateh = $date; // Date of new subscription
 		$subscription->datef = $datefin; // End data of new subscription
 		$subscription->amount = $amount;
-		$subscription->note = $label; // deprecated
 		$subscription->note_public = $label;
 		$subscription->fk_type = $fk_type;
+		$subscription->ref_ext = $ref_ext;
 
 		if (empty($subscription->user_creation_id)) {
 			$subscription->user_creation_id = $user->id;
