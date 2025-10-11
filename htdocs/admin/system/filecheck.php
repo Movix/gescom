@@ -482,7 +482,7 @@ if (empty($error) && !empty($xml)) {
 
 	$outexpectedchecksum = ($checksumtoget ? $checksumtoget : $langs->trans("Unknown"));
 	if ($checksumget == $checksumtoget) {
-		if (empty($onlymodifiedorremoved) && is_array($file_list['added']) && count($file_list['added'])) {
+		if (empty($onlymodifiedorremoved) && !empty($file_list['added'])) {
 			$resultcode = 'warning';
 			$resultcomment = 'FileIntegrityIsOkButFilesWereAdded';
 			$outcurrentchecksum = $checksumget;
@@ -511,6 +511,7 @@ if (empty($error) && !empty($xml)) {
 		}
 	}
 
+	$outforlistoffiles = '';
 	if ($mode == 'unalterable') {
 		print load_fiche_titre($langs->trans("UnalterableFilesChecksum"));
 
