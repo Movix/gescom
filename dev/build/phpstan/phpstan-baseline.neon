@@ -391,12 +391,6 @@ parameters:
 			path: ../../../htdocs/adherents/card.php
 
 		-
-			message: '#^Variable \$public in isset\(\) always exists and is not nullable\.$#'
-			identifier: isset.variable
-			count: 1
-			path: ../../../htdocs/adherents/card.php
-
-		-
 			message: '#^If condition is always false\.$#'
 			identifier: if.alwaysFalse
 			count: 1
@@ -437,12 +431,6 @@ parameters:
 			identifier: empty.variable
 			count: 1
 			path: ../../../htdocs/adherents/messaging.php
-
-		-
-			message: '#^Property Partnership\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/adherents/partnership.php
 
 		-
 			message: '#^Variable \$bankline in empty\(\) always exists and is not falsy\.$#'
@@ -817,12 +805,6 @@ parameters:
 			path: ../../../htdocs/admin/modules.php
 
 		-
-			message: '#^Property DolibarrModules\:\:\$langfiles \(array\<string\>\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/admin/modules.php
-
-		-
 			message: '#^Right side of && is always true\.$#'
 			identifier: booleanAnd.rightAlwaysTrue
 			count: 5
@@ -965,12 +947,6 @@ parameters:
 			identifier: notEqual.alwaysTrue
 			count: 1
 			path: ../../../htdocs/admin/system/dolibarr.php
-
-		-
-			message: '#^Call to function is_array\(\) with non\-empty\-list\<array\{filename\: string\|null, md5\: non\-falsy\-string\|false\}\> will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: ../../../htdocs/admin/system/filecheck.php
 
 		-
 			message: '#^If condition is always true\.$#'
@@ -1117,12 +1093,6 @@ parameters:
 			path: ../../../htdocs/admin/tools/ui/class/documentation.class.php
 
 		-
-			message: '#^Ternary operator condition is always false\.$#'
-			identifier: ternary.alwaysFalse
-			count: 2
-			path: ../../../htdocs/admin/triggers.php
-
-		-
 			message: '#^Variable \$label might not be defined\.$#'
 			identifier: variable.undefined
 			count: 2
@@ -1205,12 +1175,6 @@ parameters:
 			identifier: equal.alwaysTrue
 			count: 1
 			path: ../../../htdocs/ai/admin/setup.php
-
-		-
-			message: '#^Call to function is_object\(\) with ActionComm\|Adherent\|Commande\|CommandeFournisseur\|Contact\|Contrat\|Expedition\|ExpenseReport\|Facture\|FactureFournisseur\|Fichinter\|Mo\|Product\|Project\|Propal\|Task will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 2
-			path: ../../../htdocs/api/class/api_documents.class.php
 
 		-
 			message: '#^Variable \$modulepart in empty\(\) always exists and is not falsy\.$#'
@@ -2371,28 +2335,10 @@ parameters:
 			path: ../../../htdocs/comm/propal/list.php
 
 		-
-			message: '#^Negated boolean expression is always true\.$#'
-			identifier: booleanNot.alwaysTrue
-			count: 1
-			path: ../../../htdocs/commande/card.php
-
-		-
-			message: '#^Right side of && is always true\.$#'
-			identifier: booleanAnd.rightAlwaysTrue
-			count: 2
-			path: ../../../htdocs/commande/card.php
-
-		-
 			message: '#^Variable \$classname might not be defined\.$#'
 			identifier: variable.undefined
 			count: 3
 			path: ../../../htdocs/commande/card.php
-
-		-
-			message: '#^Parameter \#1 \$object of method Orders\:\:_cleanObjectDatas\(\) expects object, array\<int, array\<string, int\|string\>\>\|int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../../../htdocs/commande/class/api_orders.class.php
 
 		-
 			message: '#^Variable \$socid might not be defined\.$#'
@@ -6889,12 +6835,6 @@ parameters:
 			path: ../../../htdocs/core/lib/admin.lib.php
 
 		-
-			message: '#^Variable \$strictw3c in empty\(\) always exists and is not falsy\.$#'
-			identifier: empty.variable
-			count: 13
-			path: ../../../htdocs/core/lib/admin.lib.php
-
-		-
 			message: '#^Negated boolean expression is always false\.$#'
 			identifier: booleanNot.alwaysFalse
 			count: 2
@@ -9235,12 +9175,6 @@ parameters:
 			path: ../../../htdocs/don/document.php
 
 		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/don/document.php
-
-		-
 			message: '#^Variable \$maxlength might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1
@@ -9859,12 +9793,6 @@ parameters:
 			path: ../../../htdocs/fourn/card.php
 
 		-
-			message: '#^Parameter \#1 \$object of method SupplierOrders\:\:_cleanObjectDatas\(\) expects object, array\<mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../../../htdocs/fourn/class/api_supplier_orders.class.php
-
-		-
 			message: '#^Variable \$contact might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1
@@ -10375,12 +10303,6 @@ parameters:
 			path: ../../../htdocs/fourn/facture/card.php
 
 		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/fourn/facture/document.php
-
-		-
 			message: '#^Variable \$contextpage in empty\(\) always exists and is not falsy\.$#'
 			identifier: empty.variable
 			count: 2
@@ -10444,12 +10366,6 @@ parameters:
 			message: '#^Variable \$object might not be defined\.$#'
 			identifier: variable.undefined
 			count: 2
-			path: ../../../htdocs/fourn/paiement/document.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
 			path: ../../../htdocs/fourn/paiement/document.php
 
 		-
@@ -10903,12 +10819,6 @@ parameters:
 			path: ../../../htdocs/hrm/evaluation_card.php
 
 		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/hrm/evaluation_document.php
-
-		-
 			message: '#^Variable \$contextpage in empty\(\) always exists and is not falsy\.$#'
 			identifier: empty.variable
 			count: 1
@@ -10925,12 +10835,6 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/hrm/job_card.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/hrm/job_document.php
 
 		-
 			message: '#^Comparison operation "\<" between int\<0, max\> and 0 is always false\.$#'
@@ -10955,12 +10859,6 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/hrm/position.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/hrm/position_document.php
 
 		-
 			message: '#^Variable \$contextpage in empty\(\) always exists and is not falsy\.$#'
@@ -11003,12 +10901,6 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/hrm/skill_card.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/hrm/skill_document.php
 
 		-
 			message: '#^Variable \$contextpage in empty\(\) always exists and is not falsy\.$#'
@@ -11437,12 +11329,6 @@ parameters:
 			path: ../../../htdocs/knowledgemanagement/knowledgerecord_card.php
 
 		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/knowledgemanagement/knowledgerecord_document.php
-
-		-
 			message: '#^Variable \$contextpage in empty\(\) always exists and is not falsy\.$#'
 			identifier: empty.variable
 			count: 1
@@ -11649,12 +11535,6 @@ parameters:
 		-
 			message: '#^Negated boolean expression is always true\.$#'
 			identifier: booleanNot.alwaysTrue
-			count: 1
-			path: ../../../htdocs/main.inc.php
-
-		-
-			message: '#^Ternary operator condition is always false\.$#'
-			identifier: ternary.alwaysFalse
 			count: 1
 			path: ../../../htdocs/main.inc.php
 
@@ -11965,24 +11845,6 @@ parameters:
 			path: ../../../htdocs/modulebuilder/template/class/myobject.class.php
 
 		-
-			message: '#^Left side of && is always true\.$#'
-			identifier: booleanAnd.leftAlwaysTrue
-			count: 1
-			path: ../../../htdocs/modulebuilder/template/class/myobject.class.php
-
-		-
-			message: '#^Property MyObject\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/modulebuilder/template/class/myobject.class.php
-
-		-
-			message: '#^Variable \$url in empty\(\) always exists and is not falsy\.$#'
-			identifier: empty.variable
-			count: 2
-			path: ../../../htdocs/modulebuilder/template/class/myobject.class.php
-
-		-
 			message: '#^If condition is always false\.$#'
 			identifier: if.alwaysFalse
 			count: 1
@@ -12017,12 +11879,6 @@ parameters:
 			identifier: include.fileNotFound
 			count: 1
 			path: ../../../htdocs/modulebuilder/template/js/mymodule.js.php
-
-		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
-			count: 4
-			path: ../../../htdocs/modulebuilder/template/lib/mymodule_myobject.lib.php
 
 		-
 			message: '#^Negated boolean expression is always true\.$#'
@@ -12091,12 +11947,6 @@ parameters:
 			path: ../../../htdocs/modulebuilder/template/myobject_card.php
 
 		-
-			message: '#^Property MyObject\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/modulebuilder/template/myobject_card.php
-
-		-
 			message: '#^Negated boolean expression is always true\.$#'
 			identifier: booleanNot.alwaysTrue
 			count: 1
@@ -12129,12 +11979,6 @@ parameters:
 		-
 			message: '#^Path in include\(\) "\.\./main\.inc\.php" is not a file or it does not exist\.$#'
 			identifier: include.fileNotFound
-			count: 1
-			path: ../../../htdocs/modulebuilder/template/myobject_document.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/modulebuilder/template/myobject_document.php
 
@@ -12205,12 +12049,6 @@ parameters:
 			path: ../../../htdocs/mrp/class/api_mos.class.php
 
 		-
-			message: '#^Property MoLine\:\:\$fk_warehouse \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 2
-			path: ../../../htdocs/mrp/class/api_mos.class.php
-
-		-
 			message: '#^Result of && is always false\.$#'
 			identifier: booleanAnd.alwaysFalse
 			count: 1
@@ -12254,12 +12092,6 @@ parameters:
 
 		-
 			message: '#^Property Mo\:\:\$fk_product \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/mrp/class/mo.class.php
-
-		-
-			message: '#^Property Mo\:\:\$fk_warehouse \(int\) in isset\(\) is not nullable\.$#'
 			identifier: isset.property
 			count: 1
 			path: ../../../htdocs/mrp/class/mo.class.php
@@ -12335,12 +12167,6 @@ parameters:
 			identifier: isset.property
 			count: 1
 			path: ../../../htdocs/mrp/mo_card.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/mrp/mo_document.php
 
 		-
 			message: '#^Property Mo\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
@@ -12439,43 +12265,7 @@ parameters:
 			path: ../../../htdocs/opensurvey/class/opensurveysondage.class.php
 
 		-
-			message: '#^Property Opensurveysondage\:\:\$format \(string\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/opensurvey/class/opensurveysondage.class.php
-
-		-
 			message: '#^Property Opensurveysondage\:\:\$id_sondage \(string\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/opensurvey/class/opensurveysondage.class.php
-
-		-
-			message: '#^Property Opensurveysondage\:\:\$mail_admin \(string\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/opensurvey/class/opensurveysondage.class.php
-
-		-
-			message: '#^Property Opensurveysondage\:\:\$mailsonde \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/opensurvey/class/opensurveysondage.class.php
-
-		-
-			message: '#^Property Opensurveysondage\:\:\$nom_admin \(string\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/opensurvey/class/opensurveysondage.class.php
-
-		-
-			message: '#^Property Opensurveysondage\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/opensurvey/class/opensurveysondage.class.php
-
-		-
-			message: '#^Property Opensurveysondage\:\:\$title \(string\) in isset\(\) is not nullable\.$#'
 			identifier: isset.property
 			count: 1
 			path: ../../../htdocs/opensurvey/class/opensurveysondage.class.php
@@ -12571,12 +12361,6 @@ parameters:
 			path: ../../../htdocs/partnership/class/partnership.class.php
 
 		-
-			message: '#^Property Partnership\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/partnership/class/partnership.class.php
-
-		-
 			message: '#^Left side of && is always false\.$#'
 			identifier: booleanAnd.leftAlwaysFalse
 			count: 1
@@ -12609,12 +12393,6 @@ parameters:
 		-
 			message: '#^If condition is always false\.$#'
 			identifier: if.alwaysFalse
-			count: 1
-			path: ../../../htdocs/partnership/partnership_card.php
-
-		-
-			message: '#^Property Partnership\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
 			count: 1
 			path: ../../../htdocs/partnership/partnership_card.php
 
@@ -13657,12 +13435,6 @@ parameters:
 			path: ../../../htdocs/product/stock/movement_list.php
 
 		-
-			message: '#^Variable \$idAlreadyReverse might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/product/stock/movement_list.php
-
-		-
 			message: '#^Variable \$listofobjectref might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1
@@ -13805,12 +13577,6 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/product/stock/stocktransfer/stocktransfer_contact.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/product/stock/stocktransfer/stocktransfer_document.php
 
 		-
 			message: '#^Variable \$contextpage in empty\(\) always exists and is not falsy\.$#'
@@ -14365,12 +14131,6 @@ parameters:
 			path: ../../../htdocs/projet/tasks/contact.php
 
 		-
-			message: '#^Call to function method_exists\(\) with Task and ''fetchComments'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: ../../../htdocs/projet/tasks/contact.php
-
-		-
 			message: '#^Property Project\:\:\$budget_amount \(float\|string\) in isset\(\) is not nullable\.$#'
 			identifier: isset.property
 			count: 1
@@ -14389,12 +14149,6 @@ parameters:
 			path: ../../../htdocs/projet/tasks/document.php
 
 		-
-			message: '#^Call to function method_exists\(\) with Task and ''fetchComments'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: ../../../htdocs/projet/tasks/document.php
-
-		-
 			message: '#^Property Project\:\:\$budget_amount \(float\|string\) in isset\(\) is not nullable\.$#'
 			identifier: isset.property
 			count: 1
@@ -14403,12 +14157,6 @@ parameters:
 		-
 			message: '#^Ternary operator condition is always true\.$#'
 			identifier: ternary.alwaysTrue
-			count: 1
-			path: ../../../htdocs/projet/tasks/document.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/projet/tasks/document.php
 
@@ -14746,12 +14494,6 @@ parameters:
 			message: '#^If condition is always true\.$#'
 			identifier: if.alwaysTrue
 			count: 1
-			path: ../../../htdocs/public/eventorganization/subscriptionok.php
-
-		-
-			message: '#^Variable \$suffix might not be defined\.$#'
-			identifier: variable.undefined
-			count: 2
 			path: ../../../htdocs/public/eventorganization/subscriptionok.php
 
 		-
@@ -15919,12 +15661,6 @@ parameters:
 			path: ../../../htdocs/recruitment/recruitmentcandidature_card.php
 
 		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/recruitment/recruitmentcandidature_document.php
-
-		-
 			message: '#^Variable \$contextpage in empty\(\) always exists and is not falsy\.$#'
 			identifier: empty.variable
 			count: 1
@@ -15968,12 +15704,6 @@ parameters:
 
 		-
 			message: '#^Variable \$maxlength might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/recruitment/recruitmentjobposition_document.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/recruitment/recruitmentjobposition_document.php
@@ -16172,12 +15902,6 @@ parameters:
 
 		-
 			message: '#^Variable \$mc might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/societe/admin/societe.php
-
-		-
-			message: '#^Variable \$sql might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/societe/admin/societe.php
@@ -16421,12 +16145,6 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/societe/consumption.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/societe/document.php
 
 		-
 			message: '#^Variable \$contextpage in empty\(\) always exists and is not falsy\.$#'
@@ -17155,12 +16873,6 @@ parameters:
 			path: ../../../htdocs/ticket/class/ticket.class.php
 
 		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/ticket/document.php
-
-		-
 			message: '#^Variable \$badgeStatus0 might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1
@@ -17397,12 +17109,6 @@ parameters:
 		-
 			message: '#^If condition is always true\.$#'
 			identifier: if.alwaysTrue
-			count: 1
-			path: ../../../htdocs/user/document.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
 			count: 1
 			path: ../../../htdocs/user/document.php
 
@@ -17839,12 +17545,6 @@ parameters:
 			path: ../../../htdocs/webportal/class/webportalpartnership.class.php
 
 		-
-			message: '#^Property Partnership\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/webportal/class/webportalpartnership.class.php
-
-		-
 			message: '#^Call to function method_exists\(\) with \$this\(WebPortalPropal\) and ''getLibStatut'' will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
@@ -18041,12 +17741,6 @@ parameters:
 			identifier: empty.variable
 			count: 1
 			path: ../../../htdocs/website/websiteaccount_card.php
-
-		-
-			message: '#^Variable \$upload_dir might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: ../../../htdocs/workstation/workstation_document.php
 
 		-
 			message: '#^Variable \$val might not be defined\.$#'
