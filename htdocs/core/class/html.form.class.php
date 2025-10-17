@@ -9986,7 +9986,7 @@ class Form
 
         <dl class="dropdown">
             <dt>
-            <a href="#' . $htmlname . '">
+            <a href="#' . $htmlname . '" class="multiselectpicto">
               ' . img_picto('', 'list') . '
             </a>
             <input type="hidden" class="' . $htmlname . '" name="' . $htmlname . '" value="' . $listcheckedstring . '">
