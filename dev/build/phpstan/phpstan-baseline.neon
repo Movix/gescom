@@ -15577,24 +15577,6 @@ parameters:
 			path: ../../../htdocs/societe/class/companybankaccount.class.php
 
 		-
-			message: '#^Call to function method_exists\(\) with \$this\(Societe\) and ''getLibStatut'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: ../../../htdocs/societe/class/societe.class.php
-
-		-
-			message: '#^Call to function method_exists\(\) with \$this\(Societe\) and ''getNomUrl'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: ../../../htdocs/societe/class/societe.class.php
-
-		-
-			message: '#^Call to function property_exists\(\) with \$this\(Societe\) and ''code_client'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: ../../../htdocs/societe/class/societe.class.php
-
-		-
 			message: '#^Loose comparison using \!\= between ''email''\|''mobile'' and ''poste'' will always evaluate to true\.$#'
 			identifier: notEqual.alwaysTrue
 			count: 2
@@ -15607,20 +15589,8 @@ parameters:
 			path: ../../../htdocs/societe/class/societe.class.php
 
 		-
-			message: '#^Negated boolean expression is always true\.$#'
-			identifier: booleanNot.alwaysTrue
-			count: 6
-			path: ../../../htdocs/societe/class/societe.class.php
-
-		-
 			message: '#^Property Contact\:\:\$roles \(array\<int, array\{id\: int, socid\: int, element\: string, source\: string, code\: string, label\: string\}\>\|null\) does not accept non\-empty\-list\<string\>\.$#'
 			identifier: assign.propertyType
-			count: 1
-			path: ../../../htdocs/societe/class/societe.class.php
-
-		-
-			message: '#^Property Societe\:\:\$bank_account \(Account\|string\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
 			count: 1
 			path: ../../../htdocs/societe/class/societe.class.php
 
@@ -15638,12 +15608,6 @@ parameters:
 
 		-
 			message: '#^Property Societe\:\:\$status \(int\) in isset\(\) is not nullable\.$#'
-			identifier: isset.property
-			count: 1
-			path: ../../../htdocs/societe/class/societe.class.php
-
-		-
-			message: '#^Property Societe\:\:\$stcomm_id \(int\) in isset\(\) is not nullable\.$#'
 			identifier: isset.property
 			count: 1
 			path: ../../../htdocs/societe/class/societe.class.php
