@@ -8791,28 +8791,28 @@ parameters:
 			path: ../../../htdocs/core/website.inc.php
 
 		-
-			message: '#^Loose comparison using \=\= between 1 and 0 will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
-			count: 1
-			path: ../../../htdocs/cron/card.php
+			message: '#^Variable \$conf might not be defined\.$#'
+			identifier: variable.undefined
+			count: 3
+			path: ../../../htdocs/core/website.inc.php
 
 		-
-			message: '#^Negated boolean expression is always false\.$#'
-			identifier: booleanNot.alwaysFalse
+			message: '#^Variable \$db might not be defined\.$#'
+			identifier: variable.undefined
+			count: 7
+			path: ../../../htdocs/core/website.inc.php
+
+		-
+			message: '#^Variable \$hookmanager might not be defined\.$#'
+			identifier: variable.undefined
 			count: 2
-			path: ../../../htdocs/cron/card.php
+			path: ../../../htdocs/core/website.inc.php
 
 		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
+			message: '#^Variable \$websitekey might not be defined\.$#'
+			identifier: variable.undefined
 			count: 2
-			path: ../../../htdocs/cron/card.php
-
-		-
-			message: '#^Right side of && is always true\.$#'
-			identifier: booleanAnd.rightAlwaysTrue
-			count: 5
-			path: ../../../htdocs/cron/card.php
+			path: ../../../htdocs/core/website.inc.php
 
 		-
 			message: '#^Variable \$mc might not be defined\.$#'
