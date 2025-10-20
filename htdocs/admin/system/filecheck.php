@@ -67,9 +67,12 @@ print '<div class="opacitymedium justify">'.$langs->trans("FileCheckDesc").'</di
 print '<div class="div-table-responsive-no-min">';
 print '<table class="noborder centpercent">';
 print '<tr class="liste_titre"><td>'.$langs->trans("Version").'</td><td></td></tr>'."\n";
-print '<tr class="oddeven"><td width="300">'.$langs->trans("VersionLastInstall").'</td><td>'.getDolGlobalString('MAIN_VERSION_LAST_INSTALL').'</td></tr>'."\n";
-print '<tr class="oddeven"><td width="300">'.$langs->trans("VersionLastUpgrade").'</td><td>'.getDolGlobalString('MAIN_VERSION_LAST_UPGRADE').'</td></tr>'."\n";
-print '<tr class="oddeven"><td width="300">'.$langs->trans("VersionProgram").'</td><td>'.DOL_VERSION;
+$htmltooltip = '';
+$htmltooltip .= $langs->trans("VersionLastInstall").': '.getDolGlobalString('MAIN_VERSION_LAST_INSTALL').'<br>'."\n";
+$htmltooltip .= $langs->trans("VersionLastUpgrade").': '.getDolGlobalString('MAIN_VERSION_LAST_UPGRADE').'<br>'."\n";
+
+print '<tr class="oddeven nohover"><td width="300">'.$langs->trans("VersionProgram").'</td><td>';
+print '<span class="valignmiddle">'.DOL_VERSION.'</span>';
 // If current version differs from last upgrade
 if (!getDolGlobalString('MAIN_VERSION_LAST_UPGRADE')) {
 	// Compare version with last install database version (upgrades never occurred)
@@ -82,6 +85,7 @@ if (!getDolGlobalString('MAIN_VERSION_LAST_UPGRADE')) {
 		print ' '.img_warning($langs->trans("RunningUpdateProcessMayBeRequired", DOL_VERSION, getDolGlobalString('MAIN_VERSION_LAST_UPGRADE')));
 	}
 }
+print ' '.$form->textwithpicto('', $htmltooltip);
 print '</td></tr>'."\n";
 print '</table>';
 print '</div>';
