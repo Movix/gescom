@@ -153,5 +153,32 @@ if (isset($totalarray['pos'])) {
 			}
 		}
 	}
+
+		// print breakdown totals
+	if (is_array($totalGroups)) {
+		foreach ($totalGroups as $period => $group) {
+			print '<tr class="liste_total" style="font-size:0.8em;">';
+			$i = 0;
+			while ($i < $totalarray['nbfield']) {
+				$i++;
+				if (array_key_exists($totalarray['pos'][$i], $group['val'])) {
+					print '<td class="right">';
+					print $group["val"][$totalarray['pos'][$i]];
+					print '</td>';
+				}
+				else {
+					if ($i == 1) {
+						print '<td>';
+						print $langs->trans($period."BreakdownTotal");
+						print '</td>';
+					}
+					else {
+						print '<td></td>';
+					}
+				}
+			}
+			print '</tr>';
+		}
+	}
 	//print '</tfoot>';
 }

@@ -700,3 +700,5 @@ TypeAmountOfEachNewDiscountSplit=Saisissez le montant pour chaque partie
 SplitDiscountTitle=Diviser la remise en plusieurs parties
 DisputeStatus=Litige état
 DisputeOpen=Litige ouvert
+monthlyBreakdownTotal=Total mensuel lissé
+yearlyBreakdownTotal=Total annuel lissé
