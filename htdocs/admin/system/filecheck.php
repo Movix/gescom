@@ -551,7 +551,7 @@ if (empty($error) && !empty($xml)) {
 			$resultcode = 'ok';
 			$resultcomment = 'Success';
 			$outcurrentchecksum = '<span class="'.$resultcode.'" title="Checksum of all current checksums concatenated separated by a comma">'.$checksumget.'</span>';
-			$outcurrentchecksumtext.= img_picto('', 'tick').' <span class="'.$resultcode.'">'.$langs->trans($resultcomment).'</span>';
+			$outcurrentchecksumtext.= img_picto('', 'tick').' <span class="badge badge-status4 badge-status '.$resultcode.'">'.$langs->trans($resultcomment).'</span>';
 		}
 	} else {
 		$resultcode = 'error';
@@ -617,7 +617,7 @@ if (empty($error) && !empty($xml)) {
 
 	print '<br>';
 	print $outforlistoffiles;
-	print '<br>';
+	print '<br><br>';
 
 
 	// Output detail
