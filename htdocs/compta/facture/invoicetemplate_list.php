@@ -205,6 +205,7 @@ $uploaddir = $conf->facture->dir_output;
 $result = restrictedArea($user, 'facture', $object->id, $objecttype);
 
 // initialise data array for breakdown totals
+global $totalGroups;
 $totalGroups = array(
 	"monthly" => array ("val" => array(
 		'f.total_ht' => 0,
