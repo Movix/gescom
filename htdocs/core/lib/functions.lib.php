@@ -8299,9 +8299,10 @@ function get_default_tva(Societe $thirdparty_seller, Societe $thirdparty_buyer, 
 	// If seller does not use VAT, default VAT is 0. End of rule.
 	if (!$seller_use_vat) {
 		//print 'VATRULE 1';
-		// TODO get the VAT Code of exemption asked into setup if country isInEEC (from an array list of possible values VATEX-EU-132-* or VATEX-FR-FRANCHISE).
+		// TODO get the VAT Code of exemption asked into setup if country isInEEC (from an array list of possible
+		// values like VATEX-EU-132-*, VATEX-FR-FRANCHISE, VATEX-EU-AE...
 		// When we had recorded it, we also added a corresponding entry into table of vat code if it does not exists yet.
-		// If entry for the VAT exemption code exists in llx_vat, we can return '0 (VATEX-EU-132-xx)'
+		// Here we test if entry for the VAT exemption code exists in llx_vat, we can return '0 (VATEX-EU-132-xx)'
 		// If not, we add it and we return '0 (VATEX-EU-132-xx)'
 		return 0;
 	}
