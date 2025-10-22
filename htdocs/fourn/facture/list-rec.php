@@ -192,12 +192,12 @@ $result = restrictedArea($user, 'supplier_invoicerec', $object->id, $objecttype)
 $totalGroups = array(
 	"monthly" => array(
 		"ht" => 0,
-		"tva" => 0,	
+		"tva" => 0,
 		"ttc" => 0
 	),
 	"yearly" => array(
 		"ht" => 0,
-		"tva" => 0,	
+		"tva" => 0,
 		"ttc" => 0
 	)
 );
@@ -876,9 +876,9 @@ while ($i < $imaxinloop) {
 	$totalGroups["monthly"]['val']['f.total_ht'] += 2628000 / $tmpPeriod * $supplierinvoicerectmp->total_ht;
 	$totalGroups["monthly"]['val']['f.total_tva'] += 2628000 / $tmpPeriod * $supplierinvoicerectmp->total_tva;
 	$totalGroups["monthly"]['val']['f.total_ttc'] += 2628000 / $tmpPeriod * $supplierinvoicerectmp->total_ttc;
-	$totalGroups["yearly"]['val']['f.total_ht'] = round($totalGroups["monthly"]['val']['f.total_ht'],2)*12;
-	$totalGroups["yearly"]['val']['f.total_tva'] = round($totalGroups["monthly"]['val']['f.total_tva'],2)*12;
-	$totalGroups["yearly"]['val']['f.total_ttc'] = round($totalGroups["monthly"]['val']['f.total_ttc'],2) * 12;
+	$totalGroups["yearly"]['val']['f.total_ht'] = round($totalGroups["monthly"]['val']['f.total_ht'], 2)*12;
+	$totalGroups["yearly"]['val']['f.total_tva'] = round($totalGroups["monthly"]['val']['f.total_tva'], 2)*12;
+	$totalGroups["yearly"]['val']['f.total_ttc'] = round($totalGroups["monthly"]['val']['f.total_ttc'], 2) * 12;
 
 	// Show here line of result
 	$j = 0;
@@ -1111,12 +1111,12 @@ while ($i < $imaxinloop) {
 }
 
 // Format breakdown totals
-$totalGroups["monthly"]['val']['f.total_ht'] = price(round($totalGroups["monthly"]['val']['f.total_ht'],2));
-$totalGroups["monthly"]['val']['f.total_tva'] = price(round($totalGroups["monthly"]['val']['f.total_tva'],2));
-$totalGroups["monthly"]['val']['f.total_ttc'] = price(round($totalGroups["monthly"]['val']['f.total_ttc'],2));
-$totalGroups["yearly"]['val']['f.total_ht'] = price(round($totalGroups["yearly"]['val']['f.total_ht'],2));
-$totalGroups["yearly"]['val']['f.total_tva'] = price(round($totalGroups["yearly"]['val']['f.total_tva'],2));
-$totalGroups["yearly"]['val']['f.total_ttc'] = price(round($totalGroups["yearly"]['val']['f.total_ttc'],2));
+$totalGroups["monthly"]['val']['f.total_ht'] = price(round($totalGroups["monthly"]['val']['f.total_ht'], 2));
+$totalGroups["monthly"]['val']['f.total_tva'] = price(round($totalGroups["monthly"]['val']['f.total_tva'], 2));
+$totalGroups["monthly"]['val']['f.total_ttc'] = price(round($totalGroups["monthly"]['val']['f.total_ttc'], 2));
+$totalGroups["yearly"]['val']['f.total_ht'] = price(round($totalGroups["yearly"]['val']['f.total_ht'], 2));
+$totalGroups["yearly"]['val']['f.total_tva'] = price(round($totalGroups["yearly"]['val']['f.total_tva'], 2));
+$totalGroups["yearly"]['val']['f.total_ttc'] = price(round($totalGroups["yearly"]['val']['f.total_ttc'], 2));
 
 // Show total line
 include DOL_DOCUMENT_ROOT.'/core/tpl/list_print_total.tpl.php';

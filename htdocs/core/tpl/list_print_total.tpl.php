@@ -165,14 +165,12 @@ if (isset($totalarray['pos'])) {
 					print '<td class="right">';
 					print $group["val"][$totalarray['pos'][$i]];
 					print '</td>';
-				}
-				else {
+				} else {
 					if ($i == 1) {
 						print '<td>';
 						print $langs->trans($period."BreakdownTotal");
 						print '</td>';
-					}
-					else {
+					} else {
 						print '<td></td>';
 					}
 				}
