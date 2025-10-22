@@ -52,8 +52,6 @@ require_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
  * @var User $user
  */
 
-/** @var array $totalGroups */
-
 // Load translation files required by the page
 $langs->loadLangs(array('bills', 'compta', 'admin', 'other', 'suppliers'));
 
@@ -191,8 +189,6 @@ $permissiontoedit = $user->hasRight('facture', 'creer'); // Used by the include 
 $result = restrictedArea($user, 'supplier_invoicerec', $object->id, $objecttype);
 
 // initialise data array for breakdown totals
-
-global $totalGroups;
 $totalGroups = array(
 	"monthly" => array ("val" => array(
 		'f.total_ht' => 0,
