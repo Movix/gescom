@@ -161,7 +161,7 @@ if (isset($totalarray['pos'])) {
 			$i = 0;
 			while ($i < $totalarray['nbfield']) {
 				$i++;
-				if (array_key_exists($totalarray['pos'][$i], $group['val'])) {
+				if (isset($totalarray['pos'][$i]) && array_key_exists($totalarray['pos'][$i], $group['val'])) {
 					print '<td class="right">';
 					print $group["val"][$totalarray['pos'][$i]];
 					print '</td>';

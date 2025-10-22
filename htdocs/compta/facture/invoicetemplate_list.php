@@ -206,16 +206,16 @@ $result = restrictedArea($user, 'facture', $object->id, $objecttype);
 
 // initialise data array for breakdown totals
 $totalGroups = array(
-	"monthly" => array(
-		"ht" => 0,
-		"tva" => 0,
-		"ttc" => 0
-	),
-	"yearly" => array(
-		"ht" => 0,
-		"tva" => 0,
-		"ttc" => 0
-	)
+	"monthly" => array ("val" => array(
+		'f.total_ht' => 0,
+		'f.total_tva' => 0,
+		'f.total_ttc' =>0
+	)),
+	"yearly" => array( "val" => array(
+		'f.total_ht' => 0,
+		'f.total_tva' => 0,
+		'f.total_ttc' =>0
+	))
 );
 
 /*
