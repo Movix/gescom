@@ -209,12 +209,12 @@ $totalGroups = array(
 	"monthly" => array ("val" => array(
 		'f.total_ht' => 0,
 		'f.total_tva' => 0,
-		'f.total_ttc' =>0
+		'f.total_ttc' => 0
 	)),
 	"yearly" => array( "val" => array(
 		'f.total_ht' => 0,
 		'f.total_tva' => 0,
-		'f.total_ttc' =>0
+		'f.total_ttc' => 0
 	))
 );
 
