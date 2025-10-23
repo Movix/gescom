@@ -25,11 +25,11 @@
  *
  * @var int	$trforbreaknobg
  * @var array{nbfield:int,type?:array<int,string>,pos?:array<int,string>,val?:array<int,float>} $totalarray
- * @var array{nbfield:int,type?:array<int,string>,pos?:array<int,string>,val?:array<int,float>} $totalGroups;
+ * @var array{period:string,val?:array<string,float>,} $totalGroups;
  */
 '
 @phan-var-force array{nbfield:int,type?:array<int,string>,pos?:array<int,string>,val?:array<int,float>} $totalarray
-@phan-var-force array{nbfield:int,type?:array<int,string>,pos?:array<int,string>,val?:array<int,float>} $totalGroups
+@phan-var-force array{period:int,val?:array<string,float>} $totalGroups
 @phan-var-force ?string $sqlfields
 ';
 
@@ -156,15 +156,17 @@ if (isset($totalarray['pos'])) {
 		}
 	}
 
-		// print breakdown totals
+	// print breakdown totals
+	/** @var array<string, array{val: array<string, float|int>}> $totalGroups */
 	if (is_array($totalGroups)) {
 		foreach ($totalGroups as $period => $group) {
+			/** @var array{val: float|string} $group */
 			print '<tr class="liste_total" style="font-size:0.8em;">';
 			$i = 0;
 			while ($i < $totalarray['nbfield']) {
 				$i++;
 				if (array_key_exists('val', $group)) {
-					$values = $group["val"];
+					$values = $group['val'];
 				} else {
 					$values = array();
 				}

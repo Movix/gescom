@@ -189,6 +189,7 @@ $permissiontoedit = $user->hasRight('facture', 'creer'); // Used by the include 
 $result = restrictedArea($user, 'supplier_invoicerec', $object->id, $objecttype);
 
 // initialise data array for breakdown totals
+
 $totalGroups = array(
 	"monthly" => array ("val" => array(
 		'f.total_ht' => 0,
