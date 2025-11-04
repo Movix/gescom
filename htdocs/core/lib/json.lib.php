@@ -118,7 +118,7 @@ function _val($val)
 	     */
 	    for ($c = 0; $c < $strlen_var; ++$c) {
 
-	        $ord_var_c = ord($val{$c});
+	        $ord_var_c = ord($val[$c]);
 
 	        switch (true) {
 	            case $ord_var_c == 0x08:
