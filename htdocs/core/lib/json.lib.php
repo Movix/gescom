@@ -141,7 +141,7 @@ function _val($val)
 	            case $ord_var_c == 0x2F:
 	            case $ord_var_c == 0x5C:
 	                // double quote, slash, slosh
-	                $ascii .= '\\'.$val{$c};
+	                $ascii .= '\\'.$val[$c];
 	                break;
 
 	            case (($ord_var_c >= 0x20) && ($ord_var_c <= 0x7F)):
