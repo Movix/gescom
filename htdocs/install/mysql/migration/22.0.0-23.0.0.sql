@@ -337,4 +337,6 @@ ALTER TABLE llx_accounting_bookkeeping_tmp ADD COLUMN matching_general tinyint D
 
 INSERT INTO llx_c_currencies ( code_iso, unicode, active, label ) VALUES ( 'CDF', '[70,67]', 1, 'Congolese Franc');
 
+ALTER TABLE llx_societe MODIFY COLUMN mode_reglement integer;
+
 -- end of migration
