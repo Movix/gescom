@@ -266,9 +266,16 @@ class modBlockedLog extends DolibarrModules
 		}
 
 		if ($b->alreadyUsed(1)) {
-			$res = $b->create($user, '0000000000'); // If already used for something else than SET or UNSET, we log with error
-			//$this->error = $langs->trans('DisablingBlockedLogIsNotallowedOnceUsedExceptOnFullreset', $langs->transnoentitiesnoconv('BlockedLog'));
-			return 0;
+			// Unalterable log was already used.
+			if (isALNEQualifiedVersion()) {
+				// Case we refuse to disable it
+				global $langs;
+				$this->error = $langs->trans('DisablingBlockedLogIsNotallowedOnceUsedExceptOnFullreset', $langs->transnoentitiesnoconv('BlockedLog'));
+				return 0;
+			} else {
+				// Case we disable it with a log
+				$res = $b->create($user, '0000000000'); // If already used for something else than SET or UNSET, we log with error
+			}
 		} else {
 			$res = $b->create($user);
 		}
