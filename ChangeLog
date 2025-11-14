@@ -115,8 +115,6 @@ FIX: wrong field name (#35728)
 FIX: wrong getEntiy element name (#35771)
 FIX: wrong number of categories by entity (#36111)
 FIX: wrong socpeople id when multiple assigned + avoid php warnings (#35878)
-NEW: Add option PROJECT_CAN_ALWAYS_LINK_TO_ALL_CUSTOMERS
-QUAL Remove duplicate code block (#35591)
 
 
 ***** ChangeLog for 22.0.2 compared to 22.0.1 *****
