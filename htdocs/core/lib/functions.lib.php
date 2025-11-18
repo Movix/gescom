@@ -298,6 +298,17 @@ function getDolCurrency()
 }
 
 /**
+ * Return the current entity
+ *
+ * @return 	int							Value returned
+ */
+function getDolEntity()
+{
+	global $conf;
+	return (int) $conf->entity;
+}
+
+/**
  * Return the default context page string
  *
  * @param	string		$s					Page path

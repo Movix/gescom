@@ -2864,7 +2864,7 @@ function htmlPrintOnlineFooter($fromcompany, $langs, $addformmessage = 0, $suffi
 	}
 	// Capital
 	if ($fromcompany->capital) {
-		$line1 .= ($line1 ? " - " : "") . $langs->transnoentities("CapitalOf", (string) $fromcompany->capital) . " " . $langs->transnoentities("Currency" . $conf->currency);
+		$line1 .= ($line1 ? " - " : "") . $langs->transnoentities("CapitalOf", (string) $fromcompany->capital) . " " . $langs->transnoentities("Currency" . getDolCurrency());
 	}
 	// Prof Id 1
 	if ($fromcompany->idprof1 && ($fromcompany->country_code != 'FR' || !$fromcompany->idprof2)) {
