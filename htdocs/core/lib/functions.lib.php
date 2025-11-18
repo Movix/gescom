@@ -1344,6 +1344,7 @@ function sanitizeVal($out = '', $check = 'alphanohtml', $filter = null, $options
 			}
 			break;
 		case 'san_alpha':
+			dol_syslog("Use of parameter value 'san_alpha' in GETPOST is deprecated. Use 'alphanohtml', 'aZ09comma', ...", LOG_WARNING);
 			$out = filter_var($out, FILTER_SANITIZE_STRING);
 			break;
 		case 'email':
