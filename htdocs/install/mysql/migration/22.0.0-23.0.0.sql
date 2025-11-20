@@ -366,4 +366,8 @@ CREATE TABLE llx_expensereport_det_extrafields
 	import_key                varchar(14)
 ) ENGINE=innodb;
 
+
+ALTER TABLE llx_blockedlog ADD INDEX idx_ref_object (ref_object);
+ALTER TABLE llx_blockedlog ADD CONSTRAINT fk_linktoref FOREIGN KEY (linktoref) REFERENCES llx_blockedlog(ref_object);
+
 -- end of migration
