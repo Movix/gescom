@@ -11988,7 +11988,7 @@ function dol_eval_standard($s, $hideerrors = 1, $onlysimplestring = '1')
 		$scheck = $s;
 		while ($scheck && $savescheck != $scheck) {
 			$savescheck = $scheck;
-			$scheck = preg_replace('/\$conf->[a-z]+->enabled/', '__VARCONFENABLED__', $scheck);		// Remove this once $user->module->enabled has been replaced everywhere with isModEnabled.
+			$scheck = preg_replace('/\$conf->[a-z\_]+->enabled/', '__VARCONFENABLED__', $scheck);		// Remove this once $user->module->enabled has been replaced everywhere with isModEnabled.
 			$scheck = preg_replace('/\$user->hasRight/', '__VARUSERHASRIGHT__', $scheck);
 			$scheck = preg_replace('/\$user->rights/', '__VARUSERHASRIGHT__', $scheck);		// Remove this once $user->rights->xxx is removed everywhere.
 			$scheck = preg_replace('/\(\$db\)/', '__VARDB__', $scheck);
