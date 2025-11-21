@@ -334,7 +334,7 @@ function LoadProducts(position, issubcat) {
 
 	// Get socid
 	let socid = jQuery('#thirdpartyid').val();
-	if ((socid === undefined || socid === "") && parseInt("<?= $socid ?>") > 0) {
+	if ((socid === undefined || socid === "") && parseInt("<?php echo $socid ?>") > 0) {
 		socid = parseInt("<?= $socid ?>");
 	}
 
@@ -449,7 +449,7 @@ function MoreProducts(moreorless) {
 
 	// Get socid
 	let socid = jQuery('#thirdpartyid').val();
-	if ((socid === undefined || socid === "") && parseInt("<?= $socid ?>") > 0) {
+	if ((socid === undefined || socid === "") && parseInt("<?php echo $socid ?>") > 0) {
 		socid = parseInt("<?= $socid ?>");
 	}
 
@@ -681,7 +681,7 @@ function Search2(keyCodeForEnter, moreorless) {
 
 			// Only show products for sale (tosell=1)
 			let socid = jQuery('#thirdpartyid').val();
-			if ((socid === undefined || socid === "") && parseInt("<?= $socid ?>") > 0) {
+			if ((socid === undefined || socid === "") && parseInt("<?php echo $socid ?>") > 0) {
 				socid = parseInt("<?= $socid ?>");
 			}
 
