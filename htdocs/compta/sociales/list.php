@@ -521,21 +521,21 @@ if (!empty($arrayfields['p.ref']['checked'])) {
 if (!empty($arrayfields['cs.fk_user']['checked'])) {
 	// Employee
 	print '<td class="liste_titre">';
-	print $form->select_dolusers($search_users, 'search_users', 1, null, 0, '', '', '0', 0, 0, '', 0, '', 'maxwidth150', 0, 0, true);
+	print $form->select_dolusers($search_users, 'search_users', 1, null, 0, '', '', '0', 0, 0, '', 0, '', 'maxwidth125', 0, 0, true);
 	print '</td>';
 }
 
 // Filter: Type
 if (!empty($arrayfields['cs.fk_mode_reglement']['checked'])) {
 	print '<td class="liste_titre">';
-	print $form->select_types_paiements($search_type, 'search_type', '', 0, 1, 1, 0, 1, 'maxwidth150', 1);
+	print $form->select_types_paiements($search_type, 'search_type', '', 0, 1, 1, 0, 1, 'maxwidth125', 1);
 	print '</td>';
 }
 
 // Filter: Bank Account
 if (!empty($arrayfields['cs.fk_account']['checked'])) {
 	print '<td class="liste_titre">';
-	$form->select_comptes($search_account, 'search_account', 0, '', 1, '', 0, 'maxwidth150');
+	$form->select_comptes($search_account, 'search_account', 0, '', 1, '', 0, 'maxwidth125');
 	print '</td>';
 }
 
