@@ -218,6 +218,13 @@ class Contracts extends DolibarrApi
 		if ($thirdparty_result < 1) {
 			throw new RestException(404, 'Thirdparty with id='.$socid.' not found or not allowed');
 		}
+		if (!DolibarrApi::_checkAccessToResource('societe', $thirdpartytmp->id)) {
+			throw new RestException(404, 'Thirdparty with id='.$thirdpartytmp->id.' not found or not allowed');
+		}
+
+		dol_syslog("socid=".$socid);
+		dol_syslog("thirdparty_result=".$thirdparty_result);
+		dol_syslog("thirdpartytmp->id=".$thirdpartytmp->id);
 
 		// Check mandatory fields
 		$result = $this->_validate($request_data);
