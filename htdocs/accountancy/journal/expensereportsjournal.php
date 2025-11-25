@@ -383,6 +383,7 @@ if ($action == 'writebookkeeping' && !$error && $user->hasRight('accounting', 'b
 						$bookkeeping->label_compte = $account_label;
 
 						$bookkeeping->label_operation = $bookkeepingstatic->accountingLabelForOperation($userstatic->name, '', $account_label);
+
 						$bookkeeping->montant = $mt;
 						$bookkeeping->sens = ($mt < 0) ? 'C' : 'D';
 						$bookkeeping->debit = ($mt > 0) ? $mt : 0;
