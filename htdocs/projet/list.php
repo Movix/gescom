@@ -1136,12 +1136,12 @@ if ($search_date_modif_end) {
 }
 if (!empty($search_category_user_array)) {
 	foreach ($search_category_user_array as $tmpval) {
-		$param .= '&search_categegory_user_list[]='.urlencode($tmpval);
+		$param .= '&search_category_user_list[]='.urlencode($tmpval);
 	}
 }
 if (!empty($search_category_array)) {
 	foreach ($search_category_array as $tmpval) {
-		$param .= '&search_categegory_project_list[]='.urlencode($tmpval);
+		$param .= '&search_category_project_list[]='.urlencode($tmpval);
 	}
 }
 if (!empty($searchCategoryCustomerList)) {
