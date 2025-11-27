@@ -1024,11 +1024,11 @@ class Form
 					$countryArray[$i]
 						= array(
 							'rowid' => (int) $obj->rowid,
-							'code_iso' => $obj->code_iso,
-							'code_iso3' => $obj->code_iso3,
-							'label' => ($obj->code_iso && $langs->transnoentitiesnoconv("Country" . $obj->code_iso) != "Country" . $obj->code_iso ? $langs->transnoentitiesnoconv("Country" . $obj->code_iso) : ($obj->label != '-' ? $obj->label : '')),
-							'favorite' => $obj->favorite,
-							'eec' => $obj->eec,
+							'code_iso' => (string) $obj->code_iso,
+							'code_iso3' => (string) $obj->code_iso3,
+							'label' => (string) ($obj->code_iso && $langs->transnoentitiesnoconv("Country" . $obj->code_iso) != "Country" . $obj->code_iso ? $langs->transnoentitiesnoconv("Country" . $obj->code_iso) : ($obj->label != '-' ? $obj->label : '')),
+							'favorite' => (string) $obj->favorite,
+							'eec' => (string) $obj->eec,
 						);
 					$favorite[$i] = $obj->favorite;
 					$label[$i] = dol_string_unaccent($countryArray[$i]['label']);
@@ -4753,6 +4753,7 @@ class Form
 		if ($resql) {
 			$num = $this->db->num_rows($resql);
 			$i = 0;
+			/** @var array<int,array{id:int,code:string,label:string}> */
 			$tmparray = array();
 			while ($i < $num) {
 				$obj = $this->db->fetch_object($resql);
@@ -4769,7 +4770,7 @@ class Form
 				$tmparray[(int) $obj->rowid]
 					= array(
 						'id'    => (int) $obj->rowid,
-						'code'  => $obj->code,
+						'code'  => (string) $obj->code,
 						'label' => $label,
 					);
 				$i++;
@@ -5236,8 +5237,8 @@ class Form
 				$this->cache_transport_mode[(int) $obj->rowid]
 					= array(
 						'rowid'  => (int) $obj->rowid,
-						'code'   => $obj->code,
-						'label'  => $label,
+						'code'   => (string) $obj->code,
+						'label'  => (string) $label,
 						'active' => (int) $obj->active,
 					);
 				$i++;
