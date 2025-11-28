@@ -4320,7 +4320,8 @@ if ($action == 'create') {
 					print '<div id="credit_note_options" class="clearboth paddingtop marginbottomonly">';
 					print '<div class="marginleftlargeondesktop"><input type="checkbox" name="invoiceAvoirWithLines" id="invoiceAvoirWithLines" value="1" onclick="$(\'#credit_note_options input[type=checkbox]\').not(this).prop(\'checked\', false);" '.(GETPOSTINT('invoiceAvoirWithLines') > 0 ? 'checked' : '').' /> <label for="invoiceAvoirWithLines" class="small">'.$langs->trans('invoiceAvoirWithLines')."</label></div>";
 					print '<div class="marginleftlargeondesktop"><input type="checkbox" name="invoiceAvoirWithPaymentRestAmount" id="invoiceAvoirWithPaymentRestAmount" value="1" onclick="$(\'#credit_note_options input[type=checkbox]\').not(this).prop(\'checked\', false);" '.(GETPOSTINT('invoiceAvoirWithPaymentRestAmount') > 0 ? 'checked' : '').' /> <label for="invoiceAvoirWithPaymentRestAmount" class="small">'.$langs->trans('invoiceAvoirWithPaymentRestAmount')."</label></div>";
-					// TODO Add a checkbox: "Automatically consume the credit note to close the corrected invoice"
+					// Adding a checkbox: "Automatically consume the credit note to close the corrected invoice" is better to be into
+					// the confirm popup when we validate the credit note
 					print '</div>';
 
 					print '</div></div>'."\n";
