@@ -508,6 +508,7 @@ class FormFile
 
 		$printer = 0;
 		$supportedmoduleparts = [
+			'company',
 			'member',
 			'product',
 			'stock',
