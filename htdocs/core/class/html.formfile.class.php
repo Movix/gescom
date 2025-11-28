@@ -524,6 +524,7 @@ class FormFile
 			'commande',
 			'expedition',
 			'commande_fournisseur',
+			'facture_fournisseur',
 			'expensereport',
 			'delivery',
 			'ticket',
