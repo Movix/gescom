@@ -217,18 +217,27 @@ function showDirectPublicLink($object)
 }
 
 /**
- *  Generate a random id
+ * Generate a random id
  *
- *  @param  int 	$car 	Length of string to generate key
- *  @return string
+ * @param  int     $car   Length of string to generate key
+ * @return string
  */
 function generate_random_id($car = 16)
 {
 	$string = "";
 	$chaine = "abcdefghijklmnopqrstuvwxyz123456789";
-	mt_srand((int) ((float) microtime() * 1000000));
+	$max = strlen($chaine) - 1;
+
 	for ($i = 0; $i < $car; $i++) {
-		$string .= $chaine[mt_rand() % strlen($chaine)];
+		try {
+			// Cela ne dépend PAS de microtime() et ne nécessite pas de srand/seed.
+			$key = random_int(0, $max);
+		} catch (\Exception $e) {
+			// Fallback de secours extrême si la source d'entropie système est illisible
+			// On laisse PHP gérer le seeding automatiquement ici (plus de mt_srand manuel)
+			$key = mt_rand(0, $max);
+		}
+		$string .= $chaine[$key];
 	}
 	return $string;
 }
