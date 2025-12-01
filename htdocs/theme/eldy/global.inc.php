@@ -1241,6 +1241,9 @@ td.wordbreak img, td.wordbreakimp img {
 .marginleftlarge {
 	margin-<?php print $left; ?>: 20px !important;
 }
+.marginleftlargeondesktop {
+	margin-<?php print $left; ?>: 20px;
+}
 .paddinglarge {
 	padding: 6px !important;
 }
@@ -2278,6 +2281,10 @@ datalist {
 {
 	div.refidno {
 		font-size: <?php print is_numeric($fontsize) ? ((int) $fontsize + 3).'px' : $fontsize; ?> !important;
+	}
+
+	.marginleftlargeondesktop {
+		margin-<?php print $left; ?>: 0;
 	}
 
 	div#login_left, div#login_right {
@@ -4434,7 +4441,7 @@ td.border, div.tagtable div div.border {
 .nobordertop, .nobordertop tr:first-of-type td {
 	border-top: none !important;
 }
-.noborderbottom, .noborderbottom tr:last-of-type td {
+.noborderbottom, tr.noborderbottom td, .noborderbottom tr:last-of-type td {
 	border-bottom: none !important;
 }
 .bordertop {
