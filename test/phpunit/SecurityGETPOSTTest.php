@@ -129,7 +129,6 @@ class SecurityGETPOSTTest extends CommonClassTest
 		$_GET["param20"] = '<link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />';
 
 
-
 		$result = GETPOST('id', 'int');              // Must return nothing
 		print __METHOD__." result=".$result."\n";
 		$this->assertEquals('', $result);
@@ -316,6 +315,13 @@ class SecurityGETPOSTTest extends CommonClassTest
 		$conf->global->MAIN_RESTRICTHTML_ONLY_VALID_HTML = 1;
 		$conf->global->MAIN_RESTRICTHTML_ONLY_VALID_HTML_TIDY = 0;
 
+		$_POST["pagecontentwithaconstantvarinurl"] = '<a href="https://[__aaa__]/aaa.html">https://[__aaa__]/aaa.html</a>';
+		$result = GETPOST("pagecontentwithaconstantvarinurl", 'restricthtml');
+		print __METHOD__." result=".$result."\n";
+		$this->assertEquals('<a href="https://[__aaa__]/aaa.html">https://[__aaa__]/aaa.html</a>', $result, 'Test on HTML content with url with constant');
+
+
+
 		//$_POST["param0"] = 'A real string with <a href="rrr" title="aabb">aaa</a> and " inside content';
 		$result = GETPOST("param0", 'restricthtml');
 		$resultexpected = 'A real string with <a href="rrr" title=\'aa"bb\'>aaa</a> and " and \' and &amp; inside content';
@@ -456,6 +462,7 @@ class SecurityGETPOSTTest extends CommonClassTest
 		print __METHOD__." result=".$result."\n";
 		$this->assertEquals('x3aalert(1)', $result, 'Test for backtopage param');
 
+		// Test with restricthtml + MAIN_SECURITY_MAX_IMG_IN_HTML_CONTENT to test limit of external links
 
 		$conf->global->MAIN_SECURITY_MAX_IMG_IN_HTML_CONTENT = 3;
 		$_POST["pagecontentwithlinks"] = '<img src="aaa"><img src="bbb"><img src="/ccc"><span style="background: url(/ddd)"></span>';
@@ -497,7 +504,6 @@ class SecurityGETPOSTTest extends CommonClassTest
 		$result = GETPOST("pagecontentwithnowrapperlinks", 'restricthtml');
 		print __METHOD__." result=".$result."\n";
 		$this->assertEquals('ErrorHTMLExternalLinksNotAllowed (Example: http://ddd)', $result, 'Test on MAIN_DISALLOW_URL_INTO_DESCRIPTIONS = 1 (no links to http allowed)');
-
 
 		// Test substitution in GET url
 		$user->fk_user = 999;
