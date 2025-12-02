@@ -754,12 +754,13 @@ if (empty($reshook) && $action == 'add' && $usercancreate) {
 				$firstday = $selectedrecurrulebymonthday;
 				$firstmonth = GETPOST("apday") > $selectedrecurrulebymonthday ? GETPOSTINT("apmonth") + 1 : GETPOSTINT("apmonth");//We begin the month after
 				$datep = dol_mktime($fulldayevent ? 0 : GETPOSTINT("aphour"), $fulldayevent ? 0 : GETPOSTINT("apmin"), $fulldayevent ? 0 : GETPOSTINT("apsec"), $firstmonth, $firstday, GETPOSTINT("apyear"), $tzforfullday ? $tzforfullday : 'tzuserrel');
+				$datep = dol_time_plus_duree($datep, 1, 'm');//We begin the month after
 				$dayoffset = 0;
 				$monthoffset = 1;
 				$yearoffset = 0;
 			} elseif ($selectedrecurrulefreq == 'YEARLY' && !empty($selectedrecurrulebyyearmonthday)) {
 				$datep = dol_mktime($fulldayevent ? 0 : GETPOSTINT("aphour"), $fulldayevent ? 0 : GETPOSTINT("apmin"), $fulldayevent ? 0 : GETPOSTINT("apsec"), GETPOSTINT("apmonth"), GETPOSTINT("apday"), GETPOSTINT("apyear"), $tzforfullday ? $tzforfullday : 'tzuserrel');
-				$datep = dol_time_plus_duree($datep, 1, 'y');//We begin the week after
+				$datep = dol_time_plus_duree($datep, 1, 'y');//We begin the year after
 				$dayoffset = 0;
 				$monthoffset = 0;
 				$yearoffset = 1;
@@ -771,14 +772,6 @@ if (empty($reshook) && $action == 'add' && $usercancreate) {
 			$deltatime = num_between_day($object->datep, $datep);
 			// @phan-suppress-next-line PhanPluginSuspiciousParamOrder
 			$datef = dol_time_plus_duree($datef, $deltatime, 'd');
-
-			// increment date for recurrent events
-			$datep = dol_time_plus_duree($datep, $dayoffset, 'd');
-			$datep = dol_time_plus_duree($datep, $monthoffset, 'm');  // @phan-suppress-current-line PhanPluginSuspiciousParamOrder
-			$datep = dol_time_plus_duree($datep, $yearoffset, 'y');  // @phan-suppress-current-line PhanPluginSuspiciousParamOrder
-			$datef = dol_time_plus_duree($datef, $dayoffset, 'd');
-			$datef = dol_time_plus_duree($datef, $monthoffset, 'm');  // @phan-suppress-current-line PhanPluginSuspiciousParamOrder
-			$datef = dol_time_plus_duree($datef, $yearoffset, 'y');  // @phan-suppress-current-line PhanPluginSuspiciousParamOrder
 
 			while ($datep <= $repeateventlimitdate && !$error) {
 				$finalobject = clone $object;
