@@ -995,7 +995,12 @@ class FactureLigne extends CommonInvoiceLine
 			// state at the previous situation (if applicable).
 			$prevProgress = $this->get_prev_progress($this->fk_facture);
 
-			return ($this->situation_percent - $prevProgress) / 100;
+			if ($this->situation_percent == 0) {
+				// should not happen
+				return 0;
+			}
+
+			return ($this->situation_percent - $prevProgress) / $this->situation_percent;
 		}
 		// new mode (INVOICE_USE_SITUATION == 2):
 		// no ratio needed (data stored on line is already a delta)
