@@ -536,7 +536,7 @@ class Tasks extends DolibarrApi
 	 *
 	 * @url	GET {id}/getTimeSpent/{timespent_id}
 	 *
-	 * @return	array|mixed                         data without useless information
+	 * @return	Object                      data without useless information
 	 *
 	 * @throws	RestException
 	 */
