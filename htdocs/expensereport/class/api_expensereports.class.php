@@ -721,6 +721,9 @@ class ExpenseReports extends DolibarrApi
 		if ($result < 0) {
 			throw new RestException(500, 'Error when cancelling expense report: '.$this->expensereport->error);
 		}
+
+		$result = $this->expensereport->fetch($id);
+		return $this->_cleanObjectDatas($this->expensereport);
 	}
 
 	/**
