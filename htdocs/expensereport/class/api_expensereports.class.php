@@ -291,7 +291,9 @@ class ExpenseReports extends DolibarrApi
 	/**
 	 * Add a line to an expense report
 	 *
-	 * @param	int		$id				ID of expense report to update
+	 * @since	23.0.0	Initial implementation
+	 *
+	 * @param	int		$id				ID of the expense report to update
 	 * @param	array	$request_data	Expense Report line data
 	 * @phan-param ?array<string,mixed> $request_data
 	 * @phpstan-param ?array<string,mixed> $request_data
