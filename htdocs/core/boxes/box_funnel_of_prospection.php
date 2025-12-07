@@ -280,8 +280,8 @@ class box_funnel_of_prospection extends ModeleBoxes
 					$dolgraph->setBorderWidth(2);
 					$dolgraph->setBorderSkip('false');
 					$dolgraph->SetType(array('horizontalbars'));
-					$dolgraph->SetHeight('200');
-					$dolgraph->SetWidth('600');
+					$dolgraph->SetHeight('150');
+					$dolgraph->SetWidth($conf->dol_optimize_smallscreen ? '300' : '600');
 					$dolgraph->setTooltipsTitles($liststatus);
 					$dolgraph->setTooltipsLabels($customlabels);
 					$dolgraph->mode = 'depth';
