@@ -434,7 +434,7 @@ function getNextFiscalYear($db, $after_date, $gm = 'tzserver')
 		$obj = $db->fetch_object($res);
 
 		$date_start = $db->jdate($obj->date_start, $gm);
-		$date_end = $db->jdate($obj->date_end, $gm);  // Sans dol_get_last_hour pour éviter le bug
+		$date_end = $db->jdate($obj->date_end, $gm);  // Without dol_get_last_hour to avoid the bug
 
 		return array(
 			'date_start' => $date_start,
