@@ -490,7 +490,7 @@ class Holidays extends DolibarrApi
 	 */
 	public function refuse($id, $detail_refuse, $notrigger = 0)
 	{
-		if (!DolibarrApiAccess::$user->hasRight('holiday', 'write')) {
+		if (!DolibarrApiAccess::$user->hasRight('holiday', 'approve')) {
 			throw new RestException(403, "Insufficient rights");
 		}
 		
