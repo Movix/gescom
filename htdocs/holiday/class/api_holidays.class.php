@@ -365,7 +365,7 @@ class Holidays extends DolibarrApi
 		if (!DolibarrApi::_checkAccessToResource('holiday', $this->holiday->id)) {
 			throw new RestException(403, 'Access not allowed for login '.DolibarrApiAccess::$user->login);
 		}
-		
+	
 		$this->holiday->status = Holiday::STATUS_VALIDATED;
 		$result = $this->holiday->validate(DolibarrApiAccess::$user, $notrigger);
 		if ($result == 0) {
@@ -448,7 +448,7 @@ class Holidays extends DolibarrApi
 		if (!DolibarrApiAccess::$user->hasRight('holiday', 'write')) {
 			throw new RestException(403, "Insufficient rights");
 		}
-	
+
 		$result = $this->holiday->fetch($id);
 		if (!$result) {
 			throw new RestException(404, 'Holiday not found');
@@ -495,7 +495,7 @@ class Holidays extends DolibarrApi
 		if (!DolibarrApiAccess::$user->hasRight('holiday', 'approve')) {
 			throw new RestException(403, "Insufficient rights");
 		}
-	
+
 		$result = $this->holiday->fetch($id);
 		if (!$result) {
 			throw new RestException(404, 'Holiday not found');
@@ -545,7 +545,7 @@ class Holidays extends DolibarrApi
 		if (!DolibarrApiAccess::$user->hasRight('holiday', 'write')) {
 			throw new RestException(403, "Insufficient rights");
 		}
-	
+
 		$result = $this->holiday->fetch($id);
 		if (!$result) {
 			throw new RestException(404, 'Holiday not found');
