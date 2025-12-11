@@ -54,11 +54,6 @@ class mailing_thirdparties_services_expired extends MailingTargets
 	 */
 	public $picto = 'company';
 
-	/**
-	 * @var array<int,string>
-	 */
-	//public $arrayofproducts = array();
-
 
 	/**
 	 *	Constructor
