@@ -785,7 +785,7 @@ class Documents extends DolibarrApi
 	 *
 	 * @param   string  $filename           	Name of file to create ('FA1705-0123.txt')
 	 * @param   string  $modulepart         	Name of module or area concerned by file upload ('product', 'service', 'invoice', 'proposal', 'project', 'project_task', 'supplier_invoice', 'expensereport', 'member', ...)
-	 * @param   string  $ref                	Reference of object (This will define subdir automatically and store submitted file into it)
+	 * @param   string  $ref                	Reference of object (This will define subdir automatically and store submitted file into it). For third party use object ID not name.
 	 * @param   string  $subdir       			Subdirectory (Only if $ref is not provided)
 	 * @param   string  $filecontent        	File content (string with file content. An empty file will be created if this parameter is not provided)
 	 * @param   string  $fileencoding       	File encoding (''=no encoding, 'base64'=Base 64)
@@ -965,7 +965,11 @@ class Documents extends DolibarrApi
 
 			// Test on permissions
 			//if ($modulepart != 'ecm') {	// Here $modulepart is always != 'ecm'
-			$relativefile = $tmpreldir.dol_sanitizeFileName($object->ref);
+			if ($modulepart == 'societe') {
+				$relativefile = $tmpreldir.dol_sanitizeFileName((string) $object->id);
+			} else {
+				$relativefile = $tmpreldir.dol_sanitizeFileName($object->ref);
+			}
 			$tmp = dol_check_secure_access_document($modulepart, $relativefile, $entity, DolibarrApiAccess::$user, $ref, 'write');
 			$upload_dir = $tmp['original_file']; // No dirname here, tmp['original_file'] is already the dir because dol_check_secure_access_document was called with param original_file that is only the dir
 			/*} else {
