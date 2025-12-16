@@ -118,4 +118,4 @@ Scope is the web application (backoffice) and the APIs.
 
 ## Be informed of a new vulnerability
 
-You can get more information on how to be informed on a new vulnerability on the page [https://wiki.dolibarr.org/index.php/Informations_s%C3%A9curit%C3%A9](https://wiki.dolibarr.org/index.php/Security_information)
+You can get more information on how to be informed on a new vulnerability on the page https://wiki.dolibarr.org/index.php/Security_information
