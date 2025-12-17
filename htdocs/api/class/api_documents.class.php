@@ -327,7 +327,7 @@ class Documents extends DolibarrApi
 			if ($result <= 0) {
 				throw new RestException(500, 'Error generating document missing doctemplate parameter');
 			}
-		} elseif ($modulepart == 'stock') {
+		} elseif ($modulepart == 'stock' || $modulepart == 'entrepot') {
 			require_once DOL_DOCUMENT_ROOT . '/product/stock/class/entrepot.class.php';
 
 			$tmpobject = new Entrepot($this->db);
