@@ -11474,7 +11474,7 @@ class Form
 	}
 
 	/**
-	 *    Return HTML to show the search and clear search button
+	 * Return HTML to show the search and clear search button
 	 *
 	 * @param int $addcheckuncheckall Add the check all/uncheck all checkbox (use javascript) and code to manage this
 	 * @param string $cssclass CSS class
@@ -11589,10 +11589,10 @@ class Form
 	/**
 	 * Return HTML to show the select ranges of expense range
 	 *
-	 * @param string $selected preselected category
-	 * @param string $htmlname name of HTML select list
-	 * @param integer $useempty 1=Add empty line
-	 * @return    string
+	 * @param 	string 	$selected 	Preselected category
+	 * @param 	string 	$htmlname 	Name of HTML select list
+	 * @param 	integer	$useempty 	1=Add empty line
+	 * @return  string
 	 */
 	public function selectExpenseRanges($selected = '', $htmlname = 'fk_range', $useempty = 0)
 	{
@@ -11630,7 +11630,7 @@ class Form
 	 * @param integer $useid 0=use 'code' as key, 1=use 'id' as key
 	 * @return    string
 	 */
-	public function selectExpense($selected = '', $htmlname = 'fk_c_type_fees', $useempty = 0, $allchoice = 1, $useid = 0)
+	public function selectExpenseFees($selected = '', $htmlname = 'fk_c_type_fees', $useempty = 0, $allchoice = 1, $useid = 0)
 	{
 		global $langs;
 
@@ -11669,7 +11669,8 @@ class Form
 	}
 
 	/**
-	 *  Output a combo list with invoices qualified for a third party
+	 * Output a combo list with invoices qualified for a third party
+	 * TODO Bad method. This is used by viewcat.php. We must use a generic method in viewcat to use an ajax search ad remove this one that download all the database.
 	 *
 	 * @param int $socid Id third party (-1=all, 0=only projects not linked to a third party, id=projects not linked or linked to third party id)
 	 * @param string $selected Id invoice preselected
@@ -11711,14 +11712,13 @@ class Form
 		}
 
 		// Search all projects
-		$sql = "SELECT f.rowid, f.ref as fref, 'nolabel' as flabel, p.rowid as pid, f.ref,
-            p.title, p.fk_soc, p.fk_statut, p.public,";
+		$sql = "SELECT f.rowid, f.ref as fref, 'nolabel' as flabel, p.rowid as pid, f.ref, p.title, p.fk_soc, p.fk_statut, p.public,";
 		$sql .= ' s.nom as name';
 		$sql .= ' FROM ' . $this->db->prefix() . 'projet as p';
 		$sql .= ' LEFT JOIN ' . $this->db->prefix() . 'societe as s ON s.rowid = p.fk_soc,';
 		$sql .= ' ' . $this->db->prefix() . 'facture as f';
 		$sql .= " WHERE p.entity IN (" . getEntity('project') . ")";
-		$sql .= " AND f.fk_projet = p.rowid AND f.fk_statut=0"; //Brouillons seulement
+		$sql .= " AND f.fk_projet = p.rowid AND f.fk_statut = 0"; // Draft only
 		//if ($projectsListId) $sql.= " AND p.rowid IN (".$this->db->sanitize($projectsListId).")";
 		//if ($socid == 0) $sql.= " AND (p.fk_soc=0 OR p.fk_soc IS NULL)";
 		//if ($socid > 0)  $sql.= " AND (p.fk_soc=".((int) $socid)." OR p.fk_soc IS NULL)";
@@ -11821,7 +11821,8 @@ class Form
 	}
 
 	/**
-	 *  Output a combo list with invoices qualified for a third party
+	 * Output a combo list with invoices qualified for a third party
+	 * TODO Bad method. This is used by viewcat.php. We must use a generic method in viewcat to use an ajax search ad remove this one that download all the database.
 	 *
 	 * @param string $selected Id invoice preselected
 	 * @param string $htmlname Name of HTML select
@@ -11842,7 +11843,6 @@ class Form
 		dol_syslog('FactureRec::fetch', LOG_DEBUG);
 
 		$sql = 'SELECT f.rowid, f.entity, f.titre as title, f.suspended, f.fk_soc';
-		//$sql.= ', el.fk_source';
 		$sql .= ' FROM ' . MAIN_DB_PREFIX . 'facture_rec as f';
 		$sql .= " WHERE f.entity IN (" . getEntity('invoice') . ")";
 		$sql .= " ORDER BY f.titre ASC";
@@ -11918,6 +11918,7 @@ class Form
 
 	/**
 	 * Output a combo list with orders qualified for a third party
+	 * TODO Bad method. This is used by viewcat.php. We must use a generic method in viewcat to use an ajax search ad remove this one that download all the database.
 	 *
 	 * @param string	$selected		Id order preselected
 	 * @param string	$htmlname		Name of HTML select
@@ -11933,7 +11934,7 @@ class Form
 	 */
 	public function selectOrder($selected = '', $htmlname = 'orderid', $maxlength = 24, $option_only = 0, $show_empty = '1', $discard_closed = 0, $forcefocus = 0, $disabled = 0, $morecss = 'maxwidth500')
 	{
-		global $user, $conf, $langs;
+		global $conf;
 
 		$out = '';
 
@@ -12020,23 +12021,24 @@ class Form
 	}
 
 	/**
-	 *  Output a combo list with supplier orders qualified for a third party
+	 * Output a combo list with supplier orders qualified for a third party
+	 * TODO Bad method. This is used by viewcat.php. We must use a generic method in viewcat to use an ajax search ad remove this one that download all the database.
 	 *
-	 *  @param  string	$selected   	Id supplier order preselected
-	 *  @param  string	$htmlname   	Name of HTML select
-	 *	@param	int		$maxlength		Maximum length of label
-	 *	@param	int		$option_only	Return only html options lines without the select tag
-	 *	@param	string	$show_empty		Add an empty line ('1' or string to show for empty line)
-	 *  @param	int		$discard_closed Discard closed projects (0=Keep,1=hide completely,2=Disable)
-	 *  @param	int		$forcefocus		Force focus on field (works with javascript only)
-	 *  @param	int		$disabled		Disabled
-	 *  @param	string	$morecss        More css added to the select component
+	 * @param  string	$selected   	Id supplier order preselected
+	 * @param  string	$htmlname   	Name of HTML select
+	 * @param	int		$maxlength		Maximum length of label
+	 * @param	int		$option_only	Return only html options lines without the select tag
+	 * @param	string	$show_empty		Add an empty line ('1' or string to show for empty line)
+	 * @param	int		$discard_closed Discard closed projects (0=Keep,1=hide completely,2=Disable)
+	 * @param	int		$forcefocus		Force focus on field (works with javascript only)
+	 * @param	int		$disabled		Disabled
+	 * @param	string	$morecss        More css added to the select component
 	 *
-	 *	@return int         			Nbr of project if OK, <0 if KO
+	 * @return int         			Nbr of project if OK, <0 if KO
 	 */
 	public function selectSupplierOrder($selected = '', $htmlname = 'supplierorderid', $maxlength = 24, $option_only = 0, $show_empty = '1', $discard_closed = 0, $forcefocus = 0, $disabled = 0, $morecss = 'maxwidth500')
 	{
-		global $user, $conf, $langs;
+		global $conf;
 
 		$out = '';
 
@@ -12123,23 +12125,24 @@ class Form
 	}
 
 	/**
-	 *  Output a combo list with supplier invoices qualified for a third party
+	 * Output a combo list with supplier invoices qualified for a third party
+	 * TODO Bad method. This is used by viewcat.php. We must use a generic method in viewcat to use an ajax search ad remove this one that download all the database.
 	 *
-	 *  @param  string	$selected   	Id supplier order preselected
-	 *  @param  string	$htmlname   	Name of HTML select
-	 *	@param	int		$maxlength		Maximum length of label
-	 *	@param	int		$option_only	Return only html options lines without the select tag
-	 *	@param	string	$show_empty		Add an empty line ('1' or string to show for empty line)
-	 *  @param	int		$discard_closed Discard closed projects (0=Keep,1=hide completely,2=Disable)
-	 *  @param	int		$forcefocus		Force focus on field (works with javascript only)
-	 *  @param	int		$disabled		Disabled
-	 *  @param	string	$morecss        More css added to the select component
+	 * @param  string	$selected   	Id supplier order preselected
+	 * @param  string	$htmlname   	Name of HTML select
+	 * @param	int		$maxlength		Maximum length of label
+	 * @param	int		$option_only	Return only html options lines without the select tag
+	 * @param	string	$show_empty		Add an empty line ('1' or string to show for empty line)
+	 * @param	int		$discard_closed Discard closed projects (0=Keep,1=hide completely,2=Disable)
+	 * @param	int		$forcefocus		Force focus on field (works with javascript only)
+	 * @param	int		$disabled		Disabled
+	 * @param	string	$morecss        More css added to the select component
 	 *
-	 *	@return int         			Nbr of project if OK, <0 if KO
+	 * @return int         			Nbr of project if OK, <0 if KO
 	 */
 	public function selectSupplierInvoice($selected = '', $htmlname = 'supplierinvoiceid', $maxlength = 24, $option_only = 0, $show_empty = '1', $discard_closed = 0, $forcefocus = 0, $disabled = 0, $morecss = 'maxwidth500')
 	{
-		global $user, $conf, $langs;
+		global $conf;
 
 		$out = '';
 
@@ -12225,8 +12228,9 @@ class Form
 		}
 	}
 
+
 	/**
-	 * Output the component to make advanced search criteries
+	 * Output the component to make advanced search criteria
 	 *
 	 * @param 	array<array<string,array{type:string}>>	$arrayofcriterias 					Array of available search criteria. Example: array($object->element => $object->fields, 'otherfamily' => otherarrayoffields, ...)
 	 * @param 	array<int,string> 						$search_component_params 			Array of selected search criteria
