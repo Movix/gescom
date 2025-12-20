@@ -4668,7 +4668,7 @@ td.linecoldescription {
 	padding: 6px 10px 6px 12px !important;			/* t r b l */
 }
 table.tableforfield td, .tagtr.table-border-row .tagtd, table.border.margintable .trforfield td {
-	padding: 2px 4px 2px 10px;			/* t r b l */
+	padding: 2px 8px 2px 10px;			/* t r b l */
 }
 table.liste td, table.noborder > tr > td,
 table.noborder > tbody > tr > td,

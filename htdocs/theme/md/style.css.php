@@ -674,7 +674,7 @@ input, select {
 	text-shadow: none;
 	text-transform: uppercase;
 	/* font-weight: bold; */
-	margin: 0em 0.8em;
+	margin: 0 2px;
 	padding: 0.6em 0.7em;
 	line-height: 17px;
 }
@@ -4437,7 +4437,7 @@ tr.liste_titre.box_titre td table td, .bordernooddeven tr td {
 }
 
 table.border td, table.bordernooddeven td, div.border div div.tagtd {
-	padding: 3px 4px 3px 4px;
+	padding: 3px 8px 3px 8px;
 	/* border: 1px solid #f0f0f0; */
 	border-collapse: collapse;
 }
