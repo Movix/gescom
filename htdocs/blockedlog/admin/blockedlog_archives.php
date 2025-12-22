@@ -546,7 +546,7 @@ print '<input type="hidden" name="action" value="export">';
 
 print '<div class="right">';
 
-print $langs->trans("RestrictYearToExport").': ';
+print '<span class="hideonsmartphone">'.$langs->trans("RestrictYearToExport").': </span>';
 // Month
 print $formother->select_month((string) GETPOSTINT('monthtoexport'), 'monthtoexport', $langs->trans("Month"), 0, 'minwidth50 maxwidth75imp valignmiddle', true);
 print '<input type="text" name="yeartoexport" class="valignmiddle maxwidth75imp" value="'.GETPOST('yeartoexport').'" placeholder="'.$langs->trans("Year").'">';
