@@ -109,6 +109,7 @@ print '<form action="'.$_SERVER["PHP_SELF"].'" method="post">';
 print '<input type="hidden" name="token" value="'.newToken().'">';
 print '<input type="hidden" name="action" value="set">';
 
+print '<div class="div-table-responsive-no-min">';
 print '<table class="noborder centpercent">';
 print '<tr class="liste_titre">';
 print '<td>'.$langs->trans("Parameter").'</td><td></td>';
@@ -154,11 +155,13 @@ print '</span>';
 print '</td></tr>';
 
 print '</table>';
+print '</div>';
 
 print "</form>\n";
 
 print '<br>';
 
+print '<div class="hideonsmartphone">';
 print $langs->trans("NoteOnPathLocation").'<br>';
 
 $url1 = 'http://www.maxmind.com/en/city?rId=awstats';
@@ -173,16 +176,19 @@ $textoshow = $langs->trans("YouCanDownloadAdvancedDatFileTo", '{s1}');
 $textoshow = str_replace('{s1}', '<a href="'.$url2.'" target="_blank" rel="noopener noreferrer external">'.$url2.'</a>', $textoshow);
 print $textoshow;
 
+print '</div>';
+
 if ($geoip) {
+	print '<br><br><br>';
+
 	print '<form action="'.$_SERVER["PHP_SELF"].'" method="post">';
 	print '<input type="hidden" name="token" value="'.newToken().'">';
 
 	$ip = '24.24.24.24';
 
-	print '<br><br>';
-	print '<br><span class="opacitymedium">'.$langs->trans("TestGeoIPResult", $ip).':</span>';
+	print load_fiche_titre($langs->trans("TestGeoIPResult", $ip));
 
-	print '<br>'.$ip.' -> ';
+	print $ip.' -> ';
 	$result = dol_print_ip($ip, 1);
 	if ($result) {
 		print $result;
@@ -212,7 +218,7 @@ if ($geoip) {
 	//$ip='91.161.249.43';
 	$isip = is_ip($ip);
 	if ($isip == 1) {
-		print '<br>'.$ip.' -> ';
+		print '<br>'.$langs->trans("CurrentIP").': '.$ip.' -> ';
 		$result = dol_print_ip($ip, 1);
 		if ($result) {
 			print $result;
