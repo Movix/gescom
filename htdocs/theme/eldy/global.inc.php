@@ -1042,7 +1042,7 @@ textarea.centpercent {
 .small, small {
 	font-size: 85%;
 }
-.smallincombo {
+.select2-results__option .smallincombo {
 	font-size: 95%;
 	font-weight: bold;
 }
