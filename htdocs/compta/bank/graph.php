@@ -230,6 +230,7 @@ if ($result < 0) {
 			$labels[$i] = $xday;
 
 			$day += 86400;
+
 			//$textdate = strftime("%Y%m%d", $day);
 			$textdate = dol_print_date($day, "%Y%m%d");
 			$xyear = substr($textdate, 0, 4);
@@ -365,25 +366,22 @@ if ($result < 0) {
 		$xday = substr($textdate, 6, 2);
 
 		$i = 0;
-		while ($xyear == $year && $day <= $datetime) {
+		while ($xyear == $year && $day <= $nowlasthourmidday) {
 			$subtotal += (isset($amounts[$textdate]) ? $amounts[$textdate] : 0);
-			if ($day > $nowlasthourmidday) {
-				$datas[$i] = ''; // Valeur speciale permettant de ne pas tracer le graph
-			} else {
-				$datas[$i] = $solde + $subtotal;
-			}
+
+			$datas[$i] = $solde + $subtotal;
+
 			$datamin[$i] = $object->min_desired;
 			$dataall[$i] = $object->min_allowed;
-			/*if ($xday == '15')	// Set only some label for jflot
-			{
-				$labels[$i] = dol_print_date($day, "%b");
-			}*/
+
 			$labels[$i] = dol_print_date($day, "%Y%m");
+
 			$day += 86400;
-			//$textdate = strftime("%Y%m%d", $day);
+
 			$textdate = dol_print_date($day, "%Y%m%d");
 			$xyear = substr($textdate, 0, 4);
 			$xday = substr($textdate, 6, 2);
+
 			$i++;
 		}
 
