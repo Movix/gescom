@@ -179,8 +179,6 @@ foreach ($dirmodels as $reldir) {
 	if (is_dir($dir)) {
 		$handle = opendir($dir);
 		if (is_resource($handle)) {
-			$var = true;
-
 			while (($file = readdir($handle)) !== false) {
 				if (substr($file, 0, 16) == 'mod_takepos_ref_' && substr($file, dol_strlen($file) - 3, 3) == 'php') {
 					$file = substr($file, 0, dol_strlen($file) - 4);
@@ -311,7 +309,6 @@ print "</td></tr>\n";
 print '<tr class="oddeven"><td>';
 print $langs->trans("SortProductField");
 print '<td>';
-$prod = new Product($db);
 $array = array('rowid' => 'ID', 'ref' => 'Ref', 'label' => 'Label', 'datec' => 'DateCreation', 'tms' => 'DateModification');
 print $form->selectarray('TAKEPOS_SORTPRODUCTFIELD', $array, getDolGlobalString('TAKEPOS_SORTPRODUCTFIELD', 'rowid'), 0, 0, 0, '', 1);
 print "</td></tr>\n";
@@ -368,8 +365,7 @@ print $langs->trans('EmailTemplate');
 print '<td>';
 include_once DOL_DOCUMENT_ROOT.'/core/class/html.formmail.class.php';
 $formmail = new FormMail($db);
-$nboftemplates = $formmail->fetchAllEMailTemplate('facture_send', $user, null, -1); // We set lang=null to get in priority record with no lang
-//$arraydefaultmessage = $formmail->getEMailTemplate($db, $tmp[1], $user, null, 0, 1, '');
+$formmail->fetchAllEMailTemplate('facture_send', $user, null, -1); // We set lang=null to get in priority record with no lang
 $arrayofmessagename = array();
 if (is_array($formmail->lines_model)) {
 	foreach ($formmail->lines_model as $modelmail) {
