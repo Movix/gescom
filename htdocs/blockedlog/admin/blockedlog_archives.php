@@ -662,8 +662,10 @@ if (GETPOST('action') == 'export' && $user->hasRight('blockedlog', 'read')) {		/
 			$object->ref = 'systemevent';
 			$object->entity = $conf->entity;
 			$object->date = dol_now();
+			$object->fullname = $user->getFullName($langs);
 
-			$object->label = 'Export unalterable logs - Period: year='.GETPOSTINT('yeartoexport').(GETPOSTINT('monthtoexport') ? ' month='.GETPOSTINT('monthtoexport') : '');
+			$object->label = 'Export unalterable logs';
+			$object->period = 'year='.GETPOSTINT('yeartoexport').(GETPOSTINT('monthtoexport') ? ' month='.GETPOSTINT('monthtoexport') : '');
 
 			$action = 'BLOCKEDLOG_EXPORT';
 			$result = $b->setObjectData($object, $action, 0, $user, null);
