@@ -20,9 +20,15 @@ CREATE TABLE llx_pos_cash_fence(
 	ref VARCHAR(64),
 	label VARCHAR(255),
 	opening double(24,8) default 0,
+	-- amount calculated
+	cash_calculated double(24,8) default NULL,
+	card_calculated double(24,8) default NULL,
+	cheque_calculated double(24,8) default NULL,
+	-- amount declared
 	cash double(24,8) default 0,
 	card double(24,8) default 0,
 	cheque double(24,8) default 0,
+	-- lifetime amount (not used)
 	cash_lifetime double(24,8) default NULL,
 	card_lifetime double(24,8) default NULL,
 	cheque_lifetime double(24,8) default NULL,
