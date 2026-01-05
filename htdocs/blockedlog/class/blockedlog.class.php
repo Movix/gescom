@@ -174,8 +174,8 @@ class BlockedLog
 	public $trackedevents = array();
 
 	/**
-	 * Array of tracked modules
-	 * @var array<string,string|mixed>
+	 * Array of tracked modules (key => label)
+	 * @var array<string,string>
 	 */
 	public $trackedmodules = array();
 
@@ -206,7 +206,7 @@ class BlockedLog
 
 		$sep = 0;
 
-		$this->trackedmodules = array('0' => 'None');
+		$this->trackedmodules['0'] = 'None';
 		if (isModEnabled('takepos')) {
 			$this->trackedmodules['takepos'] = 'TakePOS';
 		}
@@ -691,7 +691,7 @@ class BlockedLog
 		// Field specific to object
 		if ($this->element == 'facture') {
 			'@phan-var-force Facture $object';
-			$this->module_source = $object->module_source;
+			$this->module_source = (string) $object->module_source;
 
 			foreach ($object as $key => $value) {
 				if (in_array($key, $arrayoffieldstoexclude)) {
@@ -775,10 +775,10 @@ class BlockedLog
 			// Add data for action emails
 			if ($action == 'BILL_SENTBYMAIL') {
 				$emailobj = new stdClass();
-				$emailobj->email_from = $object->email_from;
-				//$emailobj->email_to = $object->email_to;
-				$emailobj->email_msgid = $object->email_msgid;
-				$emailobj->email_subject = $object->email_subject;
+				$emailobj->email_from = $object->context['email_from'];
+				// $emailobj->email_to = $object->context['email_to'];
+				$emailobj->email_msgid = $object->context['email_msgid'];
+				// $emailobj->email_subject = $object->context['email_subject'];
 
 				$this->object_data->action_email_sent = $emailobj;
 			}
@@ -1100,7 +1100,7 @@ class BlockedLog
 				$this->action 			= $obj->action;
 				$this->module_source	= $obj->module_source;
 
-				$this->amounts_taxecl	= (is_null($obj->amounts_taxexcl) ? null : (float) $obj->amounts);
+				$this->amounts_taxexcl	= (is_null($obj->amounts_taxexcl) ? null : (float) $obj->amounts);
 				$this->amounts			= (float) $obj->amounts;
 
 				$this->fk_object = $obj->fk_object;
