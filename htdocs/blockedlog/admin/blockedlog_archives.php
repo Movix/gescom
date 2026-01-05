@@ -50,7 +50,7 @@ $langs->loadLangs(array('admin', 'banks', 'bills', 'blockedlog', 'other'));
 
 // Get Parameters
 $action      = GETPOST('action', 'aZ09');
-$confirm     = GETPOST('confirm', 'aZ09');
+//$confirm     = GETPOST('confirm', 'aZ09');
 $contextpage = GETPOST('contextpage', 'aZ') ? GETPOST('contextpage', 'aZ') : getDolDefaultContextPage(__FILE__); // To manage different context of search
 $backtopage  = GETPOST('backtopage', 'alpha'); // Go back to a dedicated page
 $optioncss   = GETPOST('optioncss', 'aZ'); // Option for the css output (always '' except when 'print')
@@ -132,7 +132,6 @@ if ($max_time && $max_time < $max_execution_time_for_importexport) {
 }
 
 $MAXLINES = getDolGlobalInt('BLOCKEDLOG_MAX_LINES', 10000);
-$MAXFORSHOWNLINKS = getDolGlobalInt('BLOCKEDLOG_MAX_FOR_SHOWN_LINKS', 100);
 
 $permission = $user->hasRight('blockedlog', 'read');
 $permissiontoadd = $user->hasRight('blockedlog', 'read');	// Permission is to upload new files to scan them
@@ -242,13 +241,14 @@ if (GETPOST('action') == 'export' && $user->hasRight('blockedlog', 'read')) {		/
 
 
 	// Init var for totals
+	/*
 	$totalhtamountalllines = array('BILL_VALIDATE' => 0, 'PAYMENT_CUSTOMER_CREATE' => 0);
 	$totalvatamountalllines = array('BILL_VALIDATE' => 0, 'PAYMENT_CUSTOMER_CREATE' => 0);
 	$totalamountalllines = array('BILL_VALIDATE' => 0, 'PAYMENT_CUSTOMER_CREATE' => 0);
 	$totalhtamountlifetime = array('BILL_VALIDATE' => array(), 'PAYMENT_CUSTOMER_CREATE' => array());
 	$totalvatamountlifetime = array('BILL_VALIDATE' => array(), 'PAYMENT_CUSTOMER_CREATE' => array());
 	$totalamountlifetime = array('BILL_VALIDATE' => array(), 'PAYMENT_CUSTOMER_CREATE' => array());
-
+	*/
 
 	if (!$error) {
 		$fh = fopen($tmpfile, 'w');
@@ -398,6 +398,7 @@ if (GETPOST('action') == 'export' && $user->hasRight('blockedlog', 'read')) {		/
 		}
 
 		// Now calculate cumulative total of all invoices validated
+		/*
 		if (array_key_exists('BILL_VALIDATE', $totalhtamount)) {
 			foreach ($totalhtamount['BILL_VALIDATE'] as $val) {	// Loop on each module
 				$totalhtamountalllines['BILL_VALIDATE'] += $val;
@@ -421,7 +422,6 @@ if (GETPOST('action') == 'export' && $user->hasRight('blockedlog', 'read')) {		/
 			}
 		}
 
-		/*
 
 		// Add a final line with cumulative total of invoices validated (BILL_VALIDATE)
 		$block_static->id = '';
