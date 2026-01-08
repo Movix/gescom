@@ -1710,6 +1710,25 @@ class BlockedLog
 
 
 	/**
+	 * Check if module can be enabled.
+	 *
+	 * @return  string			'' if ok, error message if not possible
+	 */
+	public function canBeEnabled()
+	{
+		global $dolibarr_main_force_https;
+
+		include_once DOL_DOCUMENT_ROOT.'/blockedlog/lib/blockedlog.lib.php';
+
+		if (isALNEQualifiedVersion(0, 1) && empty($dolibarr_main_force_https)) {
+			return 'Error: The HTTPS must be forced by setting the $dolibarr_main_force_https into Dolibarr conf/conf.php file to allow the use of this module in France.';
+		}
+
+		return '';
+	}
+
+
+	/**
 	 * Check if module can be disabled.
 	 *
 	 * @return  int<0,1>		0=Can't be disabled, 1=Can be disabled
@@ -1717,6 +1736,8 @@ class BlockedLog
 	public function canBeDisabled()
 	{
 		global $mysoc;
+
+		include_once DOL_DOCUMENT_ROOT.'/blockedlog/lib/blockedlog.lib.php';
 
 		$canbedisabled = 1;
 		if (isALNEQualifiedVersion() && $mysoc->country_code == 'FR') {
