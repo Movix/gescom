@@ -75,9 +75,9 @@ class CommonInvoiceTest extends CommonClassTest
 		$resql = $db->query($sql);
 		$id = $db->last_insert_id("c_payment_term");
 		$result = $localobject->calculate_date_lim_reglement($id);
-		print __METHOD__." date=".dol_print_date($localobject->date, 'dayhour', 'gmt')."\n";
-		print __METHOD__." result=".dol_print_date($result, 'dayhour', 'gmt')."\n";
-		$this->assertEquals('15/03/2010 12:00', dol_print_date($result, 'dayhour', 'gmt'));
+		print __METHOD__." date=".dol_print_date($localobject->date, 'standard', 'gmt')."\n";
+		print __METHOD__." result=".dol_print_date($result, 'standard', 'gmt')."\n";
+		$this->assertEquals('2010-03-15 12:00:00', dol_print_date($result, 'standard', 'gmt'));
 
 		// Add 45 days, take end of month, add 15 days
 		$localobject->date = dol_mktime(12, 0, 0, 3, 31, 2010);
@@ -85,9 +85,9 @@ class CommonInvoiceTest extends CommonClassTest
 		$resql = $db->query($sql);
 		$id = $db->last_insert_id("c_payment_term");
 		$result = $localobject->calculate_date_lim_reglement($id);
-		print __METHOD__." date=".dol_print_date($localobject->date, 'dayhour', 'gmt')."\n";
-		print __METHOD__." result=".dol_print_date($result, 'dayhour', 'gmt')."\n";
-		$this->assertEquals('15/06/2010 12:00', dol_print_date($result, 'dayhour', 'gmt'));
+		print __METHOD__." date=".dol_print_date($localobject->date, 'standard', 'gmt')."\n";
+		print __METHOD__." result=".dol_print_date($result, 'standard', 'gmt')."\n";
+		$this->assertEquals('2010-06-15 12:00:00', dol_print_date($result, 'standard', 'gmt'));
 
 		// Test on the mode type_cdr = 2
 
@@ -100,9 +100,9 @@ class CommonInvoiceTest extends CommonClassTest
 			die(1);
 		}
 		$result = $localobject->calculate_date_lim_reglement($id);
-		print __METHOD__." date=".dol_print_date($localobject->date, 'dayhour', 'gmt')."\n";
-		print __METHOD__." result=".dol_print_date($result, 'dayhour', 'gmt')."\n";
-		$this->assertEquals('15/02/2010 00:00', dol_print_date($result, 'dayhour', 'gmt'));
+		print __METHOD__." date=".dol_print_date($localobject->date, 'standard', 'gmt')."\n";
+		print __METHOD__." result=".dol_print_date($result, 'standard', 'gmt')."\n";
+		$this->assertEquals('2010-02-15 00:00:00', dol_print_date($result, 'standard', 'gmt'));
 
 		// 2010-03-30  Add 45 days, go to the next 15th
 		$localobject->date = dol_mktime(12, 0, 0, 3, 30, 2010);
@@ -113,9 +113,9 @@ class CommonInvoiceTest extends CommonClassTest
 			die(1);
 		}
 		$result = $localobject->calculate_date_lim_reglement($id);
-		print __METHOD__." date=".dol_print_date($localobject->date, 'dayhour', 'gmt')."\n";
-		print __METHOD__." result=".dol_print_date($result, 'dayhour', 'gmt')."\n";
-		$this->assertEquals('15/05/2010 00:00', dol_print_date($result, 'dayhour', 'gmt'));
+		print __METHOD__." date=".dol_print_date($localobject->date, 'standard', 'gmt')."\n";
+		print __METHOD__." result=".dol_print_date($result, 'standard', 'gmt')."\n";
+		$this->assertEquals('2010-05-15 00:00:00', dol_print_date($result, 'standard', 'gmt'));
 
 		// 2010-03-31  Add 45 days, go to the next 15th
 		$localobject->date = dol_mktime(12, 0, 0, 3, 31, 2010);
@@ -126,9 +126,9 @@ class CommonInvoiceTest extends CommonClassTest
 			die(1);
 		}
 		$result = $localobject->calculate_date_lim_reglement($id);
-		print __METHOD__." date=".dol_print_date($localobject->date, 'dayhour', 'gmt')."\n";
-		print __METHOD__." result=".dol_print_date($result, 'dayhour', 'gmt')."\n";
-		$this->assertEquals('15/05/2010 00:00', dol_print_date($result, 'dayhour', 'gmt'));
+		print __METHOD__." date=".dol_print_date($localobject->date, 'standard', 'gmt')."\n";
+		print __METHOD__." result=".dol_print_date($result, 'standard', 'gmt')."\n";
+		$this->assertEquals('2010-05-15 00:00:00', dol_print_date($result, 'standard', 'gmt'));
 
 		// 2010-04-01  Add 45 days, go to the next 15th
 		$localobject->date = dol_mktime(12, 0, 0, 4, 1, 2010);
@@ -139,9 +139,9 @@ class CommonInvoiceTest extends CommonClassTest
 			die(1);
 		}
 		$result = $localobject->calculate_date_lim_reglement($id);
-		print __METHOD__." date=".dol_print_date($localobject->date, 'dayhour', 'gmt')."\n";
-		print __METHOD__." result=".dol_print_date($result, 'dayhour', 'gmt')."\n";
-		$this->assertEquals('15/06/2010 00:00', dol_print_date($result, 'dayhour', 'gmt'));
+		print __METHOD__." date=".dol_print_date($localobject->date, 'standard', 'gmt')."\n";
+		print __METHOD__." result=".dol_print_date($result, 'standard', 'gmt')."\n";
+		$this->assertEquals('2010-06-15 00:00:00', dol_print_date($result, 'standard', 'gmt'));
 
 		return $result;
 	}
