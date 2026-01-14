@@ -1463,6 +1463,8 @@ class AccountancyExport
 			print $output;
 		}
 
+		$conf->cache['archiveFileList_notfound'] = array();
+
 		$i = 0;
 		foreach ($objectLines as $line) {
 			if ($line->debit == 0 && $line->credit == 0) {
@@ -1701,6 +1703,8 @@ class AccountancyExport
 		} else {
 			print $output;
 		}
+
+		$conf->cache['archiveFileList_notfound'] = array();
 
 		$i = 0;
 		foreach ($objectLines as $line) {
