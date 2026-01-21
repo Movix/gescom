@@ -1113,7 +1113,7 @@ $fulltag = null;
 
 // Free payment
 if (!$source) {
-	dol_syslog("newpayment.php no source");
+	dol_syslog("newpayment.php no source", LOG_DEBUG);
 
 	$found = true;
 	$tag = GETPOST("tag", 'alpha');
@@ -1164,7 +1164,7 @@ if (!$source) {
 
 // Payment on a Sale Order
 if ($source == 'order') {
-	dol_syslog("newpayment.php source=order");
+	dol_syslog("newpayment.php source=order", LOG_DEBUG);
 
 	$found = true;
 	$langs->load("orders");
@@ -1300,7 +1300,7 @@ if ($source == 'order') {
 
 // Payment on a Customer Invoice
 if ($source == 'invoice') {
-	dol_syslog("newpayment.php source=invoice");
+	dol_syslog("newpayment.php source=invoice", LOG_DEBUG);
 
 	$found = true;
 	$langs->load("bills");
@@ -1449,7 +1449,7 @@ if ($source == 'invoice') {
 
 // Payment on a Contract line
 if ($source == 'contractline') {
-	dol_syslog("newpayment.php source=contractline");
+	dol_syslog("newpayment.php source=contractline", LOG_DEBUG);
 
 	$found = true;
 	$langs->load("contracts");
@@ -1648,7 +1648,7 @@ if ($source == 'contractline') {
 
 // Payment on a Member subscription
 if ($source == 'member' || $source == 'membersubscription') {
-	dol_syslog("newpayment.php source=".$source);
+	dol_syslog("newpayment.php source=".$source, LOG_DEBUG);
 
 	$newsource = 'member';
 
@@ -1893,7 +1893,7 @@ if ($source == 'member' || $source == 'membersubscription') {
 
 // Payment on donation
 if ($source == 'donation') {
-	dol_syslog("newpayment.php source=donation");
+	dol_syslog("newpayment.php source=donation", LOG_DEBUG);
 
 	$found = true;
 	$langs->load("don");
@@ -2052,7 +2052,7 @@ if ($source == 'donation') {
 }
 
 if ($source == 'organizedeventregistration' && is_object($thirdparty)) {
-	dol_syslog("newpayment.php source=organizedeventregistration");
+	dol_syslog("newpayment.php source=organizedeventregistration", LOG_DEBUG);
 
 	$found = true;
 	$langs->loadLangs(array("members", "eventorganization"));
@@ -2144,7 +2144,7 @@ if ($source == 'organizedeventregistration' && is_object($thirdparty)) {
 }
 
 if ($source == 'boothlocation') {
-	dol_syslog("newpayment.php source=boothlocation");
+	dol_syslog("newpayment.php source=boothlocation", LOG_DEBUG);
 
 	$found = true;
 	$langs->load("members");
@@ -2243,7 +2243,7 @@ print "\n";
 
 // Show all payment mode buttons (Stripe, Paypal, ...)
 if ($action != 'dopayment') {
-	dol_syslog("newpayment.php action is not dopayment so we show all payment modes");
+	dol_syslog("newpayment.php action is not dopayment so we show all payment modes", LOG_DEBUG);
 
 	if ($found && !$error) {	// We are in a management option and no error
 		// Check status of the object (Invoice) to verify if it is paid by external payment modules (ie Payzen, ...)
@@ -2507,7 +2507,7 @@ if (preg_match('/^dopayment/', $action)) {			// If we choose/clicked on the paym
 			}
 
 			if (getDolGlobalString('STRIPE_USE_INTENT_WITH_AUTOMATIC_CONFIRMATION')) {
-				dol_syslog("newpayment.php Create a Paymentintent for amount=".$amount);
+				dol_syslog("newpayment.php Create a Paymentintent for amount=".$amount, LOG_DEBUG);
 
 				// By default noidempotency is set to 1, to avoid the error "Keys for idempotant requests...". It means we can pay several times the same tag/ref.
 				// If STRIPE_USE_IDEMPOTENCY_BY_DEFAULT is set or param noidempotency=0 is added, then with add an idempotent key, so we must use a different tag/ref for each payment (if not we will get an error).
