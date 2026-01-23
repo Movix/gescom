@@ -111,9 +111,18 @@ function product_prepare_head($object)
 		$head[$h][0] = dolBuildUrl(DOL_URL_ROOT.'/product/composition/card.php', ['id' => $object->id]);
 		$head[$h][1] = $langs->trans('AssociatedProducts');
 
-		$nbFatherAndChild = $object->hasFatherOrChild();
-		if ($nbFatherAndChild > 0) {
-			$head[$h][1] .= '<span class="badge marginleftonlyshort">'.$nbFatherAndChild.'</span>';
+		$nbFather = $object->hasFatherOrChild(-1);
+		$nbChild = $object->hasFatherOrChild(1);
+		if ($nbFather > 0 || $nbChild > 0) {
+			$head[$h][1] .= '<span class="badge marginleftonlyshort">';
+			if ($nbFather) {
+				$head[$h][1] .= $nbFather;
+			}
+			$head[$h][1] .= ($nbFather && $nbChild) ? '+' : '';
+			if ($nbChild) {
+				$head[$h][1] .= $nbChild;
+			}
+			$head[$h][1] .= '</span>';
 		}
 		$head[$h][2] = 'subproduct';
 		$h++;
