@@ -2968,11 +2968,13 @@ class BookKeeping extends CommonObject
 
 		// Current fiscal period
 		$fiscal_period_id = max(0, $fiscal_period_id);
+
 		if (empty($fiscal_period_id)) {
 			$langs->load('errors');
 			$this->errors[] = $langs->trans('ErrorBadParameters');
 			return -1;
 		}
+
 		$fiscal_period = new Fiscalyear($this->db);
 		$result = $fiscal_period->fetch($fiscal_period_id);
 		if ($result < 0) {
@@ -2989,7 +2991,7 @@ class BookKeeping extends CommonObject
 		$new_fiscal_period_id = max(0, $new_fiscal_period_id);
 		if (empty($new_fiscal_period_id)) {
 			$langs->load('errors');
-			$this->errors[] = $langs->trans('ErrorBadParameters');
+			$this->errors[] = $langs->trans('ErrorBadParameters').' - '.$langs->trans('AccountancyClosureStep3NewFiscalPeriod');
 			return -1;
 		}
 		$new_fiscal_period = new Fiscalyear($this->db);
