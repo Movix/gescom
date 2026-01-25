@@ -1382,6 +1382,16 @@ if (getDolGlobalString('PRODUIT_MULTIPRICES') || getDolGlobalString('PRODUIT_CUS
 		}
 	}
 } else {
+	// Type
+	if (isModEnabled("product") && isModEnabled("service")) {
+		$typeformat = 'select;0:'.$langs->trans("Product").',1:'.$langs->trans("Service");
+		print '<tr><td class="">';
+		print (!getDolGlobalString('PRODUCT_DENY_CHANGE_PRODUCT_TYPE')) ? $form->editfieldkey("Type", 'fk_product_type', (string) $object->type, $object, 0, $typeformat) : $langs->trans('Type');
+		print '</td><td>';
+		print $form->editfieldval("Type", 'fk_product_type', $object->type, $object, 0, $typeformat);
+		print '</td></tr>';
+	}
+
 	// TVA
 	print '<tr><td class="titlefield">'.$langs->trans("DefaultTaxRate").'</td><td>';
 
@@ -1546,23 +1556,19 @@ print dol_get_fiche_end();
 
 
 
-/*
- * Action bar
- */
-
+// Button for actions
 
 if (!$action || $action == 'delete' || $action == 'showlog_customer_price' || $action == 'showlog_default_price' || $action == 'add_customer_price'
 	|| $action == 'activate_price_by_qty' || $action == 'disable_price_by_qty') {
 	print "\n".'<div class="tabsAction">'."\n";
 
-
 	$parameters = array();
 	$reshook = $hookmanager->executeHooks('addMoreActionsButtons', $parameters, $object, $action); // Note that $action and $object may have been
 	if (empty($reshook)) {
 		if ($object->isVariant()) {
-			if ($user->hasRight('produit', 'creer') || $user->hasRight('service', 'creer')) {
-				print '<div class="inline-block divButAction"><a class="butActionRefused classfortooltip" href="#" title="' . dol_escape_htmltag($langs->trans("NoEditVariants")) . '">' . $langs->trans("UpdateDefaultPrice") . '</a></div>';
-			}
+			//if ($user->hasRight('produit', 'creer') || $user->hasRight('service', 'creer')) {
+			print '<div class="inline-block divButAction"><a class="butActionRefused classfortooltip" href="#" title="' . dol_escape_htmltag($langs->trans("NoEditVariants")) . '">' . $langs->trans("UpdateDefaultPrice") . '</a></div>';
+			//}
 		} else {
 			if (!getDolGlobalString('PRODUIT_MULTIPRICES') && !getDolGlobalString('PRODUIT_CUSTOMER_PRICES_BY_QTY_MULTIPRICES') && !getDolGlobalString('PRODUIT_CUSTOMER_PRICES_AND_MULTIPRICES')) {
 				if ($user->hasRight('produit', 'creer') || $user->hasRight('service', 'creer')) {
