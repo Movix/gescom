@@ -1892,6 +1892,15 @@ select.flat.selectlimit {
 	width: 250px;
 }
 
+.showonhover:hover *::before {
+	visibility: visible !important;
+	display: inline-block !important;
+}
+.showonhover:not(:hover) *::before {
+	visibility: hidden;
+	display: inline-block !important;
+}
+
 /* Styles for amount on card */
 table.paymenttable td.amountpaymentcomplete, table.paymenttable td.amountremaintopay, table.paymenttable td.amountremaintopayback {
 	padding-top: 0px;
@@ -2608,6 +2617,7 @@ td.showDragHandle {
 	display: table-cell;
 <?php } ?>
 	border-<?php echo $right; ?>: 1px solid #ECECEC;
+	border-bottom: 1px solid #ECECEC;
 	box-shadow: 3px 0 6px -2px #eee;
 	background: var(--colorbackvmenu1);
 	transition: left 0.5s ease;
