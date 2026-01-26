@@ -1889,7 +1889,7 @@ select.flat.selectlimit {
 	margin-top: 25px !important;
 }
 .navselectiondate {
-	width: 250px;
+	min-width: 250px;
 }
 
 .showonhover:hover *::before {
