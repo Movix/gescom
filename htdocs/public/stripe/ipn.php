@@ -1195,16 +1195,16 @@ if ($event->type == 'payout.created' && getDolGlobalString('STRIPE_AUTO_RECORD_P
 		}
 
 		if (! $error) {
-			// Add status dispute_status to Dispute Lost
-			$result = $tmpinvoice->setStatut(8, null, '', 'FACTURE_MODIFY', 'dispute_status');
+			// Add status dispute_status to Dispute Open
+			$result = $tmpinvoice->setStatut(1, null, '', 'FACTURE_MODIFY', 'dispute_status');
 			if ($result < 0) {
 				$errormsg = $tmpinvoice->error.implode(', ', $tmpinvoice->errors);
 				$error++;
 			}
 
 			if (!$error) {
-				dol_syslog("The dispute_status of invoice ".$tmpinvoice->ref." has been modified to 8");
-				dol_syslog("The dispute_status of invoice ".$tmpinvoice->ref." has been modified to 8", LOG_DEBUG, 0, '_payment');
+				dol_syslog("The dispute_status of invoice ".$tmpinvoice->ref." has been modified to 1");
+				dol_syslog("The dispute_status of invoice ".$tmpinvoice->ref." has been modified to 1", LOG_DEBUG, 0, '_payment');
 			}
 		}
 
