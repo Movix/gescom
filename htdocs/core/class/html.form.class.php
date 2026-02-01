@@ -7411,6 +7411,8 @@ class Form
 		$hookmanager->initHooks(array('commonobject'));
 		$info_bits == 1 ? $is_npr = 1 : $is_npr = 0;
 		$parameters = array(
+			'htmlname' => $htmlname,
+			'selectedrate' => $selectedrate
 			'seller' => $societe_vendeuse,
 			'buyer' => $societe_acheteuse,
 			'idprod' => $idprod,
