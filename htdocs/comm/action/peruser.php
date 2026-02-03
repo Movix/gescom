@@ -32,6 +32,13 @@
 
 // Load Dolibarr environment
 require '../../main.inc.php';
+/**
+ * @var Conf $conf
+ * @var DoliDB $db
+ * @var HookManager $hookmanager
+ * @var Translate $langs
+ * @var User $user
+ */
 require_once DOL_DOCUMENT_ROOT.'/comm/action/class/actioncomm.class.php';
 require_once DOL_DOCUMENT_ROOT.'/societe/class/societe.class.php';
 require_once DOL_DOCUMENT_ROOT.'/contact/class/contact.class.php';
@@ -40,14 +47,6 @@ require_once DOL_DOCUMENT_ROOT.'/core/lib/date.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/agenda.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';
 require_once DOL_DOCUMENT_ROOT.'/projet/class/project.class.php';
-
-/**
- * @var Conf $conf
- * @var DoliDB $db
- * @var HookManager $hookmanager
- * @var Translate $langs
- * @var User $user
- */
 
 $MAXAGENDA = getDolGlobalString('AGENDA_EXT_NB', 5);
 $DELAYFORCACHE = 300;	// 300 seconds
@@ -1742,7 +1741,7 @@ while ($currentdaytoshow < $lastdaytoshow) {
 		$var = !$var;
 
 		echo "<tr>";
-		echo '<td class="tdoverflowmax100 cal_current_month cal_peruserviewname'.($var ? ' cal_impair' : '').'">';
+		echo '<td class="tdoverflowmax100 cal_current_month cal_peruserviewname'.($var ? ' cal_impair' : '').' nopaddingtopimp nopaddingbottomimp noheightimp">';
 		print '<span class="paddingrightimp">';
 		print $username->getNomUrl(-1, '', 0, 0, 20, 1, '', 'paddingleft');
 		print '</span>';
