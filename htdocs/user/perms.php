@@ -484,6 +484,7 @@ $familyinfo = array(
 	'interface' => array('position' => '050', 'label' => $langs->trans("ModuleFamilyInterface")),
 	'base' => array('position' => '060', 'label' => $langs->trans("ModuleFamilyBase")),
 	'other' => array('position' => '100', 'label' => $langs->trans("ModuleFamilyOther")),
+	'external' => array('position' => '500', 'label' => 'External'),
 );
 
 $arrayofpermission = array();
@@ -503,11 +504,10 @@ if ($result) {
 		if (empty($obj->family)) {
 			$obj->family = 'other';
 		}
-
-		// Si la famille n'existe pas dans $familyinfo, on utilise 'other'
 		if (!empty($obj->family) && !isset($familyinfo[$obj->family])) {
-			$obj->family = 'other';
+			$obj->family = 'external';
 		}
+
 		if (empty($obj->family_position)) {
 			$obj->family_position = $familyinfo[$obj->family]['position'];
 			if ($obj->module_position < 100000) {
