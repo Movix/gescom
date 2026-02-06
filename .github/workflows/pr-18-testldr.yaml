@@ -28,6 +28,9 @@ jobs:
     #- name: Install GitHub CLI
     #  run: sudo apt-get install gh
 
+    - name: Debug GitHub Event
+      run: cat $GITHUB_EVENT_PATH
+
     - name: Generate a token
       id: generate-token
       uses: actions/create-github-app-token@v2
