@@ -36,8 +36,8 @@ create table llx_fichinter
   fk_user_valid		integer,                    -- user validating record
   fk_statut			smallint  DEFAULT 0,
   dateo				date,						-- date start intervention
-  datee				date,						-- date end intervention (diff with datet ?)
-  datet				date,						-- date end intervention (diff with datee ?)
+  datee				date,						-- date end intervention
+  datet				date,						-- date end intervention
   duree				real,                       -- duration total of  intervention
   description		text,
 
