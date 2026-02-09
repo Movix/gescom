@@ -507,19 +507,19 @@ if ($action == 'create') {
 	// Number
 	if (isModEnabled("bank")) {
 		print '<tr><td><label for="num_payment">'.$langs->trans('Numero');
-		print ' <em>('.$langs->trans("ChequeOrTransferNumber").')</em>';
+		print ' <em class="opacitymedium">('.$langs->trans("ChequeOrTransferNumber").')</em>';
 		print '</label></td>';
 		print '<td><input name="num_payment" class="maxwidth150onsmartphone" id="num_payment" type="text" value="'.GETPOST("num_payment").'"></td></tr>'."\n";
 
 		// Check transmitter
 		print '<tr><td class="'.(GETPOST('paymenttype') == 'CHQ' ? 'fieldrequired ' : '').'fieldrequireddyn"><label for="fieldchqemetteur">'.$langs->trans('CheckTransmitter');
-		print ' <em>('.$langs->trans("ChequeMaker").')</em>';
+		print ' <em class="opacitymedium">('.$langs->trans("ChequeMaker").')</em>';
 		print '</label></td>';
 		print '<td><input id="fieldchqemetteur" name="chqemetteur" size="30" type="text" value="'.GETPOST('chqemetteur', 'alphanohtml').'"></td></tr>';
 
 		// Bank name
 		print '<tr><td><label for="chqbank">'.$langs->trans('Bank');
-		print ' <em>('.$langs->trans("ChequeBank").')</em>';
+		print ' <em class="opacitymedium">('.$langs->trans("ChequeBank").')</em>';
 		print '</label></td>';
 		print '<td><input id="chqbank" name="chqbank" size="30" type="text" value="'.GETPOST('chqbank', 'alphanohtml').'"></td></tr>';
 	}
