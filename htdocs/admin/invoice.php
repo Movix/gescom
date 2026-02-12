@@ -881,7 +881,7 @@ print '<td class="left" colspan="2">';
 if (!getDolGlobalInt('FAC_FORCE_DATE_VALIDATION')) {	// If date is forced, this option to check become useless
 	print ajax_constantonoff('INVOICE_CHECK_POSTERIOR_DATE');
 } else {
-	print img_picto($langs->trans("AlwaysOn"), 'switch_on', 'class="opacitymedium"');
+	print img_picto($langs->trans("PreviousOptionGuaranteeThatDateIsAlwaysHigher"), 'switch_off', 'class="opacitymedium"');
 }
 print '</td></tr>';
 
