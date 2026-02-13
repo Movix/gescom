@@ -3765,7 +3765,7 @@ if (!function_exists("llxFooter")) {
 		$forceping = GETPOSTINT('forceping');
 
 		if (($_SERVER["PHP_SELF"] == DOL_URL_ROOT.'/index.php') || $forceping) {
-			$hash_unique_id_ping = dol_hash('dolibarr'.$conf->file->instance_unique_id, 'sha256', 1);
+			$hash_unique_id_ping = getHashUniqueIdOfRegistration('sha256');
 			$constanttosavelastko = 'MAIN_LAST_PING_KO_DATE';
 			$constanttosavefirstok = 'MAIN_FIRST_PING_OK_DATE';
 			$constanttosavefirstokid = 'MAIN_FIRST_PING_OK_ID';

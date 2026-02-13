@@ -3130,7 +3130,7 @@ function printCodeForPing($constanttosavelastko, $constanttosavefirstok, $arrayo
 	global $db, $conf;
 
 	$algo = 'sha256';
-	$hash_unique_id = dol_hash('dolibarr'.$conf->file->instance_unique_id, $algo);	// Note: if the global salt changes, this hash changes too so ping may be counted twice. We don't mind. It is for statistics and inventory purpose only.
+	$hash_unique_id = getHashUniqueIdOfRegistration($algo);
 
 	// Disable ping if $constanttosavelastpingko is set and is recent (this month)
 	if (getDolGlobalString($constanttosavelastko) && substr(getDolGlobalString($constanttosavelastko), 0, 6) == dol_print_date(dol_now(), '%Y%m') && !$forceping) {

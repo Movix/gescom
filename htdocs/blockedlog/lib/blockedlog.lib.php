@@ -127,15 +127,16 @@ function isRegistrationDataSavedAndPushed()
 
 
 /**
- * Return a hash unique identifier of the registration
+ * Return a hash unique identifier of the registration (used to identify the registration of instance without disclosing personal data)
  *
- * @return string		Hash unique ID (used to idenfiy the registration without disclosing personal data)
+ * @param	string	$algo		Algorithm to use for hash key
+ * @return 	string				Hash unique ID
  */
-function getHashUniqueIdOfRegistration()
+function getHashUniqueIdOfRegistration($algo = 'sha256')
 {
 	global $conf;
 
-	return dol_hash('dolibarr'.$conf->file->instance_unique_id, 'sha256', 1);
+	return dol_hash('dolibarr'.$conf->file->instance_unique_id.($conf->entity > 1 ? $conf->entity : ''), $algo, 1);
 }
 
 
@@ -347,7 +348,7 @@ function callApiToPushCounter($id, $signature, $test = 0)
 		$url_for_ping = getDolGlobalString('MAIN_URL_FOR_PING', "https://ping.dolibarr.org/");
 
 		$algo = 'sha256';
-		$hash_unique_id = dol_hash('dolibarr'.$conf->file->instance_unique_id, $algo);	// Note: if the global salt changes, this hash changes too so ping may be counted twice. We don't mind. It is for statistics and inventory purpose only.
+		$hash_unique_id = getHashUniqueIdOfRegistration($algo);
 
 		$data = 'hash_algo=dol_hash-'.urlencode($algo);
 		$data .= '&hash_unique_id='.urlencode($hash_unique_id);
