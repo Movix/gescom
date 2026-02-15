@@ -181,9 +181,20 @@ fi
 #echo "mysql -P$port -u$admin $passwd $base < $mydir/$dumpfile"
 #mysql -P$port -u$admin $passwd $base < $mydir/$dumpfile
 #echo "drop old table"
-echo "drop table"
+echo "drop table if exists llx_accounting_account;"
 echo "drop table if exists llx_accounting_account;" | mysql "-P$port" "-u$admin" "$passwd" "$base"
 echo "mysql -P$port -u$admin $passwdshown $base < '$mydir/$dumpfile'"
+mysql "-P$port" "-u$admin" "$passwd" "$base" < "$mydir/$dumpfile"
+export res=$?
+
+if [ $res -ne 0 ]; then
+	echo "Error to load database dump with: mysql -P$port -u$admin $passwdshown $base < '$mydir/$dumpfile'"
+	exit
+fi
+
+echo "drop table if exists llx_accounting_system;"
+echo "drop table if exists llx_accounting_system;" | mysql "-P$port" "-u$admin" "$passwd" "$base"
+ echo "mysql -P$port -u$admin $passwdshown $base < '$mydir/$dumpfile'"
 mysql "-P$port" "-u$admin" "$passwd" "$base" < "$mydir/$dumpfile"
 export res=$?
 
