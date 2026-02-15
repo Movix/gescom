@@ -236,7 +236,7 @@ if ($confirm == 'confirmresetblockedlog') {
 	$db->query($sql);
 
 
-	$sql = "UPDATE ".MAIN_DB_PREFIX."facture SET datef = datec WHERE datef >= NOW()";
+	$sql = "UPDATE ".MAIN_DB_PREFIX."facture SET datef = datec";
 	print $sql;
 	print "\n";
 	$db->query($sql);
