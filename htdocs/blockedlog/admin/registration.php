@@ -264,7 +264,12 @@ if (in_array($mysoc->country_code, array('FR'))) {
 			print info_admin($infotoshow, 0, 0, 'info');
 		}
 
-		$htmltext = $langs->trans("UnalterableLogToolRegistrationFR").'<br>';
+		if (!isRegistrationDataSavedAndPushed()) {
+			print '<center><span class="error">'.$langs->trans("RegistrationRequired").'</span></center>';
+		}
+
+		$htmltext = "";
+		$htmltext .= $langs->trans("UnalterableLogToolRegistrationFR").'<br>';
 		$htmltext .= $langs->trans("InformationWillBePublishedTo");
 		$htmltext .= '<br>'.$langs->trans("InformationWillBePublishedTo2", $organization_for_ping, $dataprivacy_url);
 		$htmltext .= '<br>'.$langs->trans("InformationWillBePublishedTo3");
