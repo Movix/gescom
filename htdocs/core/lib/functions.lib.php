@@ -1937,11 +1937,12 @@ function dol_size($size, $type = '')
  * 	@param	string		$newstr			String to replace bad chars with.
  *  @param	int	    	$unaccent		1=Remove also accent (default), 0 do not remove them
  *  @param	int			$includequotes	1=Include simple quotes (double is already included by default)
+ *  @param	int	    	$allowdash		1=Allow dash char after a space and before a string, 0 do not allow
  *	@return string      	    		String cleaned
  *
  * 	@see        	dol_string_nospecial(), dol_string_unaccent(), dol_sanitizePathName()
  */
-function dol_sanitizeFileName($str, $newstr = '_', $unaccent = 1, $includequotes = 0)
+function dol_sanitizeFileName($str, $newstr = '_', $unaccent = 1, $includequotes = 0, $allowdash = 0)
 {
 	$str = (string) $str;
 
@@ -1955,9 +1956,13 @@ function dol_sanitizeFileName($str, $newstr = '_', $unaccent = 1, $includequotes
 	}
 	$tmp = dol_string_nospecial($unaccent ? dol_string_unaccent($str) : $str, $newstr, $filesystem_forbidden_chars);
 	$tmp = preg_replace('/\-\-+/', '_', $tmp);
-	$tmp = preg_replace('/\s+\-([^\s])/', ' _$1', $tmp);
-	$tmp = preg_replace('/\s+\-$/', '', $tmp);
+	if (empty($allowdash)) {
+		$tmp = preg_replace('/\s+\-([^\s])/', ' _$1', $tmp);
+		$tmp = preg_replace('/\s+\-$/', '', $tmp);
+	}
 	$tmp = str_replace('..', '', $tmp);
+	$tmp = str_replace('~', $newstr, $tmp);
+	$tmp = preg_replace('/\s{2,}/', ' ', $tmp);
 
 	return $tmp;
 }
@@ -1998,6 +2003,8 @@ function dol_sanitizePathName($str, $newstr = '_', $unaccent = 0, $allowdash = 0
 	}
 	$tmp = str_replace('..', $newstr, $tmp);
 	$tmp = str_replace('~', $newstr, $tmp);
+	$tmp = preg_replace('/\s{2,}/', ' ', $tmp);
+
 	return $tmp;
 }
 
@@ -15703,11 +15710,12 @@ function showValueWithClipboardCPButton($valuetocopy, $showonlyonhover = 1, $tex
  * Decode an encoded string. The string can be encoded in json format (recommended) or with serialize (avoid this)
  *
  * @param 	string	$stringtodecode		String to decode (json or serialize coded)
+ * @param	boolean	$assoc				true=Return is converted into associative array
  * @return	mixed						The decoded object.
  */
-function jsonOrUnserialize($stringtodecode)
+function jsonOrUnserialize($stringtodecode, $assoc = true)
 {
-	$result = json_decode($stringtodecode);
+	$result = json_decode($stringtodecode, $assoc);
 	if ($result === null) {
 		$result = unserialize($stringtodecode);	// For backward compatibility. Is no more used in recent versions.
 	}
