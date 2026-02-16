@@ -64,6 +64,7 @@ SecretKey=Secret key
 ErrorPeriodMustBePastToAllowExport=Export into archives was done on a not complete period. A partial file has been generated and no entry was recorded for this temporary export, so you must redo it once period is completely finished to get a valid archive file for the period.
 RegistrationNumber=Registration number
 NumberOfPrints=Number of prints
+NumberOfPrintsIfDocValidated=Number of prints (excluding temporary status)
 NumberOfEmailsSent=Number of emails sent
 SaveAndEnableModule=Register and enable module
 LastRegistrationDate=Last registration update date
