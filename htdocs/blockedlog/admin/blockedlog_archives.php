@@ -938,6 +938,7 @@ if ($action == 'check' || $action == 'checkconfirmed') {
 
 					// With format VE1, we can also use a signature export.
 					// Note: this fieldis not more used, it has been replacedwith a global signature on all the file
+					$concatenateddata = $block_static->buildKeyForSignature();
 					$signatureexport = dol_hash($previoushashexport.$concatenateddata, 'sha256');
 					$previoushashexport = $signatureexport;
 				}
