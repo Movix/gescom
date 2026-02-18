@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright (C) 2010-2026	Laurent Destailleur 		<eldy@users.sourceforge.net>
 # Copyright (C) 2024-2026	MDW							<mdeweerd@users.noreply.github.com>
 
 #------------------------------------------------------
