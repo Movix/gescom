@@ -217,7 +217,7 @@ if (empty($reshook)) {
 	// Test that period is not close
 	$tmpcurrentday = dol_getdate(dol_now());
 
-	$sql = "SELECT COUNT(rowid) as nb FROM ".MAIN_DB_PREFIX."pos_cash_fence";
+	$sql = "SELECT MIN(ref) as firstref FROM ".MAIN_DB_PREFIX."pos_cash_fence";
 	$sql .= " WHERE posnumber = ".((int) $takeposterminal);
 	$sql .= " AND year_close = ".((int) $tmpcurrentday['year']);
 	$sql .= " AND (";
@@ -231,14 +231,14 @@ if (empty($reshook)) {
 	if ($resql) {
 		$obj = $db->fetch_object($resql);
 		if ($obj) {
-			$nbcashcontrol = $obj->nb;
+			$refcashcontrol = $obj->firstref;
 		}
 	}
 
-	if ($nbcashcontrol) {
+	if ($refcashcontrol) {
 		$error++;
 		$langs->load('errors');
-		dol_htmloutput_errors($langs->trans("ACashControlHasBeenclosedForCurrentDay"), [], 1);
+		dol_htmloutput_errors($langs->trans("ACashControlHasBeenclosedForCurrentDay", $refcashcontrol), [], 1);
 		$action = '';
 	}
 
