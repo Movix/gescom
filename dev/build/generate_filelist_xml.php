@@ -343,7 +343,7 @@ if ($release) {
 
 $checksumconcat = array();
 
-if ($releaseblockedlog) {
+if ($release && $releaseblockedlog) {
 	fputs($fp, '<dolibarr_unalterable_files version="'.$releaseblockedlog.'">'."\n");
 }
 

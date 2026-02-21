@@ -70,7 +70,7 @@ if (isModEnabled('blockedlog')) {
 	print '<span class="opacitymedium">';
 	print $langs->trans("DataIntegrityDesc").': ';
 	print '</span>';
-	print '<a href="'.DOL_URL_ROOT.'/blockedlog/admin/blockedlog_list.php">'.img_picto('', 'url', 'class="pictofixedwidth"').$langs->trans("FileCheck").'</a><br>';
+	print '<a href="'.DOL_URL_ROOT.'/blockedlog/admin/blockedlog_list.php">'.img_picto('', 'url', 'class="pictofixedwidth"').$langs->trans("BlockedLog").'</a><br>';
 }
 print'<br>';
 
